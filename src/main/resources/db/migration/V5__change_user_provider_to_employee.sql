@@ -1,0 +1,1 @@
+UPDATE providers SET name = 'employee' WHERE name = 'user'
