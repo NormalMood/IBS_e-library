@@ -1237,6 +1237,7 @@ The application allows you to checkout, extend and return books. Only employees 
    ```
    Within "" you can write any value you want to <br/>
    `[integer]` - id of a book; value from 1 to 5 for a reviewed book <br/>
+   Fields "advantages", "disadvantages", "comment" are optional<br/>
 * **Success Response**
    * **Code:** 200 
    * **Content:** 
