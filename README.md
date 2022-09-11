@@ -63,7 +63,7 @@ The application allows you to checkout, extend and return books. Only employees 
 	  ```
  
  **OR**
-  * **Code:** 401 UNAUTHORIZED
+  * **Code:** 401 UNAUTHORIZED <br/>
  **OR**
   * **Code:** 404 NOT FOUND
   * **Content:** 
@@ -74,7 +74,7 @@ The application allows you to checkout, extend and return books. Only employees 
 		  "error":"Not Found",
 		  "path":"/api/user/bin/dat"
 	  }
-```
+	  ```
 
 * **Sample**
    `/api/user/bin/data?page=0&results=10`
@@ -87,12 +87,12 @@ The application allows you to checkout, extend and return books. Only employees 
 * **URL Params**
    None
 * **Body:**
-   ```json
+   `
    [
 	    [integer],
 	    [integer]
    ]
-   ```
+   `
    `[integer]` - id of a book
 * **Success Response**
    * **Code:** 200 
@@ -116,9 +116,9 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "error":"Bad Request",
 	      "path":"/api/user/bin/return"
 	  }
-	  ```
+      ```
     **OR**
-   * **Code:** 401 UNAUTHORIZED
+   * **Code:** 401 UNAUTHORIZED <br/>
     **OR**
     * **Code:** 404 NOT FOUND
     * **Content:** 
@@ -147,12 +147,12 @@ The application allows you to checkout, extend and return books. Only employees 
 * **URL Params**
    None
 * **Body**
-   ```json
+   `
    [
 	   [integer],
 	   [integer]
    ]
-	```
+   `
     `[integer]` - id of a book
 * **Success Response**
    * **Code:** 200 
@@ -176,9 +176,9 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "error":"Bad Request",
 	      "path":"/api/user/bin/extend"
 	  }
-	  ```
+      ```
    **OR**
-   * **Code:** 401 UNAUTHORIZED
+   * **Code:** 401 UNAUTHORIZED <br/>
    **OR**
    * **Code:** 404 NOT FOUND
    * **Content:**
@@ -323,8 +323,8 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "error":"Bad Request",
 	      "path":"/api/user/library/all"
 	  }
-	  ```
-   * **Code:** 401 UNAUTHORIZED
+      ```
+   * **Code:** 401 UNAUTHORIZED <br/>
     **OR**
    * **Code:** 404 NOT FOUND
    * **Content:**
@@ -417,8 +417,8 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "error":"Bad Request",
 	      "path":"/api/user/library/search"
 	  }
-	  ```
-  * **Code:** 401 UNAUTHORIZED
+      ```
+  * **Code:** 401 UNAUTHORIZED <br/>
      **OR**
   * **Code:** 404 NOT FOUND
   * **Content:** 
@@ -429,7 +429,7 @@ The application allows you to checkout, extend and return books. Only employees 
 	     "error":"Not Found",
 	     "path":"/api/user/library/searh"
 	 }
-	 ```
+     ```
 * **Sample**
    `/api/user/library/search?page=0&results=10`
     ```json
@@ -437,7 +437,7 @@ The application allows you to checkout, extend and return books. Only employees 
 	    "parameterName": "title",
 	    "parameterValue": "в"
     }
-	```
+    ```
 
 ### Get all books sorted by a certain parameter in certain order (ASC, DESC)
 * **URL**
@@ -507,8 +507,9 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "error":"Bad Request",
 	      "path":"/api/user/library/sort"
 	  }
-	  ```
-   * **Code:** 401 UNAUTHORIZED
+      ```
+     **OR** 
+   * **Code:** 401 UNAUTHORIZED <br/>
      **OR**
    * **Code:** 404 NOT FOUND
    * **Content:**
@@ -519,7 +520,7 @@ The application allows you to checkout, extend and return books. Only employees 
 	   "error":"Not Found",
 	   "path":"/api/user/library/sor"
    }
-	```
+    ```
 
 * **Sample**
    `/api/user/library/sort?page=0&results=3`
@@ -538,12 +539,12 @@ The application allows you to checkout, extend and return books. Only employees 
 * **URL Params**
    None
 * **Body**
-   ```json
+   `
    [
 	   [integer],
 	   [integer]
    ]
-   ```
+   `
     `[integer]` - id of a book
 * **Success Response**
    * **Code:** 200 
@@ -566,8 +567,9 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "status":400,
 	      "error":"Bad Request",
 	      "path":"/api/user/library/checkout"
-	  }
-	  ```
+      }
+      ```
+      **OR**
    * **Code:** 401 UNAUTHORIZED
       **OR**
    * **Code:** 404 NOT FOUND
@@ -578,8 +580,8 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "status":404,
 	      "error":"Not Found",
 	      "path":"/api/user/library/checkou"
-	  }
-	  ```
+      }
+      ```
 
 * **Sample**
    `/api/user/library/checkout`
@@ -653,8 +655,9 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "status":400,
 	      "error":"Bad Request",
 	      "path":"/api/admin/detailed_history/all"
-	  }
-	  ```
+      }
+      ```
+     **OR**
    * **Code:** 401 UNAUTHORIZED
      **OR**
    * **Code:** 404 NOT FOUND
@@ -665,8 +668,8 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "status":404,
 	      "error":"Not Found",
 	      "path":"/api/admin/detailed_histor/all"
-	  }
-	  ```
+      }
+      ```
 
 * **Sample**
    `/api/admin/detailed_history/all?page=0&results=3`
@@ -727,8 +730,9 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "status":400,
 	      "error":"Bad Request",
 	      "path":"/api/admin/detailed_history/certain"
-	  }
-	  ```
+      }
+      ```
+     **OR**
    * **Code:** 401 UNAUTHORIZED
      **OR**
    * **Code:** 404 NOT FOUND
@@ -739,8 +743,8 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "status":404,
 	      "error":"Not Found",
 	      "path":"/api/admin/detailed_history/certai"
-	  }
-	  ```
+      }
+      ```
 
 * **Sample**
    `/api/admin/detailed_history/certain?bookId=3&page=0&results=10`
@@ -801,7 +805,7 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "error":"Bad Request",
 	      "path":"/api/admin/expired"
 	  }
-	  ```
+      ```
    * **Code:** 401 UNAUTHORIZED
 	 **OR**
    * **Code:** 404 NOT FOUND
