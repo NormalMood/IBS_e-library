@@ -61,7 +61,6 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "path":"/api/user/bin/data"
       }
       ```
- <br/>
     **OR**
   * **Code:** 401 UNAUTHORIZED <br/>
     **OR**
@@ -147,14 +146,15 @@ The application allows you to checkout, extend and return books. Only employees 
    `POST`
 * **URL Params**
    None
-* **Body**
+* **Body** <br/>
    `
    [
 	   [integer],
 	   [integer]
    ]
    `
-    `[integer]` - id of a book
+   <br/>
+    `[integer]` - id of a book <br/>
 * **Success Response**
    * **Code:** 200 
    * **Content:** 
@@ -178,9 +178,9 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "path":"/api/user/bin/extend"
       }
       ```
-   **OR**
+     **OR**
    * **Code:** 401 UNAUTHORIZED <br/>
-   **OR**
+     **OR**
    * **Code:** 404 NOT FOUND
    * **Content:**
 	```json
@@ -191,7 +191,7 @@ The application allows you to checkout, extend and return books. Only employees 
 		 "path":"/api/user/bin/exten"
 	 }
 	```
-* **Sample**
+* **Sample** <br/>
    `/api/user/bin/extend`
    ```json
    [
@@ -325,9 +325,9 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "path":"/api/user/library/all"
       }
       ```
-    **OR**
+     **OR**
    * **Code:** 401 UNAUTHORIZED <br/>
-    **OR**
+     **OR**
    * **Code:** 404 NOT FOUND
    * **Content:**
 	```json
@@ -338,7 +338,7 @@ The application allows you to checkout, extend and return books. Only employees 
 	   "path":"/api/user/librar/all"
    }
 	```
-* **Sample**
+* **Sample** <br/>
    `http://localhost:8080/api/user/library/all?page=0&results=10`
 
 ### Search books by a certain parameter
@@ -360,7 +360,7 @@ The application allows you to checkout, extend and return books. Only employees 
    }
    ```
     "parameterName": "title", "author", "genres", "provider" or "status" <br/>
-    "parameterValue": any string you want to search
+    "parameterValue": any string you want to search <br/>
 * **Success Response**
    * **Code:** 200 
    * **Content:** 
@@ -420,9 +420,9 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "path":"/api/user/library/search"
       }
       ```
-     **OR**
+    **OR**
   * **Code:** 401 UNAUTHORIZED <br/>
-     **OR**
+    **OR**
   * **Code:** 404 NOT FOUND
   * **Content:** 
      ```json
@@ -433,7 +433,7 @@ The application allows you to checkout, extend and return books. Only employees 
 	     "path":"/api/user/library/searh"
      }
      ```
-* **Sample**
+* **Sample** <br/>
    `/api/user/library/search?page=0&results=10`
     ```json
     {
@@ -461,7 +461,7 @@ The application allows you to checkout, extend and return books. Only employees 
    }
    ```
    "parameterName": "title", "author", "genres", "provider" or "status" <br/>
-   "sortOrder": "ASC" or "DESC"
+   "sortOrder": "ASC" or "DESC" <br/>
 * **Success Response**
    * **Code:** 200 
    * **Content:** 
@@ -525,7 +525,7 @@ The application allows you to checkout, extend and return books. Only employees 
    }
     ```
 
-* **Sample**
+* **Sample** <br/>
    `/api/user/library/sort?page=0&results=3`
    ```json
    {
@@ -541,14 +541,15 @@ The application allows you to checkout, extend and return books. Only employees 
    `POST`
 * **URL Params**
    None
-* **Body**
+* **Body** <br/>
    `
    [
 	   [integer],
 	   [integer]
    ]
    `
-    `[integer]` - id of a book
+   <br/>
+    `[integer]` - id of a book <br/>
 * **Success Response**
    * **Code:** 200 
    * **Content:** 
@@ -572,7 +573,7 @@ The application allows you to checkout, extend and return books. Only employees 
       }
       ```
       **OR**
-   * **Code:** 401 UNAUTHORIZED
+   * **Code:** 401 UNAUTHORIZED <br/>
       **OR**
    * **Code:** 404 NOT FOUND
    * **Content:**
@@ -585,7 +586,7 @@ The application allows you to checkout, extend and return books. Only employees 
       }
       ```
 
-* **Sample**
+* **Sample** <br/>
    `/api/user/library/checkout`
    ```json
    [
@@ -659,7 +660,7 @@ The application allows you to checkout, extend and return books. Only employees 
       }
       ```
      **OR**
-   * **Code:** 401 UNAUTHORIZED
+   * **Code:** 401 UNAUTHORIZED <br/>
      **OR**
    * **Code:** 404 NOT FOUND
    * **Content:**
@@ -672,7 +673,7 @@ The application allows you to checkout, extend and return books. Only employees 
       }
       ```
 
-* **Sample**
+* **Sample** <br/>
    `/api/admin/detailed_history/all?page=0&results=3`
    
 
@@ -733,7 +734,7 @@ The application allows you to checkout, extend and return books. Only employees 
       }
       ```
      **OR**
-   * **Code:** 401 UNAUTHORIZED
+   * **Code:** 401 UNAUTHORIZED <br/>
      **OR**
    * **Code:** 404 NOT FOUND
    * **Content:**
@@ -746,7 +747,7 @@ The application allows you to checkout, extend and return books. Only employees 
       }
       ```
 
-* **Sample**
+* **Sample** <br/>
    `/api/admin/detailed_history/certain?bookId=3&page=0&results=10`
 
 ### Show information about checkouted and extended books and the expired status of return data (Option for admin only)
@@ -807,7 +808,7 @@ The application allows you to checkout, extend and return books. Only employees 
       }
       ```
      **OR**
-   * **Code:** 401 UNAUTHORIZED
+   * **Code:** 401 UNAUTHORIZED <br/>
      **OR**
    * **Code:** 404 NOT FOUND
    * **Content:**
@@ -820,7 +821,7 @@ The application allows you to checkout, extend and return books. Only employees 
    }
    ```
 
-* **Sample**
+* **Sample** <br/>
    `/api/admin/expired?page=0&results=2`
 
 ### Show all saved genres from the database
@@ -889,7 +890,7 @@ The application allows you to checkout, extend and return books. Only employees 
       }
       ```
      **OR**
-   * **Code:** 401 UNAUTHORIZED
+   * **Code:** 401 UNAUTHORIZED <br/>
      **OR**
    * **Code:** 404 NOT FOUND
    * **Content:**
@@ -902,7 +903,7 @@ The application allows you to checkout, extend and return books. Only employees 
       }
       ```
 
-* **Sample**
+* **Sample** <br/>
    `/api/library/genres/all?page=0&results=10`
 
 ### Save new genres into the database
@@ -910,7 +911,7 @@ The application allows you to checkout, extend and return books. Only employees 
    /api/library/genres/add
 * **Method**
    `POST`
-* **URL Params**
+* **URL Params** <br/>
    None
 * **Body**
    ```json
@@ -943,9 +944,9 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "path":"/api/library/genres/add"
       }
       ```
-   **OR**
-   * **Code:** 401 UNAUTHORIZED
-   **OR**
+     **OR**
+   * **Code:** 401 UNAUTHORIZED <br/>
+     **OR**
    * **Code:** 404 NOT FOUND
    * **Content:** 
    ```json
@@ -956,7 +957,7 @@ The application allows you to checkout, extend and return books. Only employees 
 	   "path":"/api/library/genres/ad"
    }
    ```
-   **OR**
+     **OR**
    * **Code:** 500 INTERNAL SERVER ERROR
    * **Content:**
    ```json
@@ -968,7 +969,7 @@ The application allows you to checkout, extend and return books. Only employees 
    }
    ```
 
-* **Sample**
+* **Sample** <br/>
    `/api/library/genres/add`
    ```json
    {
@@ -983,7 +984,7 @@ The application allows you to checkout, extend and return books. Only employees 
    /api/library/user/add
 * **Method**
    `POST`
-* **URL Params**
+* **URL Params** <br/>
    None
 * **Body**
    ```json
@@ -1023,7 +1024,7 @@ The application allows you to checkout, extend and return books. Only employees 
       }
       ```
      **OR**
-   * **Code:** 401 UNAUTHORIZED
+   * **Code:** 401 UNAUTHORIZED <br/>
      **OR**
    * **Code:** 404 NOT FOUND
    * **Content:**
@@ -1046,7 +1047,7 @@ The application allows you to checkout, extend and return books. Only employees 
 	    "path":"/api/library/user/add"
     }
     ```
-* **Sample**
+* **Sample** <br/>
    `/api/library/user/add`
    ```json
    {
@@ -1109,7 +1110,7 @@ The application allows you to checkout, extend and return books. Only employees 
       }
       ```
      **OR**
-   * **Code:** 401 UNAUTHORIZED
+   * **Code:** 401 UNAUTHORIZED <br/>
      **OR**
    * **Code:** 404 NOT FOUND
    * **Content:**
@@ -1121,7 +1122,7 @@ The application allows you to checkout, extend and return books. Only employees 
 	   "path":"/api/library/admin/ad"
    }
    ```
-   **OR**
+     **OR**
    * **Code:** 500 INTERNAL SERVER ERROR
    * **Content:**
     ```json
@@ -1133,7 +1134,7 @@ The application allows you to checkout, extend and return books. Only employees 
     }
     ```
 
-* **Sample**
+* **Sample** <br/>
    `/api/library/admin/add`
    ```json
    {
@@ -1203,7 +1204,7 @@ The application allows you to checkout, extend and return books. Only employees 
       }
       ```
      **OR**
-   * **Code:** 401 UNAUTHORIZED
+   * **Code:** 401 UNAUTHORIZED <br/>
      **OR**
    * **Code:** 404 NOT FOUND
    * **Content:**
@@ -1215,7 +1216,7 @@ The application allows you to checkout, extend and return books. Only employees 
 	    "path":"/api/user/review/all"
     }
     ```
-* **Sample**
+* **Sample** <br/>
    `/api/user/reviews/all?bookId=1&page=0&results=10`
 
 ### Add a new review of a certain book
@@ -1223,7 +1224,7 @@ The application allows you to checkout, extend and return books. Only employees 
    /api/user/reviews/add
 * **Method**
    `POST`
-* **URL Params**
+* **URL Params** <br/>
    None
  * **Body**
    ```json
@@ -1260,7 +1261,7 @@ The application allows you to checkout, extend and return books. Only employees 
       }
       ```
      **OR**
-   * **Code:** 401 UNAUTHORIZED
+   * **Code:** 401 UNAUTHORIZED <br/>
      **OR**
    * **Code:** 404 NOT FOUND
    * **Content:**
@@ -1284,7 +1285,7 @@ The application allows you to checkout, extend and return books. Only employees 
 		"path":"/api/user/reviews/add"
 	}
 	```
-* **Sample**
+* **Sample** <br/>
    `/api/user/reviews/add`
    ```json
    {
