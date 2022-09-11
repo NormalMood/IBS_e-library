@@ -1296,3 +1296,7 @@ The application allows you to checkout, extend and return books. Only employees 
 	   "comment": "no comments"
    }
    ```
+   
+# Logical database model
+## ER diagram of the developed database
+![alt text](src/main/resources/er diagram/logical_db_model.jpg)
