@@ -61,7 +61,7 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "path":"/api/user/bin/data"
       }
       ```
- 
+ <br/>
     **OR**
   * **Code:** 401 UNAUTHORIZED <br/>
     **OR**
@@ -86,10 +86,10 @@ The application allows you to checkout, extend and return books. Only employees 
    `POST`
 * **URL Params**
    None
-* **Body:**
+* **Body:** <br/>
    `
    [
-	    [integer], <br/>
+	    [integer], 
 	    [integer]
    ]
    `
