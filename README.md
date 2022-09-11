@@ -83,7 +83,7 @@ The application allows you to checkout, extend and return books. Only employees 
    /api/user/bin/return
 * **Method**
    `POST`
-* **URL Params**
+* **URL Params** <br/>
    None
 * **Body:** <br/>
    `
@@ -144,7 +144,7 @@ The application allows you to checkout, extend and return books. Only employees 
    /api/user/bin/extend
 * **Method**
    `POST`
-* **URL Params**
+* **URL Params** <br/>
    None
 * **Body** <br/>
    `
@@ -316,7 +316,6 @@ The application allows you to checkout, extend and return books. Only employees 
 * **Error Response**
    * **Code:** 400 BAD REQUEST
    * **Content:** 
-     **OR**
       ```json
       {
 	      "timestamp":"2022-09-10T18:34:03.858+00:00",
@@ -539,7 +538,7 @@ The application allows you to checkout, extend and return books. Only employees 
    /api/user/library/checkout
 * **Method**
    `POST`
-* **URL Params**
+* **URL Params** <br/>
    None
 * **Body** <br/>
    `
@@ -572,9 +571,9 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "path":"/api/user/library/checkout"
       }
       ```
-      **OR**
+     **OR**
    * **Code:** 401 UNAUTHORIZED <br/>
-      **OR**
+     **OR**
    * **Code:** 404 NOT FOUND
    * **Content:**
       ```json
@@ -1069,7 +1068,7 @@ The application allows you to checkout, extend and return books. Only employees 
    /api/library/admin/add
 * **Method**
    `POST`
-* **URL Params**
+* **URL Params** <br/>
    None
 * **Body**
    ```json
@@ -1208,7 +1207,7 @@ The application allows you to checkout, extend and return books. Only employees 
      **OR**
    * **Code:** 404 NOT FOUND
    * **Content:**
-     ```json
+    ```json
     {
 	    "timestamp":"2022-09-10T22:11:14.195+00:00",
 	    "status":404,
