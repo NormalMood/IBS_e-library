@@ -62,9 +62,9 @@ The application allows you to checkout, extend and return books. Only employees 
       }
       ```
  
- **OR**
+    **OR**
   * **Code:** 401 UNAUTHORIZED <br/>
- **OR**
+    **OR**
   * **Code:** 404 NOT FOUND
   * **Content:** 
 	  ```json
@@ -76,7 +76,7 @@ The application allows you to checkout, extend and return books. Only employees 
 	  }
 	  ```
 
-* **Sample**
+* **Sample** <br/>
    `/api/user/bin/data?page=0&results=10`
 
 ### Return books
@@ -89,10 +89,11 @@ The application allows you to checkout, extend and return books. Only employees 
 * **Body:**
    `
    [
-	    [integer],
+	    [integer], <br/>
 	    [integer]
    ]
    `
+   <br/>
    `[integer]` - id of a book
 * **Success Response**
    * **Code:** 200 
@@ -117,9 +118,9 @@ The application allows you to checkout, extend and return books. Only employees 
 	      "path":"/api/user/bin/return"
       }
       ```
-    **OR**
+     **OR**
    * **Code:** 401 UNAUTHORIZED <br/>
-    **OR**
+     **OR**
     * **Code:** 404 NOT FOUND
     * **Content:** 
     ```json
@@ -130,7 +131,7 @@ The application allows you to checkout, extend and return books. Only employees 
 	    "path":"/api/user/bin/retur"
     }
     ```
-* **Sample**
+* **Sample** <br/>
    `/api/user/bin/return`
    ```json
    [
