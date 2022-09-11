@@ -12,12 +12,12 @@ The application allows you to checkout, extend and return books. Only employees 
    /api/user/bin/data
 * **Method**
    `GET`
-* **URL Params**
-   **Required:**
-   `page=[integer]`
-   `results=[integer]`
-   page - number of page (0 is the first page)
-   results - amount of elements per page
+* **URL Params** <br/>
+   **Required:** <br/>
+   `page=[integer]` <br/>
+   `results=[integer]` <br/>
+   page - number of page (0 is the first page) <br/>
+   results - amount of elements per page <br/>
 * **Success Response**
    * **Code:** 200 
    * **Content:** 
