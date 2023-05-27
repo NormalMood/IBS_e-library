@@ -55,7 +55,7 @@ public class ReadDatabaseTests {
         VGenres genres = new VGenres("123");
         List<VGenres> list = new ArrayList<>();
         list.add(genres);
-        given(repository.findAll()).willReturn(list);
+      //  given(repository.findAll()).willReturn(list);
         List<VGenres> genres1 = service.getAll();
         assertEquals(genres1, list);
     }

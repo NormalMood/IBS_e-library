@@ -5,8 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.0</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<version>3.1.0</version>
 	</parent>
 	<groupId>com.informationsystem</groupId>
 	<artifactId>library</artifactId>
@@ -28,7 +27,6 @@
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
-			<version>8.5.13</version>
 		</dependency>
 
 		<dependency>
@@ -44,7 +42,6 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.24</version>
 			<scope>provided</scope>
 			<!--<optional>true</optional>-->
 		</dependency>
@@ -108,11 +105,17 @@
 			<version>${lombok-mapstruct-binding.version}</version>
 		</dependency>
 
-		<dependency>
+		<!--<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>2.0.1.Final</version>
+			
+		</dependency>-->
+		
+		<dependency>
+    		<groupId>jakarta.validation</groupId>
+    		<artifactId>jakarta.validation-api</artifactId>
 		</dependency>
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
