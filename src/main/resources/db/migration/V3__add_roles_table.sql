@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS roles;
 CREATE TABLE roles
 (
     PRIMARY KEY (roles_num),
-    roles_num SERIAL      NOT NULL,
+    roles_num SMALLSERIAL      NOT NULL,
     name      VARCHAR(15) NOT NULL
 );
 

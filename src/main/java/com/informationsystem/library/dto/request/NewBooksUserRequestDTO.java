@@ -17,6 +17,6 @@ public class NewBooksUserRequestDTO {
 
     private String fatherName;
 
-    private List<Long> genresIds;
+    private List<Short> genresIds;
 
 }

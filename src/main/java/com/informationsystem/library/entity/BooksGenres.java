@@ -25,9 +25,9 @@ public class BooksGenres {
     private Long bookId;
 
     @Column(name = "genres_num")
-    private Long genreId;
+    private Short genreId;
 
-    public BooksGenres(Long bookId, Long genreId){
+    public BooksGenres(Long bookId, Short genreId){
         this.bookId = bookId;
         this.genreId = genreId;
     }

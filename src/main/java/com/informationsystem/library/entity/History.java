@@ -31,11 +31,11 @@ public class History {
     private Long bookId;
 
     @Column(name = "actions_num")
-    private Integer actionId;
+    private Short actionId;
 
     private Date actionsDate;
 
-    public History(Long employeeId, Long bookId, Integer actionId){
+    public History(Long employeeId, Long bookId, Short actionId){
         this.employeeId = employeeId;
         this.bookId = bookId;
         this.actionId = actionId;

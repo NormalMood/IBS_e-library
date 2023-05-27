@@ -156,7 +156,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public boolean isCheckoutPossible(Long bookId) {
-        Integer bookStatusId = booksRepository
+        Short bookStatusId = booksRepository
                 .findById(bookId)
                 .get()
                 .getStatusesId();

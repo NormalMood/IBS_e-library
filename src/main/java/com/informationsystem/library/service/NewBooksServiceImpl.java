@@ -61,7 +61,7 @@ public class NewBooksServiceImpl implements NewBooksService {
     public StatusResponseDTO addBooks(NewBooksUserRequestDTO newBookRequest) {
         Books book = newBooksUserRequestMapper.newBooksUserRequestToBooks(newBookRequest);
         Books addedBook = booksRepository.save(book);
-        for (Long genreId : newBookRequest.getGenresIds()) {
+        for (Short genreId : newBookRequest.getGenresIds()) {
             booksGenresRepository.save(new BooksGenres(addedBook.getId(), genreId));
         }
         return new StatusResponseDTO("Books were added",
@@ -73,7 +73,7 @@ public class NewBooksServiceImpl implements NewBooksService {
         Books book = newBooksAdminRequestMapper
                 .newBooksAdminRequestToBooks(newBookRequest);
         Books addedBook = booksRepository.save(book);
-        for (Long genreId : newBookRequest.getGenresIds()) {
+        for (Short genreId : newBookRequest.getGenresIds()) {
             booksGenresRepository.save(new BooksGenres(addedBook.getId(), genreId));
         }
         return new StatusResponseDTO("Books were added",

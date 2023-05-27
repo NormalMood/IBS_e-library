@@ -1,10 +1,10 @@
 CREATE TABLE reviews
 (
     PRIMARY KEY (reviews_num),
-    reviews_num     SERIAL          NOT NULL,
-    staff_num       INT             NOT NULL,
-    books_num       INT             NOT NULL,
-    stars           INT             NOT NULL,
+    reviews_num     BIGSERIAL          NOT NULL,
+    staff_num       BIGSERIAL             NOT NULL,
+    books_num       BIGSERIAL             NOT NULL,
+    stars           SMALLINT             NOT NULL,
     advantages      VARCHAR(150),
     disadvantages   VARCHAR(150),
     comment         VARCHAR(300),

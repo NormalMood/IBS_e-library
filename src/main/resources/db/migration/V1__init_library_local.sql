@@ -1,7 +1,7 @@
 CREATE TABLE staff
 (
     PRIMARY KEY (staff_num),
-    staff_num   SERIAL       NOT NULL,
+    staff_num   BIGSERIAL       NOT NULL,
     last_name   VARCHAR(40)  NOT NULL,
     first_name  VARCHAR(30)  NOT NULL,
     father_name VARCHAR(40),
@@ -24,7 +24,7 @@ VALUES ('Венедиктов', 'Юрий', 'Михайлович', 'ymvenedikto
 CREATE TABLE actions
 (
     PRIMARY KEY (actions_num),
-    actions_num SERIAL      NOT NULL,
+    actions_num SMALLSERIAL      NOT NULL,
     name        VARCHAR(30) NOT NULL UNIQUE
 );
 
@@ -36,7 +36,7 @@ VALUES ('взять'),
 CREATE TABLE providers
 (
     PRIMARY KEY (providers_num),
-    providers_num SERIAL      NOT NULL,
+    providers_num SMALLSERIAL      NOT NULL,
     name          VARCHAR(20) NOT NULL UNIQUE
 );
 
@@ -47,7 +47,7 @@ VALUES ('IBS'),
 CREATE TABLE statuses
 (
     PRIMARY KEY (statuses_num),
-    statuses_num SERIAL      NOT NULL,
+    statuses_num SMALLSERIAL      NOT NULL,
     name         VARCHAR(30) NOT NULL UNIQUE
 );
 
@@ -60,7 +60,7 @@ VALUES ('В наличии'),
 CREATE TABLE genres
 (
     PRIMARY KEY (genres_num),
-    genres_num SERIAL      NOT NULL,
+    genres_num SMALLSERIAL      NOT NULL,
     name       VARCHAR(40) NOT NULL UNIQUE
 );
 
@@ -77,13 +77,13 @@ VALUES ('Литература по саморазвитию'),
 CREATE TABLE books
 (
     PRIMARY KEY (books_num),
-    books_num     SERIAL      NOT NULL,
+    books_num     BIGSERIAL      NOT NULL,
     title         VARCHAR(70) NOT NULL,
     last_name     VARCHAR(40) NOT NULL,
     first_name    VARCHAR(30) NOT NULL,
     father_name   VARCHAR(40),
-    providers_num INT         NOT NULL,
-    statuses_num  INT         NOT NULL,
+    providers_num SMALLSERIAL         NOT NULL,
+    statuses_num  SMALLSERIAL         NOT NULL,
     CONSTRAINT fk_providers
         FOREIGN KEY (providers_num)
             REFERENCES providers (providers_num),
@@ -107,9 +107,9 @@ VALUES ('Совершенный код', 'Макконнелл', 'Стив', '',
 CREATE TABLE books_genres
 (
     PRIMARY KEY (books_genres_num),
-    books_genres_num SERIAL NOT NULL,
-    books_num        INT    NOT NULL,
-    genres_num       INT    NOT NULL,
+    books_genres_num BIGSERIAL NOT NULL,
+    books_num        BIGSERIAL    NOT NULL,
+    genres_num       SMALLSERIAL    NOT NULL,
     CONSTRAINT fk_books
         FOREIGN KEY (books_num)
             REFERENCES books (books_num),
@@ -146,10 +146,10 @@ VALUES (1, 7),
 CREATE TABLE history
 (
     PRIMARY KEY (history_num),
-    history_num  SERIAL NOT NULL,
-    staff_num    INT    NOT NULL,
-    books_num    INT    NOT NULL,
-    actions_num  INT    NOT NULL,
+    history_num  BIGSERIAL NOT NULL,
+    staff_num    BIGSERIAL    NOT NULL,
+    books_num    BIGSERIAL    NOT NULL,
+    actions_num  SMALLSERIAL    NOT NULL,
     actions_date DATE   NOT NULL,
     CONSTRAINT fk_staff
         FOREIGN KEY (staff_num)

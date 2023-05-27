@@ -20,6 +20,6 @@ public class NewBooksAdminRequestDTO {
 
     private ProvidersName provider;
 
-    private List<Long> genresIds;
+    private List<Short> genresIds;
 
 }

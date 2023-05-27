@@ -1,14 +1,14 @@
 package com.informationsystem.library.model;
 
-import java.util.HashMap;
 import java.util.Map;
+import static java.util.Map.entry;
 
 public class Action {
 
-    public static final Map<ActionsName, Integer> ACTIONS = new HashMap<ActionsName, Integer>(){{
-        put(ActionsName.TAKE, 1);
-        put(ActionsName.RETURN, 2);
-        put(ActionsName.EXTEND, 3);
-    }};
-
+    public static final Map<ActionsName, Short> ACTIONS = Map.ofEntries(
+    		entry(ActionsName.TAKE, (short)1),
+    		entry(ActionsName.RETURN, (short)2),
+    		entry(ActionsName.EXTEND, (short)3)
+    	);
+    
 }

@@ -30,7 +30,7 @@ public class Reviews {
 
     @Min(1)
     @Max(5)
-    private Integer stars;
+    private Short stars;
 
     private String advantages;
 

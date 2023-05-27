@@ -30,13 +30,13 @@ public class Books {
     private String fatherName;
 
     @Column(name = "providers_num")
-    private Integer providersId;
+    private Short providersId;
 
     @Column(name = "statuses_num")
-    private Integer statusesId;
+    private Short statusesId;
 
     public Books(String title, String lastName, String firstName,
-                 String fatherName, Integer providersId, Integer statusesId){
+                 String fatherName, Short providersId, Short statusesId){
         this.title = title;
         this.lastName = lastName;
         this.firstName = firstName;
