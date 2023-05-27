@@ -18,8 +18,8 @@ public class BooksCheckoutController {
     private final EmployeeService employeeService;
 
     @GetMapping("/all")
-    public ResponseEntity<?> getAllBooks(@RequestParam("page") Integer pageNum,
-                                         @RequestParam("results") Integer elementsPerPage){
+    public ResponseEntity<?> getAllBooks(@RequestParam(value = "page", required = false) Integer pageNum,
+                                         @RequestParam(value = "results", required = false) Integer elementsPerPage){
         return ResponseEntity.ok(employeeService.getAllBooks(pageNum, elementsPerPage));
     }
 

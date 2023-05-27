@@ -7,28 +7,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
+/*import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.SecurityFilterChain;*/
 
 //@Configuration
 //@EnableWebSecurity
 public class SecurityConfig {
 
-    private final UserDetailsService employeeDetailsService;
+    //private final UserDetailsService employeeDetailsService;
 
-    @Autowired
+  /*  @Autowired
     public SecurityConfig(@Qualifier("employeeDetailsServiceImpl") UserDetailsService userDetailsService){
         this.employeeDetailsService = userDetailsService;
-    }
+    }*/
     
   //  @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+   /* public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     	return http
     			.authorizeHttpRequests(requests -> 
     					requests
@@ -53,19 +53,19 @@ public class SecurityConfig {
     						.deleteCookies("JSESSIONID"))
     			.authenticationProvider(authenticationProvider())
     			.build();
-    }
+    }*/
     
     //@Bean
-	public AuthenticationProvider authenticationProvider() { //compare user's parameters
+	/*public AuthenticationProvider authenticationProvider() { //compare user's parameters
 		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
 		authenticationProvider.setUserDetailsService(employeeDetailsService);
 		authenticationProvider.setPasswordEncoder(passwordEncoder());
 		return authenticationProvider;
-	}
+	}*/
 
     //@Bean
-    protected PasswordEncoder passwordEncoder(){
+   /* protected PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(16);
-    }
+    }*/
 
 }

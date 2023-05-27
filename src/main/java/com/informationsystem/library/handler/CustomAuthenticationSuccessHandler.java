@@ -7,21 +7,21 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
-import org.springframework.security.core.Authentication;
+/*import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
-
+*/
 import java.io.IOException;
 import java.util.Collection;
 
-public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class CustomAuthenticationSuccessHandler/* implements AuthenticationSuccessHandler*/ {
 
     private final String USER_SUCCESSFUL_URL = APIRoutes.EMPLOYEE_BIN_CONTROLLER_MAPPING + "/data?page=0&results=10";
 
     private final String ADMIN_SUCCESSFUL_URL = APIRoutes.ADMIN_CONTROLLER_MAPPING + "/detailed_history/all?page=0&results=10";
 
-    @Getter
+   /* @Getter
     private SimpleUrlAuthenticationSuccessHandler userSuccessHandler =
             new SimpleUrlAuthenticationSuccessHandler(USER_SUCCESSFUL_URL);
 
@@ -41,6 +41,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             adminSuccessHandler.onAuthenticationSuccess(request, response, authentication);
         else
             userSuccessHandler.onAuthenticationSuccess(request, response, authentication);
-    }
+    }*/
 
 }

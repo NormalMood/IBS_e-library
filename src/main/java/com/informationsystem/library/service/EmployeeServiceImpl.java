@@ -17,7 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,7 +40,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee getCurrentEmployee() {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        String email = "ymvenediktov@ibs.ru";//SecurityContextHolder.getContext().getAuthentication().getName();
         return employeeRepository.findByEmail(email).get();
     }
 
