@@ -5,8 +5,14 @@ import com.informationsystem.library.dto.request.ParameterSortRequestDTO;
 import com.informationsystem.library.dto.response.StatusResponseDTO;
 import com.informationsystem.library.service.EmployeeService;
 import lombok.AllArgsConstructor;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -18,23 +24,20 @@ public class BooksCheckoutController {
     private final EmployeeService employeeService;
 
     @GetMapping("/all")
-    public ResponseEntity<?> getAllBooks(@RequestParam(value = "page", required = false) Integer pageNum,
-                                         @RequestParam(value = "results", required = false) Integer elementsPerPage){
-        return ResponseEntity.ok(employeeService.getAllBooks(pageNum, elementsPerPage));
+    public ResponseEntity<?> getAllBooks(Pageable pageable){
+        return ResponseEntity.ok(employeeService.getAllBooks(pageable));
     }
 
     @GetMapping("/search")
     public ResponseEntity<?> getByParameter(@RequestBody ParameterSearchRequestDTO paramRequest,
-                                            @RequestParam("page") Integer pageNum,
-                                            @RequestParam("results") Integer elementsPerPage){
-        return ResponseEntity.ok(employeeService.getByParameter(paramRequest, pageNum, elementsPerPage));
+                                            Pageable pageable){
+        return ResponseEntity.ok(employeeService.getByParameter(paramRequest, pageable));
     }
 
     @GetMapping("/sort")
     public ResponseEntity<?> sortByParameter(@RequestBody ParameterSortRequestDTO paramRequest,
-                                             @RequestParam("page") Integer pageNum,
-                                             @RequestParam("results") Integer elementsPerPage){
-        return ResponseEntity.ok(employeeService.sortByParameter(paramRequest, pageNum, elementsPerPage));
+                                             Pageable pageable){
+        return ResponseEntity.ok(employeeService.sortByParameter(paramRequest, pageable));
     }
 
     @PostMapping("/checkout")

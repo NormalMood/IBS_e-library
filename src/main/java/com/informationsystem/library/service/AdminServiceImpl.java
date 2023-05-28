@@ -8,6 +8,7 @@ import com.informationsystem.library.repository.ExpiredStatusRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,25 +20,25 @@ public class AdminServiceImpl implements AdminService {
     private final ExpiredStatusRepository expiredStatusRepository;
 
     @Override
-    public ObjectResponseDTO getDetailedHistory(Integer pageNum, Integer elementsPerPage) {
+    public ObjectResponseDTO getDetailedHistory(Pageable pageable) {
         Page<CommonDetailedHistory> detailedHistory = commonDetailedHistoryRepository
-                .findAll(PageRequest.of(pageNum, elementsPerPage));
+                .findAll(pageable);
         return new ObjectResponseDTO(detailedHistory.toList(),
                         detailedHistory.getTotalPages());
     }
 
     @Override
-    public ObjectResponseDTO getBookDetailedHistory(Long bookId, Integer pageNum, Integer elementsPerPage) {
+    public ObjectResponseDTO getBookDetailedHistory(Long bookId, Pageable pageable) {
         Page<CommonDetailedHistory> bookDetailedHistory = commonDetailedHistoryRepository
-                .findAllByBookId(bookId, PageRequest.of(pageNum, elementsPerPage));
+                .findAllByBookId(bookId, pageable);
         return new ObjectResponseDTO(bookDetailedHistory.toList(),
                         bookDetailedHistory.getTotalPages());
     }
 
     @Override
-    public ObjectResponseDTO getBinExpiredStatuses(Integer pageNum, Integer elementsPerPage) {
+    public ObjectResponseDTO getBinExpiredStatuses(Pageable pageable) {
         Page<BinExpiredStatus> binExpiredStatus = expiredStatusRepository
-                .findAll(PageRequest.of(pageNum, elementsPerPage));
+                .findAll(pageable);
         return new ObjectResponseDTO(binExpiredStatus.toList(),
                         binExpiredStatus.getTotalPages());
     }

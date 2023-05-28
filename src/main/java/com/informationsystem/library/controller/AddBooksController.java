@@ -4,6 +4,8 @@ import com.informationsystem.library.dto.request.NewBooksAdminRequestDTO;
 import com.informationsystem.library.dto.request.NewBooksUserRequestDTO;
 import com.informationsystem.library.service.NewBooksService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +19,8 @@ public class AddBooksController {
     private final NewBooksService newBooksService;
 
     @GetMapping("/genres/all")
-    public ResponseEntity<?> getAllGenres(@RequestParam("page") Integer pageNum,
-                                          @RequestParam("results") Integer elementsPerPage){
-        return ResponseEntity.ok(newBooksService.getAllGenres(pageNum, elementsPerPage));
+    public ResponseEntity<?> getAllGenres(Pageable pageable){
+        return ResponseEntity.ok(newBooksService.getAllGenres(pageable));
     }
 
     @PostMapping("/genres/add")

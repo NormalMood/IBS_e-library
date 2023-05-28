@@ -9,25 +9,25 @@ import com.informationsystem.library.entity.Employee;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 public interface EmployeeService {
 
     Employee getCurrentEmployee();
 
-    EmployeeBinResponseDTO getBinData(Integer pageNum, Integer elementsPerPage);
+    EmployeeBinResponseDTO getBinData(Pageable pageable);
 
     StatusResponseDTO returnBooks(List<Long> booksIds);
 
     StatusResponseDTO extendBooks(List<Long> booksIds);
 
-    ObjectResponseDTO getAllBooks(Integer pageNum, Integer elementsPerPage);
+    ObjectResponseDTO getAllBooks(Pageable pageable);
 
     ObjectResponseDTO getByParameter(ParameterSearchRequestDTO paramRequest,
-                                     Integer pageNum,
-                                     Integer elementsPerPage);
+                                     Pageable pageable);
 
     ObjectResponseDTO sortByParameter(ParameterSortRequestDTO paramRequest,
-                                      Integer pageNum,
-                                      Integer elementsPerPage);
+                                      Pageable pageable);
 
     boolean isCheckoutPossible(Long bookId);
 

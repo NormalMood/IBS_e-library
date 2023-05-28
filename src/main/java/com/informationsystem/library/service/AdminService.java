@@ -1,13 +1,15 @@
 package com.informationsystem.library.service;
 
+import org.springframework.data.domain.Pageable;
+
 import com.informationsystem.library.dto.response.ObjectResponseDTO;
 
 public interface AdminService {
 
-    ObjectResponseDTO getDetailedHistory(Integer pageNum, Integer elementsPerPage);
+    ObjectResponseDTO getDetailedHistory(Pageable pageable);
 
-    ObjectResponseDTO getBookDetailedHistory(Long bookId, Integer pageNum, Integer elementsPerPage);
+    ObjectResponseDTO getBookDetailedHistory(Long bookId, Pageable pageable);
 
-    ObjectResponseDTO getBinExpiredStatuses(Integer pageNum, Integer elementsPerPage);
+    ObjectResponseDTO getBinExpiredStatuses(Pageable pageable);
 
 }

@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -36,9 +37,9 @@ public class NewBooksServiceImpl implements NewBooksService {
     private final NewBooksUserRequestMapper newBooksUserRequestMapper = Mappers.getMapper(NewBooksUserRequestMapper.class);
 
     @Override
-    public ObjectResponseDTO getAllGenres(Integer pageNum, Integer elementsPerPage) {
+    public ObjectResponseDTO getAllGenres(Pageable pageable) {
         Page<VGenres> allGenres = vGenresRepository
-                .findAll(PageRequest.of(pageNum, elementsPerPage));
+                .findAll(pageable);
 
         return new ObjectResponseDTO(allGenres.toList(), allGenres.getTotalPages());
     }

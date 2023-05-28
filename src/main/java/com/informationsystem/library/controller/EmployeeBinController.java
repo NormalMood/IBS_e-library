@@ -2,6 +2,8 @@ package com.informationsystem.library.controller;
 
 import com.informationsystem.library.service.EmployeeService;
 import lombok.AllArgsConstructor;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +17,8 @@ public class EmployeeBinController {
     private final EmployeeService employeeService;
 
     @GetMapping("/data")
-    public ResponseEntity<?> getBinData(@RequestParam("page") Integer pageNum,
-                                        @RequestParam("results") Integer elementsPerPage) {
-        return ResponseEntity.ok(employeeService.getBinData(pageNum, elementsPerPage));
+    public ResponseEntity<?> getBinData(Pageable pageable) {
+        return ResponseEntity.ok(employeeService.getBinData(pageable));
     }
 
     @PostMapping("/return")

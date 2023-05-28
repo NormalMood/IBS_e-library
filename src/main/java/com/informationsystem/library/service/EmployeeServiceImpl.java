@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 //import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,11 +48,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     //EmployeeBinController
 
     @Override
-    public EmployeeBinResponseDTO getBinData(Integer pageNum, Integer elementsPerPage) {
+    public EmployeeBinResponseDTO getBinData(Pageable pageable) {
         Employee currentEmployee = getCurrentEmployee();
-        Pageable pageWithElements = PageRequest.of(pageNum, elementsPerPage);
         Page<EmployeeBin> employeeBin = employeeBinRepository
-                .findByEmployeeId(currentEmployee.getId(), pageWithElements);
+                .findByEmployeeId(currentEmployee.getId(), pageable);
         List<BinBooksResponseDTO> currentEmployeeBooks = employeeBinPageListMapper
                 .employeeBinPageToBinBooksResponseDTOList(employeeBin);
         return new EmployeeBinResponseDTO(currentEmployee.getFullName(),
@@ -89,18 +89,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     //BooksCheckoutController
     @Override
-    public ObjectResponseDTO getAllBooks(Integer pageNum, Integer elementsPerPage) {
+    public ObjectResponseDTO getAllBooks(Pageable pageable) {
         Page<VBooks> libraryBooks = vBooksRepository
-                .findAll(PageRequest.of(pageNum, elementsPerPage));
+                .findAll(pageable);
         return new ObjectResponseDTO(libraryBooks.toList(), libraryBooks.getTotalPages());
     }
 
     @Override
     public ObjectResponseDTO getByParameter(ParameterSearchRequestDTO paramRequest,
-                                            Integer pageNum,
-                                            Integer elementsPerPage) {
+                                            Pageable pageable) {
         Page<VBooks> searchResult;
-        Pageable pageable = PageRequest.of(pageNum, elementsPerPage);
         switch (paramRequest.getParameterName()) {
             case "title":
                 searchResult = vBooksRepository
@@ -137,19 +135,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public ObjectResponseDTO sortByParameter(ParameterSortRequestDTO paramRequest,
-                                             Integer pageNum,
-                                             Integer elementsPerPage) {
+                                             Pageable pageable) {
         Page<VBooks> sortResult = null;
         if (paramRequest.getSortOrder() == SortOrder.ASC)
             sortResult = vBooksRepository
-                    .findAll(PageRequest.of(pageNum,
-                            elementsPerPage,
-                            Sort.by(paramRequest.getParameterName()).ascending()));
+                    .findAll(PageRequest.of(pageable.getPageNumber(), 
+                    		pageable.getPageSize(),
+                            Sort.by(paramRequest
+                            		.getParameterName())
+                            		.ascending()));
         else if (paramRequest.getSortOrder() == SortOrder.DESC)
             sortResult = vBooksRepository
-                    .findAll(PageRequest.of(pageNum,
-                            elementsPerPage,
-                            Sort.by(paramRequest.getParameterName()).descending()));
+                    .findAll(PageRequest.of(pageable.getPageNumber(),
+                    		pageable.getPageSize(),
+                            Sort.by(paramRequest
+                            		.getParameterName())
+                            		.descending()));
         return new ObjectResponseDTO(sortResult.toList(),
                 sortResult.getTotalPages());
     }

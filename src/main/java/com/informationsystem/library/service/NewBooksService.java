@@ -7,9 +7,11 @@ import com.informationsystem.library.dto.response.StatusResponseDTO;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 public interface NewBooksService {
 
-    ObjectResponseDTO getAllGenres(Integer pageNum, Integer elementsPerPage);
+    ObjectResponseDTO getAllGenres(Pageable pageable);
 
     StatusResponseDTO saveGenres(List<String> genres);
 

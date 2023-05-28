@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +30,8 @@ public class BookReviewsServiceImpl implements BookReviewsService {
             Mappers.getMapper(ReviewsBookReviewResponseMapper.class);
 
     @Override
-    public BookReviewsResponseDTO getBookReviews(Long bookId, Integer pageNum, Integer elementsPerPage){
-        Page<Reviews> bookReviews = bookReviewsRepository.findByBookId(bookId, PageRequest.of(pageNum, elementsPerPage));
+    public BookReviewsResponseDTO getBookReviews(Long bookId, Pageable pageable){
+        Page<Reviews> bookReviews = bookReviewsRepository.findByBookId(bookId, pageable);
         return new BookReviewsResponseDTO(bookId,
                 reviewsBookReviewResponseMapper.reviewsToBookReviewResponseDTOList(bookReviews.toList()),
                 bookReviews.getTotalPages());

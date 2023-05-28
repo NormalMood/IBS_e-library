@@ -5,6 +5,8 @@ import com.informationsystem.library.dto.response.BookReviewsResponseDTO;
 import com.informationsystem.library.dto.response.StatusResponseDTO;
 import com.informationsystem.library.service.BookReviewsService;
 import lombok.AllArgsConstructor;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +19,9 @@ public class BookReviewsController {
 
     @GetMapping("/all")
     public ResponseEntity<?> getBookReviews(@RequestParam("bookId") Long bookId,
-                                            @RequestParam("page") Integer pageNum,
-                                            @RequestParam("results") Integer elementsPerPage) {
+                                            Pageable pageable) {
         BookReviewsResponseDTO bookReviewsResponseDTO = bookReviewsService
-                .getBookReviews(bookId, pageNum, elementsPerPage);
+                .getBookReviews(bookId, pageable);
         return ResponseEntity.ok(bookReviewsResponseDTO);
     }
 
