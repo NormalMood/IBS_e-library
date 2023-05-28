@@ -1,0 +1,1 @@
+UPDATE books SET statuses_num = 2 WHERE books_num IN (1, 2, 4)

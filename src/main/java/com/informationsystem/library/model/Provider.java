@@ -6,9 +6,9 @@ import static java.util.Map.entry;
 
 public class Provider {
 
-    public static final Map<ProvidersName, Integer> PROVIDERS = Map.ofEntries(
-            entry(ProvidersName.IBS, 1),
-            entry(ProvidersName.employee, 2)
+    public static final Map<ProvidersName, Short> PROVIDERS = Map.ofEntries(
+            entry(ProvidersName.IBS, (short)1),
+            entry(ProvidersName.employee, (short)2)
     );
 
 }

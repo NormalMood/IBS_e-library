@@ -58,8 +58,11 @@ public class NewBooksServiceImpl implements NewBooksService {
 
     @Override
     public StatusResponseDTO addBook(NewBooksUserRequestDTO newBookRequest) {
+    	System.out.println("in addbook");
         Books book = newBooksUserRequestMapper.newBooksUserRequestToBooks(newBookRequest);
+        System.out.println("mapped to book");
         saveBook(book, newBookRequest.getGenresIds());
+        System.out.println("book saved");
         return new StatusResponseDTO("Books were added",
                 HttpStatus.OK, HttpStatus.OK.value());
     }
@@ -76,9 +79,11 @@ public class NewBooksServiceImpl implements NewBooksService {
 	@Override
 	public void saveBook(Books book, List<Short> genresIds) {
 		Books addedBook = booksRepository.save(book);
+		System.out.println("added book");
         for (Short genreId : genresIds) {
             booksGenresRepository.save(new BooksGenres(addedBook.getId(), genreId));
         }
+        System.out.println("add genre");
 	}
 	
 }
