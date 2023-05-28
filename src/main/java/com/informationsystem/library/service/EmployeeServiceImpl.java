@@ -11,6 +11,8 @@ import com.informationsystem.library.mapper.EmployeeBinPageListMapper;
 import com.informationsystem.library.model.*;
 import com.informationsystem.library.repository.*;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,7 +26,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
@@ -62,10 +64,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public StatusResponseDTO returnBooks(List<Long> booksIds) {
         Long currentEmployeeId = getCurrentEmployee().getId();
+        saveActionOnBook(currentEmployeeId, booksIds, Action.ACTIONS.get(ActionsName.RETURN));
         for (Long bookId : booksIds) {
-            historyRepository.save(
-                    new History(currentEmployeeId, bookId, Action.ACTIONS.get(ActionsName.RETURN))
-            );
             Books book = booksRepository.findById(bookId).get();
             book.setStatusesId(Status.STATUSES.get(StatusName.IN_STOCK));
             booksRepository.save(book);
@@ -77,14 +77,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public StatusResponseDTO extendBooks(List<Long> booksIds) {
         Long currentEmployeeId = getCurrentEmployee().getId();
-        for (Long bookId : booksIds) {
-            historyRepository.save(
-                    new History(currentEmployeeId, bookId, Action.ACTIONS.get(ActionsName.EXTEND))
-            );
-        }
+        saveActionOnBook(currentEmployeeId, booksIds, Action.ACTIONS.get(ActionsName.EXTEND));
         return new StatusResponseDTO("Return date was successfully extended",
                 HttpStatus.OK, HttpStatus.OK.value());
     }
+    
+    @Override
+	public void saveActionOnBook(Long employeeId, List<Long> booksIds, Short actionId) {
+    	for (Long bookId : booksIds) {
+            historyRepository.save(
+                    new History(employeeId, bookId, actionId)
+            );
+    	}
+	}
+    
     //////////////////////
 
     //BooksCheckoutController
@@ -137,14 +143,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     public ObjectResponseDTO sortByParameter(ParameterSortRequestDTO paramRequest,
                                              Pageable pageable) {
         Page<VBooks> sortResult = null;
-        if (paramRequest.getSortOrder() == SortOrder.ASC)
+        if (paramRequest.getSortOrder().equals(SortOrder.ASC))
             sortResult = vBooksRepository
                     .findAll(PageRequest.of(pageable.getPageNumber(), 
                     		pageable.getPageSize(),
                             Sort.by(paramRequest
                             		.getParameterName())
                             		.ascending()));
-        else if (paramRequest.getSortOrder() == SortOrder.DESC)
+        else if (paramRequest.getSortOrder().equals(SortOrder.DESC))
             sortResult = vBooksRepository
                     .findAll(PageRequest.of(pageable.getPageNumber(),
                     		pageable.getPageSize(),
@@ -167,24 +173,23 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public StatusResponseDTO checkoutBooks(List<Long> booksIds) {
+    public StatusResponseDTO checkoutBook(Long bookId) {
         Long currentEmployeeId = getCurrentEmployee().getId();
-        for (Long bookId : booksIds) {
-            if (isCheckoutPossible(bookId)) {
-                historyRepository.save(
-                        new History(currentEmployeeId, bookId, Action.ACTIONS.get(ActionsName.TAKE))
-                );
-                Books book = booksRepository.findById(bookId).get();
-                book.setStatusesId(Status.STATUSES.get(StatusName.CHECKED_OUT));
-                booksRepository.save(book);
-            } else
-                return new StatusResponseDTO("Checkout is unavailable",
-                        HttpStatus.FORBIDDEN,
-                        HttpStatus.FORBIDDEN.value());
-        }
+        if (isCheckoutPossible(bookId)) {
+            historyRepository.save(
+                    new History(currentEmployeeId, bookId, Action.ACTIONS.get(ActionsName.TAKE))
+            );
+            Books book = booksRepository.findById(bookId).get();
+            book.setStatusesId(Status.STATUSES.get(StatusName.CHECKED_OUT));
+            booksRepository.save(book);
+        } else
+            return new StatusResponseDTO("Checkout is unavailable",
+                    HttpStatus.FORBIDDEN,
+                    HttpStatus.FORBIDDEN.value());
         return new StatusResponseDTO("Books were checked out successfully",
                 HttpStatus.OK, HttpStatus.OK.value());
     }
+
     //////////////////////
 
 }

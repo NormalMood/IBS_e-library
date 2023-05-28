@@ -8,6 +8,8 @@ import com.informationsystem.library.mapper.ReviewsBookNewReviewRequestMapper;
 import com.informationsystem.library.mapper.ReviewsBookReviewResponseMapper;
 import com.informationsystem.library.repository.BookReviewsRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,7 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BookReviewsServiceImpl implements BookReviewsService {
 
     private final BookReviewsRepository bookReviewsRepository;

@@ -21,6 +21,8 @@ public interface EmployeeService {
 
     StatusResponseDTO extendBooks(List<Long> booksIds);
 
+    void saveActionOnBook(Long employeeId, List<Long> booksIds, Short actionId);
+    
     ObjectResponseDTO getAllBooks(Pageable pageable);
 
     ObjectResponseDTO getByParameter(ParameterSearchRequestDTO paramRequest,
@@ -31,6 +33,6 @@ public interface EmployeeService {
 
     boolean isCheckoutPossible(Long bookId);
 
-    StatusResponseDTO checkoutBooks(List<Long> booksIds);
+    StatusResponseDTO checkoutBook(Long bookId);
 
 }

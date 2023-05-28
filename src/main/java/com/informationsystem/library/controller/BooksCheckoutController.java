@@ -41,8 +41,8 @@ public class BooksCheckoutController {
     }
 
     @PostMapping("/checkout")
-    public ResponseEntity<?> checkoutBooks(@RequestBody List<Long> booksIds){
-        StatusResponseDTO statusResponseDTO = employeeService.checkoutBooks(booksIds);
+    public ResponseEntity<?> checkoutBook(@RequestBody Long bookId){
+        StatusResponseDTO statusResponseDTO = employeeService.checkoutBook(bookId);
         return new ResponseEntity<>(statusResponseDTO, statusResponseDTO.getStatus());
     }
 

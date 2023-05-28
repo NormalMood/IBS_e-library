@@ -13,6 +13,8 @@ import com.informationsystem.library.repository.BooksGenresRepository;
 import com.informationsystem.library.repository.BooksRepository;
 import com.informationsystem.library.repository.VGenresRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,7 +25,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class NewBooksServiceImpl implements NewBooksService {
 
     private final VGenresRepository vGenresRepository;
@@ -44,10 +46,6 @@ public class NewBooksServiceImpl implements NewBooksService {
         return new ObjectResponseDTO(allGenres.toList(), allGenres.getTotalPages());
     }
 
-    public List<VGenres> getAll() {
-        return (List<VGenres>) vGenresRepository.findAll();
-    }
-
     @Override
     public StatusResponseDTO saveGenres(List<String> genres) {
         for (String genre : genres) {
@@ -59,26 +57,29 @@ public class NewBooksServiceImpl implements NewBooksService {
     }
 
     @Override
-    public StatusResponseDTO addBooks(NewBooksUserRequestDTO newBookRequest) {
+    public StatusResponseDTO addBook(NewBooksUserRequestDTO newBookRequest) {
         Books book = newBooksUserRequestMapper.newBooksUserRequestToBooks(newBookRequest);
-        Books addedBook = booksRepository.save(book);
-        for (Short genreId : newBookRequest.getGenresIds()) {
-            booksGenresRepository.save(new BooksGenres(addedBook.getId(), genreId));
-        }
+        saveBook(book, newBookRequest.getGenresIds());
         return new StatusResponseDTO("Books were added",
                 HttpStatus.OK, HttpStatus.OK.value());
     }
 
     @Override
-    public StatusResponseDTO addBooks(NewBooksAdminRequestDTO newBookRequest) {
+    public StatusResponseDTO addBook(NewBooksAdminRequestDTO newBookRequest) {
         Books book = newBooksAdminRequestMapper
                 .newBooksAdminRequestToBooks(newBookRequest);
-        Books addedBook = booksRepository.save(book);
-        for (Short genreId : newBookRequest.getGenresIds()) {
-            booksGenresRepository.save(new BooksGenres(addedBook.getId(), genreId));
-        }
+        saveBook(book, newBookRequest.getGenresIds());
         return new StatusResponseDTO("Books were added",
                 HttpStatus.OK, HttpStatus.OK.value());
     }
+
+	@Override
+	public void saveBook(Books book, List<Short> genresIds) {
+		Books addedBook = booksRepository.save(book);
+        for (Short genreId : genresIds) {
+            booksGenresRepository.save(new BooksGenres(addedBook.getId(), genreId));
+        }
+	}
+	
 }
 

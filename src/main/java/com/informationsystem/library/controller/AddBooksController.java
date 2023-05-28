@@ -30,12 +30,12 @@ public class AddBooksController {
 
     @PostMapping("/user/add")
     public ResponseEntity<?> addBooks(@RequestBody NewBooksUserRequestDTO newBook){
-        return ResponseEntity.ok(newBooksService.addBooks(newBook));
+        return ResponseEntity.ok(newBooksService.addBook(newBook));
     }
 
     @PostMapping("/admin/add")
     public ResponseEntity<?> addBooks(@RequestBody NewBooksAdminRequestDTO newBook){
-        return ResponseEntity.ok(newBooksService.addBooks(newBook));
+        return ResponseEntity.ok(newBooksService.addBook(newBook));
     }
 
 }

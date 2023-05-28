@@ -4,6 +4,7 @@ import com.informationsystem.library.dto.request.NewBooksAdminRequestDTO;
 import com.informationsystem.library.dto.request.NewBooksUserRequestDTO;
 import com.informationsystem.library.dto.response.ObjectResponseDTO;
 import com.informationsystem.library.dto.response.StatusResponseDTO;
+import com.informationsystem.library.entity.Books;
 
 import java.util.List;
 
@@ -15,8 +16,10 @@ public interface NewBooksService {
 
     StatusResponseDTO saveGenres(List<String> genres);
 
-    StatusResponseDTO addBooks(NewBooksUserRequestDTO newBook);
+    StatusResponseDTO addBook(NewBooksUserRequestDTO newBook);
 
-    StatusResponseDTO addBooks(NewBooksAdminRequestDTO newBook);
+    StatusResponseDTO addBook(NewBooksAdminRequestDTO newBook);
+    
+    void saveBook(Books book, List<Short> genresIds);
 
 }
