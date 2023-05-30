@@ -4,6 +4,7 @@ import com.informationsystem.library.dto.request.ParameterSearchRequestDTO;
 import com.informationsystem.library.dto.request.ParameterSortRequestDTO;
 import com.informationsystem.library.dto.response.BinBooksResponseDTO;
 import com.informationsystem.library.dto.response.EmployeeBinResponseDTO;
+import com.informationsystem.library.dto.response.ForbiddenExtendingsResponseDTO;
 import com.informationsystem.library.dto.response.ObjectResponseDTO;
 import com.informationsystem.library.dto.response.StatusResponseDTO;
 import com.informationsystem.library.entity.*;
@@ -19,10 +20,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 //import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -75,9 +79,41 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public StatusResponseDTO extendBooks(List<Long> booksIds) {
+    public Object extendBooks(List<Long> booksIds) {
         Long currentEmployeeId = getCurrentEmployee().getId();
-        saveActionOnBook(currentEmployeeId, booksIds, Action.ACTIONS.get(ActionsName.EXTEND));
+        List<String> forbiddenExtendings = new ArrayList<>();
+        for (Long bookId : booksIds) {
+        	History lastCheckoutedBook = historyRepository
+        			.findLastCheckoutedBook(currentEmployeeId, bookId);
+        	History lastExtendedBookRow = historyRepository
+        			.findLastExtendedBookRow(currentEmployeeId, 
+        					bookId, 
+        					lastCheckoutedBook
+        						.getId());
+        	if (lastExtendedBookRow != null)
+        		forbiddenExtendings.add(booksRepository
+        				.findById(bookId)
+        				.get()
+        				.getTitle());
+        	else {
+        		History extendedBook = new History(
+            			currentEmployeeId,
+            			bookId, 
+            			Action.ACTIONS.get(ActionsName.EXTEND));
+        		extendedBook.setReturnDate(Date
+        				.valueOf(lastCheckoutedBook
+        						.getReturnDate()
+        						.toLocalDate()
+        						.plusDays(14)
+        						.toString()));
+        		historyRepository.save(extendedBook);
+        	}	
+        }
+        if (forbiddenExtendings.size() > 0)
+        	return new ForbiddenExtendingsResponseDTO("Forbidden extendings", 
+        			HttpStatus.FORBIDDEN, 
+        			HttpStatus.FORBIDDEN.value(), 
+        			forbiddenExtendings);
         return new StatusResponseDTO("Return date was successfully extended",
                 HttpStatus.OK, HttpStatus.OK.value());
     }

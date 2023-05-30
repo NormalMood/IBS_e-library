@@ -1,0 +1,1 @@
+UPDATE books SET statuses_num = 1

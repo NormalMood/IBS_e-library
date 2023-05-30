@@ -19,7 +19,7 @@ public interface EmployeeService {
 
     StatusResponseDTO returnBooks(List<Long> booksIds);
 
-    StatusResponseDTO extendBooks(List<Long> booksIds);
+    Object extendBooks(List<Long> booksIds);
 
     void saveActionOnBook(Long employeeId, List<Long> booksIds, Short actionId);
     

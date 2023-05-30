@@ -1,5 +1,6 @@
 package com.informationsystem.library.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,10 +14,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import com.informationsystem.library.model.Action;
+import com.informationsystem.library.model.ActionsName;
+
 @Entity
 @Table(name = "history")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class History {
 
     @Id
@@ -34,6 +39,8 @@ public class History {
     private Short actionId;
 
     private Date actionsDate;
+    
+    private Date returnDate;
 
     public History(Long employeeId, Long bookId, Short actionId){
         this.employeeId = employeeId;
@@ -41,6 +48,8 @@ public class History {
         this.actionId = actionId;
         LocalDate date = LocalDate.now();
         this.actionsDate = Date.valueOf(date.toString());
+        if (actionId.equals(Action.ACTIONS.get(ActionsName.TAKE)))
+        	this.returnDate = Date.valueOf((date.plusMonths(1)).toString());
     }
 
 }
