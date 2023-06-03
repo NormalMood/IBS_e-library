@@ -26,8 +26,13 @@ public class AdminController {
     }
 
     @GetMapping("/expired")
-    public ResponseEntity<?> getBinExpiredStatuses(Pageable pageable){
+    public ResponseEntity<?> getBinExpiredStatuses(Pageable pageable) {
         return ResponseEntity.ok(adminService.getBinExpiredStatuses(pageable));
+    }
+    
+    @GetMapping("/expired_only")
+    public ResponseEntity<?> getBinExpiredStatusesOnly(Pageable pageable) {
+    	return ResponseEntity.ok(adminService.getBinExpiredStatusesOnly(pageable));
     }
 
 }

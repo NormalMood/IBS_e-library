@@ -12,4 +12,6 @@ public interface AdminService {
 
     ObjectResponseDTO getBinExpiredStatuses(Pageable pageable);
 
+	ObjectResponseDTO getBinExpiredStatusesOnly(Pageable pageable);
+
 }
