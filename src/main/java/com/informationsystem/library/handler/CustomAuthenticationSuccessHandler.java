@@ -7,26 +7,26 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
-/*import org.springframework.security.core.Authentication;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
-*/
+
 import java.io.IOException;
 import java.util.Collection;
 
-public class CustomAuthenticationSuccessHandler/* implements AuthenticationSuccessHandler*/ {
+public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    private final String USER_SUCCESSFUL_URL = APIRoutes.EMPLOYEE_BIN_CONTROLLER_MAPPING + "/data?page=0&results=10";
+    private final String USER_SUCCESSFUL_URL = APIRoutes.EMPLOYEE_BIN_CONTROLLER_MAPPING + "/data?page=0&size=10";
 
-    private final String ADMIN_SUCCESSFUL_URL = APIRoutes.ADMIN_CONTROLLER_MAPPING + "/detailed_history/all?page=0&results=10";
+    private final String ADMIN_SUCCESSFUL_URL = APIRoutes.ADMIN_CONTROLLER_MAPPING + "/detailed_history/all?page=0&size=10";
 
-   /* @Getter
-    private SimpleUrlAuthenticationSuccessHandler userSuccessHandler =
+    @Getter
+    private final SimpleUrlAuthenticationSuccessHandler userSuccessHandler =
             new SimpleUrlAuthenticationSuccessHandler(USER_SUCCESSFUL_URL);
 
     @Getter
-    private SimpleUrlAuthenticationSuccessHandler adminSuccessHandler =
+    private final SimpleUrlAuthenticationSuccessHandler adminSuccessHandler =
             new SimpleUrlAuthenticationSuccessHandler(ADMIN_SUCCESSFUL_URL);
 
     @Override
@@ -37,10 +37,10 @@ public class CustomAuthenticationSuccessHandler/* implements AuthenticationSucce
         for(final GrantedAuthority grantedAuthority : authorities){
             authorityName = grantedAuthority.getAuthority();
         }
-        if (authorityName.equals(Role.ADMIN.name()))
+        if (authorityName.equals(Role.ADMIN.getAuthority()))
             adminSuccessHandler.onAuthenticationSuccess(request, response, authentication);
         else
             userSuccessHandler.onAuthenticationSuccess(request, response, authentication);
-    }*/
+    }
 
 }

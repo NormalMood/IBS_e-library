@@ -1,5 +1,13 @@
 package com.informationsystem.library.entity;
 
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
+
+import org.springframework.data.redis.core.RedisHash;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.informationsystem.library.model.Role;
 
 import jakarta.persistence.Column;
@@ -16,7 +24,7 @@ import lombok.Data;
 @Entity
 @Table(name = "v_staff")
 @Data
-public class Employee {
+public class Employee implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,5 +50,35 @@ public class Employee {
                 + getFirstName() + " "
                 + getFatherName();
     }
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return Collections.singleton(this.role);
+	}
+
+	@Override
+	public String getUsername() {
+		return this.email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 
 }
