@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import styles from './Navbar.module.css';
+import { Link } from 'react-router-dom';
 
 const Navbar: FC = () => {
     return (
@@ -16,22 +17,22 @@ const Navbar: FC = () => {
                     </div>
                 </div>
                 <div className={styles.employeeLinksContainer}>
-                    <a href='#' className={styles.navLink}>
+                    <Link to='/catalog' className={styles.navLink}>
                         <img src='/img/all_books.png' className={styles.navLinkImg} />
                         <span>Каталог</span>
-                    </a>
-                    <a href='#' className={styles.navLink}>
+                    </Link>
+                    <Link to='/my_books' className={styles.navLink}>
                         <img src='/img/my_books.png' className={styles.navLinkImg} />
                         <span>Мои книги</span>
-                    </a>
-                    <a href='#' className={styles.navLink}>
+                    </Link>
+                    <Link to='/new_book' className={styles.navLink}>
                         <img src='/img/add_books.png' className={styles.navLinkImg} />
                         <span>Новая книга</span>
-                    </a>
-                    {/* <a href='#' className={styles.navLink}>
+                    </Link>
+                    {/* <Link to='/admin_panel' className={styles.navLink}>
                         <img src='/img/admin_panel.png' className={styles.navLinkImg} />
                         <span>Админка</span>
-                    </a> */}
+                    </Link> */}
                 </div>
             </div>
         </nav>
