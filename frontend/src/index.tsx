@@ -1,12 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import Main from './Main';
+import Header from './Header';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+const isAuthorized = false
+
+const header = ReactDOM.createRoot(
+  document.getElementById('header') as HTMLElement
+)
+if (isAuthorized) {
+  header.render(
+    <Header />
+  )
+}
+
+const main = ReactDOM.createRoot(
+  document.getElementById('main') as HTMLElement
 );
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+main.render(
+  <Main />
 );

@@ -1,0 +1,22 @@
+.customButton {
+    background-color: #0022CC;
+    color: white;
+    border: 0;
+    cursor: pointer;
+    padding: 10px 40px;
+}
+
+.customButtonLoginPage {
+    margin-top: 30px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.customButton:hover {
+    background-color: #001BA3;
+    transition-delay: 0s
+}
+
+.customButton:active {
+    background-color: #00147A;
+}
