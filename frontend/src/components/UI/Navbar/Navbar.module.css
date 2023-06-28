@@ -1,0 +1,77 @@
+.navBackground {
+    background: linear-gradient(69deg, rgba(36,32,77,0.85) 53%, rgba(69,114,182,1) 100%);
+}
+
+.navContainer {
+    padding: 20px 30px;
+}
+
+.profileInfoContainer {
+    /*border: 2px solid red;*/
+    display: inline-grid;
+    grid-template-columns: 90px auto;
+    column-gap: 20px;
+}
+
+.profileImage {
+    object-fit: cover;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    grid-column: 1;
+    cursor: pointer;
+}
+
+.employeesInfoContainer {
+    display: grid;
+    grid-column: 2;
+    grid-template-rows: auto 20px 20px auto;
+    flex-direction: column;
+    /*border: 2px red solid;*/
+}
+
+.employeesName {
+    color: white;
+    grid-row: 2;
+}
+
+.employeesPosition {
+    color: #99A7EB;
+    font-size: 14px;
+    grid-row: 3;
+}
+
+.employeeLinksContainer {
+    display: grid;
+    float: right;
+    height: 90px;
+    grid-template-columns: repeat(3, 100px);
+    column-gap: 20px;
+    text-align: center;
+}
+
+.adminLinksContainer {
+    display: grid;
+    float: right;
+    height: 90px;
+    grid-template-columns: repeat(4, 100px);
+    column-gap: 20px;
+    text-align: center;
+}
+
+.navLink {
+    display: grid;
+    grid-template-rows: auto auto;
+    text-decoration: none;
+    color: white;
+    padding-top: 15px;
+}
+
+.navLink:hover {
+    text-decoration: underline;
+}
+
+.navLinkImg {
+    margin: auto auto;
+    width: 37px;
+}

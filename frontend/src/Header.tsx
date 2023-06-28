@@ -1,8 +1,9 @@
 import React from 'react';
+import Navbar from './components/UI/Navbar/Navbar';
 
 function Header() {
     return (
-        <p>Header</p>
+        <Navbar />
     )
 }
 
