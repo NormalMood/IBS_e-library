@@ -1,12 +1,12 @@
 import React from 'react';
 import Login from './components/Login';
+import ProfilePicturePanel from './components/UI/ProfilePicturePanel/ProfilePicturePanel';
 
 function Main() {
   return (
-      <div>
-
-      </div>
-      //<Login />
+        <div className="container">
+          <Login />
+        </div>
   );
 }
 

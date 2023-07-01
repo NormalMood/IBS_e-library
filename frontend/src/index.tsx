@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import Main from './Main';
 import Header from './Header';
 
-const isAuthorized = true
+const isAuthorized = false
 
 const header = ReactDOM.createRoot(
   document.getElementById('header') as HTMLElement

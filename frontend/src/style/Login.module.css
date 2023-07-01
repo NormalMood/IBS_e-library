@@ -1,57 +1,90 @@
 .Login {
-    position: fixed;
     width: 100%;
-    height: 100%;
     top: 0;
     left: 0;
 }
 
 .background {
-    position: relative;
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    height: 60%;
+    position: relative;
+    align-items: center;
 }
 
 .backgroundImg {
-    position: absolute;
     width: 100%;
     height: 100%;
+    position: absolute;
 }
 
 .backgroundContentContainer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-65%, -50%);
+    margin-top: 10%;
     display: flex;
-    align-items:center;
-    margin-left: 5%;
+    position: relative;
+    justify-content: center;
+    align-items: center;
 }
 
+
+
 .backgroundImgText {
-    font-size: 11vh;
+    font-size: 16px;
     font-style: normal;
     color: white;
 }
 
-.backgroundLogo {
-    height: 29vh;
+@media (min-width: 768px) {
+    .backgroundImgText {
+        font-size: 22px;
+    }
 }
 
+
+
+.backgroundLogo {
+    max-width: 42px;
+}
+
+@media (min-width: 768px) {
+    .backgroundLogo {
+        max-width: 58px;
+    }
+}
+
+
+
 .backgroundIcon {
-    height: 25vh;
+    max-width: 35px;
     margin-left: 10%;
 }
 
-.greetingText {
-    margin-left: 5%;
-    font-size: 2vh;
+@media (min-width: 768px) {
+    .backgroundIcon {
+        max-width: 55px;
+        margin-left: 15%;
+    }
 }
 
+
+
 .inputAndButtonContainer {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-left: 5%;
+    position: relative;
+    width: 70%;
+    margin-bottom: 10%;
+    max-width: 300px;
+}
+
+
+
+.greetingText {
+    margin: 5%;
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    .greetingText {
+        margin: 30px;
+        font-size: 16px;
+    }
 }
