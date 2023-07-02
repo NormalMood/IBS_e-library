@@ -5,7 +5,7 @@ import ProfilePicturePanel from './components/UI/ProfilePicturePanel/ProfilePict
 function Main() {
   return (
         <div className="container">
-          <Login />
+          {/* <Login /> */}
         </div>
   );
 }
