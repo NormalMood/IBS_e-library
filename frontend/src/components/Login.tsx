@@ -16,7 +16,7 @@ const Login: FC = () => {
                 <div className={classes.inputAndButtonContainer}>
                     <LoginPageInput type={'email'} placeholder={'E-mail'} />
                     <LoginPageInput placeholder={'Пароль'} />
-                    <CustomButton text={'Войти'} />
+                    <CustomButton text={'Войти'} styles={classes.customButtonLoginPage} />
                 </div>
             </div>
             <p className={classes.greetingText}>

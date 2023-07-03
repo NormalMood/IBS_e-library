@@ -88,3 +88,8 @@
         font-size: 16px;
     }
 }
+
+.customButtonLoginPage {
+    margin-top: 20px;
+    width: 100%;
+}

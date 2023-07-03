@@ -13,18 +13,21 @@
     }
 }
 
-
-
-.customButtonLoginPage {
-    margin-top: 20px;
-    width: 100%;
-}
-
 .customButton:hover {
     background-color: #001BA3;
-    transition-delay: 0s
 }
 
 .customButton:active {
     background-color: #00147A;
+}
+
+.customButton:disabled {
+    cursor: default;
+    background-color: #809BB5;
+}
+
+
+
+.customButtonSecondary {
+    background-color: #1347FF;
 }
