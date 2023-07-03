@@ -1,22 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Main from './Main';
-import Header from './Header';
-
-const isAuthorized = true
-
-const header = ReactDOM.createRoot(
-  document.getElementById('header') as HTMLElement
-)
-if (isAuthorized) {
-  header.render(
-    <Header />
-  )
-}
+import App from './App';
 
 const main = ReactDOM.createRoot(
-  document.getElementById('main') as HTMLElement
+  document.getElementById('wrapper') as HTMLElement
 );
 main.render(
-  <Main />
+  <App />
 );
