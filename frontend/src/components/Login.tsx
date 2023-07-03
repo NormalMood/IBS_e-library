@@ -14,7 +14,7 @@ const Login: FC = () => {
                     <img src='/img/book_shelf.png' className={classes.backgroundIcon} />
                 </div>
                 <div className={classes.inputAndButtonContainer}>
-                    <LoginPageInput type={'email'} placeholder={'Email'} />
+                    <LoginPageInput type={'email'} placeholder={'E-mail'} />
                     <LoginPageInput placeholder={'Пароль'} />
                     <CustomButton text={'Войти'} />
                 </div>
