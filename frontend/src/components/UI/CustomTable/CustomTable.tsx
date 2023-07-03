@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import styles from './CustomTable.module.css';
+import CustomCheckbox from '../CustomCheckbox/CustomCheckbox';
 
 const CustomTable: FC = () => {
     return (
@@ -8,7 +9,7 @@ const CustomTable: FC = () => {
                 <caption className={styles.caption}>Взятые книги</caption>
                 <thead className={styles.tableHead}>
                     <tr>
-                        <th><input type="checkbox" /></th>
+                        <th><CustomCheckbox additionalStyles={styles.customCheckboxTh} /></th>
                         <th>Название</th>
                         <th>Автор</th>
                         <th>Жанр</th>
@@ -19,7 +20,7 @@ const CustomTable: FC = () => {
                 </thead>
                 <tbody className={styles.tableBody}>
                     <tr>
-                        <td><input type="checkbox" /></td>
+                        <td><CustomCheckbox additionalStyles={styles.customCheckboxTh} /></td>
                         <td>Данные</td>
                         <td>Данные</td>
                         <td>Данные</td>
@@ -28,7 +29,7 @@ const CustomTable: FC = () => {
                         <td>Дата возврата</td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" /></td>
+                        <td><CustomCheckbox additionalStyles={styles.customCheckboxTh} /></td>
                         <td>Данные</td>
                         <td>Данные</td>
                         <td>Данные</td>
@@ -37,7 +38,7 @@ const CustomTable: FC = () => {
                         <td>Дата возврата</td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" /></td>
+                        <td><CustomCheckbox additionalStyles={styles.customCheckboxTh} /></td>
                         <td>Данные</td>
                         <td>Данные</td>
                         <td>Данные</td>
@@ -46,7 +47,7 @@ const CustomTable: FC = () => {
                         <td>Дата возврата</td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" /></td>
+                        <td><CustomCheckbox additionalStyles={styles.customCheckboxTh} /></td>
                         <td>Данные</td>
                         <td>Данные</td>
                         <td>Данные</td>

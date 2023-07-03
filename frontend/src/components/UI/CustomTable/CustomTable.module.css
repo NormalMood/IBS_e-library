@@ -8,10 +8,21 @@
     outline: 3px solid #CCD3F5;
 }
 
+
+
 .table {
     width: 100%;
     border-collapse: collapse;
+    font-size: 14px;
 }
+
+@media (min-width: 768px) {
+    .table {
+        font-size: 16px;
+    }
+}
+
+
 
 .tableHead tr th {
     background-color: #1567E6;
@@ -22,9 +33,17 @@
     padding: 5px 10px;
 }
 
+.customCheckboxTh {
+    margin: 0 auto;
+}
+
 .tableHead tr th:first-child {
-    padding: 5px 10px;
-    text-align: center;
+    min-width: 45px;
+    max-width: 45px;
+    padding: 0;
+    width: 45px;
+    padding: 10px 0;
+    user-select: none;
 }
 
 .tableHead tr th:last-child {
@@ -41,8 +60,11 @@
 }
 
 .tableBody tr td:first-child {
-    padding: 5px 10px;
-    text-align: center;
+    min-width: 45px;
+    max-width: 45px;
+    user-select: none;
+    width: 45px;
+    padding: 10px 0;
 }
 
 .tableBody tr:nth-child(odd) td {

@@ -1,0 +1,57 @@
+.customCheckbox {
+    display: flex;
+    width: 17px;
+    height: 17px;
+}
+
+@media (min-width: 1024px) {
+    .customCheckbox {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+
+
+.hiddenCheckbox {
+    appearance: none;
+    position: absolute;
+}
+
+
+
+.checkbox {
+    position: relative;
+    width: 17px;
+    height: 17px;
+    background: #fff;
+    border: 1px solid #02C;
+}
+
+@media (min-width: 1024px) {
+    .checkbox {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+
+
+.checkmark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: auto;
+    display: none;
+}
+
+.customCheckbox .hiddenCheckbox:checked  ~ .checkbox .checkmark {
+    display: block;
+}
+
+.customCheckbox .hiddenCheckbox:checked ~ .checkbox {
+    background: #02C;
+    border: 1px solid #02C;
+}
