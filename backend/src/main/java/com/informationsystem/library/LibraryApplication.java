@@ -6,7 +6,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisIndexedHttpSession;
 
 @SpringBootApplication
-@EnableRedisIndexedHttpSession(maxInactiveIntervalInSeconds = 180)
+@EnableRedisIndexedHttpSession(maxInactiveIntervalInSeconds = 259200)
 public class LibraryApplication {
 
 	public static void main(String[] args) {
