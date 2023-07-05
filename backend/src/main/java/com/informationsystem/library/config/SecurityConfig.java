@@ -6,6 +6,8 @@ import com.informationsystem.library.model.Role;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @RequiredArgsConstructor
@@ -29,6 +32,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     	return http
+    			.cors()
+    			.configurationSource(request -> {
+    				CorsConfiguration cors = new CorsConfiguration();
+    				cors.setAllowedOrigins(List.of("http://localhost:3000", "http://127.0.0.1:3000"));
+    				cors.setAllowedMethods(List.of("GET", "POST"));
+    				cors.setAllowedHeaders(List.of("*"));
+    				return cors;
+    			})
+    			.and()
     			.authorizeHttpRequests(requests -> 
     					requests
     						.requestMatchers(APIRoutes.EMPLOYEE_BIN_CONTROLLER_MAPPING + "/**")
