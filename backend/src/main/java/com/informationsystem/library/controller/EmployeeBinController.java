@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user/bin")
 @AllArgsConstructor
+@CrossOrigin(origins = {"http://localhost:3000"})
 public class EmployeeBinController {
 
     private final EmployeeService employeeService;
