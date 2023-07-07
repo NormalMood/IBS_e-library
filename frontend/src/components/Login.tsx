@@ -1,9 +1,26 @@
-import React, { FC } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import classes from '../style/Login.module.css';
 import LoginPageInput from './UI/LoginPageInput/LoginPageInput';
 import CustomButton from './UI/CustomButton/CustomButton';
+import { loginServer } from '../service/AuthService';
+import { AuthContext } from '../context';
+import { useNavigate } from 'react-router-dom';
 
 const Login: FC = () => {
+    const [username, setUsername] = useState<string>('ymvenediktov@ibs.ru')
+    const navigate = useNavigate()
+    const [password, setPassword] = useState<string>('user1')
+    const {isAuth, setIsAuth} = useContext(AuthContext)
+    const submit = async () => {
+        localStorage.setItem('username', username)
+        localStorage.setItem('password', password)
+        await loginServer(setIsAuthCallback)
+    }
+    const setIsAuthCallback = (value: boolean) => {
+        setIsAuth(value)
+        if (value)
+            navigate('/my_books')
+    }
     return (
         <section className={classes.Login}>
             <div className={classes.background}>
@@ -14,9 +31,9 @@ const Login: FC = () => {
                     <img src='/img/book_shelf.png' className={classes.backgroundIcon} />
                 </div>
                 <div className={classes.inputAndButtonContainer}>
-                    <LoginPageInput type={'email'} placeholder={'E-mail'} />
-                    <LoginPageInput placeholder={'Пароль'} />
-                    <CustomButton text={'Войти'} styles={classes.customButtonLoginPage} />
+                    <LoginPageInput type={'email'} placeholder={'E-mail'} value={username} setCredential={setUsername} />
+                    <LoginPageInput placeholder={'Пароль'} value={password} setCredential={setPassword} />
+                    <CustomButton text={'Войти'} styles={classes.customButtonLoginPage} onClick={async () => await submit()} />
                 </div>
             </div>
             <p className={classes.greetingText}>

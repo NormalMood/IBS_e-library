@@ -8,8 +8,8 @@ const MyBooks: FC = () => {
     return (
         <>
             <div className={styles.buttonContainerEmployeeBinPage}>
-                <CustomButton text={'Вернуть'} styles={styles.customButtonEmployeeBinPage} />
-                <CustomButton text={'Продлить'} styles={styles.customButtonEmployeeBinPage} />
+                <CustomButton text={'Вернуть'} styles={styles.customButtonEmployeeBinPage} onClick={() => console.log('Вернуть')} />
+                <CustomButton text={'Продлить'} styles={styles.customButtonEmployeeBinPage} onClick={() => console.log('Продлить')} />
             </div>
             <CustomTable />
         </>

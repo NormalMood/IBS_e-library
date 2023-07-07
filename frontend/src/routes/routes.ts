@@ -9,7 +9,8 @@ export const privateRoutes: IRoute[] = [
     { path: '/catalog', component: Catalog },
     { path: '/my_books', component: MyBooks },
     { path: '/new_book', component: NewBook },
-    { path: '/admin_panel', component: AdminPanel }
+    { path: '/admin_panel', component: AdminPanel },
+    { path: '/login', component: Login }
 ]
 
 export const publicRoutes: IRoute[] = [

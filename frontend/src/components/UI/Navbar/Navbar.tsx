@@ -1,9 +1,12 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import styles from './Navbar.module.css';
 import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+import { logoutServer } from '../../../service/AuthService';
+import { AuthContext } from '../../../context';
 
 const Navbar: FC = () => {
+    const {isAuth, setIsAuth} = useContext(AuthContext)
     const [isBurgerOpened, setIsBurgerOpened] = useState(false)
     const getBurgerStyle = () => {
         if (isBurgerOpened)
@@ -14,6 +17,12 @@ const Navbar: FC = () => {
         if (isBurgerOpened)
             return [styles.navMenu, styles.navMenuOpened].join(' ')
         return styles.navMenu
+    }
+    const logout = async () => {
+        await logoutServer(setIsAuthCallback)
+    }
+    const setIsAuthCallback = (value: boolean) => {
+        setIsAuth(value)
     }
     return (
         <header className="header">
@@ -56,10 +65,14 @@ const Navbar: FC = () => {
                                 </Link>
                             </li>
                             <li> 
-                                <Link to='/admin_panel' className={styles.navLink}>
+                                <Link to='/login' className={styles.navLink} onClick={async () => await logout()}>
+                                    <img src='/img/logout.png' className={styles.navLinkImg} />
+                                    <span>Выйти</span>
+                                </Link>
+                                {/* <Link to='/admin_panel' className={styles.navLink}>
                                     <img src='/img/admin_panel.png' className={styles.navLinkImg} />
                                     <span>Админка</span>
-                                </Link>
+                                </Link> */}
                             </li>
                         </ul>
                     </nav>
