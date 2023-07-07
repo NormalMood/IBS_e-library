@@ -49,7 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee getCurrentEmployee() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        return employeeRepository.findByEmail(email).get();
+        return employeeRepository.findByEmail(email);
     }
 
     //EmployeeBinController
