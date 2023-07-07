@@ -19,7 +19,7 @@ const AppRouter: FC = () => {
             </div>
         </main>
         :
-        <main className="main">
+        <main>
             <div className="container">
                 <Routes>
                     {publicRoutes.map(route =>
