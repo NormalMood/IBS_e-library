@@ -50,6 +50,10 @@
     border-right: 0px;
 }
 
+.hiddenIdColumn tr > :nth-child(2) {
+    display: none;
+}
+
 .tableBody tr:nth-child(even) {
     background-color: #E9E9EB;
 }
