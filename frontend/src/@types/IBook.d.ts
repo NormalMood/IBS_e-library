@@ -4,6 +4,6 @@ export interface IBook {
     author: string;
     genres: string;
     actionsName: string;
-    actionsDate: Date;
-    returnDate: Date;
+    actionsDate: string;
+    returnDate: string;
 }

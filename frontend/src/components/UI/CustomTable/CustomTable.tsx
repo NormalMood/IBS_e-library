@@ -1,32 +1,68 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import styles from './CustomTable.module.css';
 import CustomCheckbox from '../CustomCheckbox/CustomCheckbox';
 import { TableHeaderMap } from '../../../map/maps';
 
 interface ICustomTableProps {
     data: any[],
-    isIdColumnHide?: boolean
+    isIdColumnHidden?: boolean
+    onCheckboxChanged: (value: boolean, tableRowIndex: number) => void
 }
 
-const CustomTable: FC<ICustomTableProps> = ({data, isIdColumnHide = true}) => {
+const CustomTable: FC<ICustomTableProps> = ({data, isIdColumnHidden = true, onCheckboxChanged}) => {
+    const tableRowCheckboxStates: boolean[] = new Array(data.length).fill(false)
+    const [isHeaderCheckboxChecked, setIsHeaderCheckboxChecked] = useState(false)
+    const [isRowChecked, setIsRowChecked] = useState(tableRowCheckboxStates)
+    const onSelectAllHandler = (isChecked: boolean, tableRowIndex: number) => {
+        setIsHeaderCheckboxChecked(isChecked)
+        setIsRowChecked(tableRowCheckboxStates.fill(isChecked))
+    }
+    const onCheckboxChangeHandler = (isChecked: boolean, tableRowIndex: number) => {
+        setIsHeaderCheckboxChecked(false)
+        const tableRowCheckboxStatesUpdated = [...isRowChecked]
+        tableRowCheckboxStatesUpdated[tableRowIndex] = isChecked
+        setIsRowChecked(tableRowCheckboxStatesUpdated)
+    }
+    useEffect(() => {
+        let isSelectedAll = true
+        isRowChecked.map((value, index) => {
+            if (!value)
+                isSelectedAll = false
+            onCheckboxChanged(value, index)
+        })
+        setIsHeaderCheckboxChecked(isSelectedAll)
+    }, [isRowChecked])
     return (
         <div className={styles.tableContainer}>
             <table className={styles.table}>
                 <caption className={styles.caption}>Взятые книги</caption>
-                <thead className={[styles.tableHead, isIdColumnHide && styles.hiddenIdColumn].join(' ')}>
+                <thead className={[styles.tableHead, isIdColumnHidden && styles.hiddenIdColumn].join(' ')}>
                     <tr>
-                        <th><CustomCheckbox additionalStyles={styles.customCheckboxTh} /></th>
+                        <th>
+                            <CustomCheckbox 
+                                additionalStyles={styles.customCheckboxTh} 
+                                isChecked={isHeaderCheckboxChecked}
+                                onChangeHandler={onSelectAllHandler}
+                            />
+                        </th>
                         {data[0] && Object.keys(data[0]).map(title => 
-                            <th>{TableHeaderMap.get(title)}</th>
+                            <th key={title}>{TableHeaderMap.get(title)}</th>
                         )}
                     </tr>
                 </thead>
-                <tbody className={[styles.tableBody, isIdColumnHide && styles.hiddenIdColumn].join(' ')}>
-                    {data && data.map(dataRow => 
-                            <tr>
-                                <td><CustomCheckbox additionalStyles={styles.customCheckboxTh} /></td>
+                <tbody className={[styles.tableBody, isIdColumnHidden && styles.hiddenIdColumn].join(' ')}>
+                    {data && data.map((dataRow, index) => 
+                            <tr key={dataRow}>
+                                <td>
+                                    <CustomCheckbox 
+                                        additionalStyles={styles.customCheckboxTh} 
+                                        tableRowIndex={index}
+                                        isChecked={isRowChecked[index]}
+                                        onChangeHandler={onCheckboxChangeHandler}
+                                    />
+                                </td>
                                 {dataRow && Object.values(dataRow).map(dataCell =>
-                                        <td>{dataCell as any}</td>
+                                        <td key={dataCell as any}>{dataCell as string}</td>
                                     )}
                             </tr>
                         )
