@@ -3,10 +3,12 @@ import Login from './components/Login';
 import { BrowserRouter, Outlet, Route, Router, Routes } from 'react-router-dom';
 import AppRouter from './components/AppRouter';
 import Navbar from './components/UI/Navbar/Navbar';
-import { AuthContext } from './context';
+import { AuthContext } from './context/AuthContext';
+import { AdditionalHeaderContext } from './context/AdditionalHeaderContext';
 
 function App() {
   const [isAuth, setIsAuth] = useState(false)
+  const [isAdditionalHeaderHidden, setIsAdditionalHeaderHidden] = useState(true)
   useEffect(() => {
     if (localStorage.getItem('isAuth'))
       setIsAuth(true)
@@ -20,7 +22,12 @@ function App() {
     }}>
       <BrowserRouter>
         {isAuth && 
-          <Navbar />
+          <AdditionalHeaderContext.Provider value={{
+            isAdditionalHeaderHidden,
+            setIsAdditionalHeaderHidden
+          }}>
+            <Navbar />
+          </AdditionalHeaderContext.Provider>
         }
         <AppRouter />
       </BrowserRouter>

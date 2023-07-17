@@ -1,7 +1,7 @@
 import React, { FC, useContext, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { privateRoutes, publicRoutes } from '../routes/routes';
-import { AuthContext } from '../context';
+import { AuthContext } from '../context/AuthContext';
 
 const AppRouter: FC = () => {
     const {isAuth, setIsAuth} = useContext(AuthContext)

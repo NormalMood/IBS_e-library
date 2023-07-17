@@ -3,8 +3,9 @@ import classes from '../style/Login.module.css';
 import LoginPageInput from './UI/LoginPageInput/LoginPageInput';
 import CustomButton from './UI/CustomButton/CustomButton';
 import { loginServer } from '../service/AuthService';
-import { AuthContext } from '../context';
+import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { AdditionalHeaderContext } from '../context/AdditionalHeaderContext';
 
 const Login: FC = () => {
     const [username, setUsername] = useState<string>('ymvenediktov@ibs.ru')

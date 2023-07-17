@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import axiosInstance, { LOGIN_ERROR_RESPONSE_URL } from "../api/axiosInstance"
-import { AuthContext } from "../context"
+import { AuthContext } from "../context/AuthContext"
 
 export const loginServer = async (setIsAuthCallback: Function) => {
         await axiosInstance.post('/login', new URLSearchParams({

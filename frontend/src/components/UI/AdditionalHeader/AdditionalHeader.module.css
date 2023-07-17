@@ -1,0 +1,17 @@
+.tabsWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.tabs {
+    margin: 0 10px;
+    max-width: 1600px;
+    width: 100%;
+}
+
+@media (min-width: 425px) {
+    .tabs {
+        margin: 0;
+    }
+}
+
