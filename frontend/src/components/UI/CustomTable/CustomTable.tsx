@@ -1,15 +1,15 @@
 import React, { FC, useEffect, useState } from 'react';
 import styles from './CustomTable.module.css';
 import CustomCheckbox from '../CustomCheckbox/CustomCheckbox';
-import { TableHeaderMap } from '../../../map/maps';
 
 interface ICustomTableProps {
-    data: any[],
-    isIdColumnHidden?: boolean
-    onCheckboxChanged: (value: boolean, tableRowIndex: number) => void
+    headerData: string[];
+    data: any[];
+    isIdColumnHidden?: boolean;
+    onCheckboxChanged: (value: boolean, tableRowIndex: number) => void;
 }
 
-const CustomTable: FC<ICustomTableProps> = ({data, isIdColumnHidden = true, onCheckboxChanged}) => {
+const CustomTable: FC<ICustomTableProps> = ({headerData, data, isIdColumnHidden = true, onCheckboxChanged}) => {
     const tableRowCheckboxStates: boolean[] = new Array(data.length).fill(false)
     const [isHeaderCheckboxChecked, setIsHeaderCheckboxChecked] = useState(false)
     const [isRowChecked, setIsRowChecked] = useState(tableRowCheckboxStates)
@@ -30,6 +30,8 @@ const CustomTable: FC<ICustomTableProps> = ({data, isIdColumnHidden = true, onCh
                 isSelectedAll = false
             onCheckboxChanged(value, index)
         })
+        if (!isRowChecked?.length)
+            isSelectedAll = false
         setIsHeaderCheckboxChecked(isSelectedAll)
     }, [isRowChecked])
     return (
@@ -45,8 +47,8 @@ const CustomTable: FC<ICustomTableProps> = ({data, isIdColumnHidden = true, onCh
                                 onChangeHandler={onSelectAllHandler}
                             />
                         </th>
-                        {data[0] && Object.keys(data[0]).map(title => 
-                            <th key={title}>{TableHeaderMap.get(title)}</th>
+                        {headerData.map(title => 
+                            <th key={title}>{title}</th>
                         )}
                     </tr>
                 </thead>

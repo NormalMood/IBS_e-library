@@ -4,11 +4,12 @@ import CustomButton from './UI/CustomButton/CustomButton';
 import styles from '../style/EmployeeBin.module.css';
 import EmployeeBinService from '../service/EmployeeBinService';
 import { IEmployeeBin } from '../@types/IEmployeeBin';
+import { EMPLOYEE_BIN_TABLE_HEADERS } from '../tableHeaders/employeeBinTableHeaders';
 
 const MyBooks: FC = () => {
     const [books, setBooks] = useState<IEmployeeBin>({
         fullName: '',
-        books: [{
+        books: [/*{
             bookId: 11,
             title: 'test',
             author: 'test',
@@ -34,29 +35,29 @@ const MyBooks: FC = () => {
             actionsName: 'test',
             actionsDate: '2023-12-16',
             returnDate: '2023-12-17'
-        }],
+        }*/],
         pages: 0
     })
      useEffect(() => {
-       // getBooksTaken()
+        getBooksTaken()
     }, [])
     const getBooksTaken = async () => {
         setBooks(await EmployeeBinService.getBooksTaken())
     }
-    let set = new Set<number>()
+    let booksIdSet = new Set<number>()
     const test = (value: boolean, tableRowIndex: number) => {
         if (value)
-            set.add(books.books[tableRowIndex].bookId)
+            booksIdSet.add(books.books[tableRowIndex].bookId)
         else
-            set.delete(books.books[tableRowIndex].bookId)
+            booksIdSet.delete(books.books[tableRowIndex].bookId)
     }
-    //request in service
-    const returnBooks = () => {
-        console.log(set)
+    const returnBooks = async () => {
+        await EmployeeBinService.returnBooks(Array.from(booksIdSet))
+        await getBooksTaken()
     }
-    //request in service
-    const extendBooks = () => {
-        console.log(set)
+    const extendBooks = async () => {
+        await EmployeeBinService.extendBooks(Array.from(booksIdSet))
+        await getBooksTaken()
     }
     return (
         <>
@@ -64,7 +65,7 @@ const MyBooks: FC = () => {
                 <CustomButton text={'Вернуть'} styles={styles.customButtonEmployeeBinPage} onClick={() => returnBooks()} />
                 <CustomButton text={'Продлить'} styles={styles.customButtonEmployeeBinPage} onClick={() => extendBooks()} />
             </div>
-            <CustomTable data={books.books} onCheckboxChanged={test} />
+            <CustomTable headerData={EMPLOYEE_BIN_TABLE_HEADERS} data={books.books} onCheckboxChanged={test} />
         </>
     )
 }
