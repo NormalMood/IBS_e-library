@@ -15,3 +15,9 @@
     }
 }
 
+.toolbarContainer {
+    position: fixed;
+    width: 100%;
+    max-width: 1600px;
+    background-color: #FFFFFF;
+}

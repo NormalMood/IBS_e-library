@@ -1,16 +1,14 @@
 import React, { FC, useContext, useState } from 'react';
 import styles from './Navbar.module.css';
 import { Link } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
 import { logoutServer } from '../../../service/AuthService';
 import { AuthContext } from '../../../context/AuthContext';
 import { AdditionalHeaderContext } from '../../../context/AdditionalHeaderContext';
-import AdditionalHeader from '../AdditionalHeader/AdditionalHeader';
+import Toolbar from '../../Layout/Toolbar/Toolbar';
 
 const Navbar: FC = () => {
     const {isAuth, setIsAuth} = useContext(AuthContext)
     const [isBurgerOpened, setIsBurgerOpened] = useState(false)
-    const {isAdditionalHeaderHidden, setIsAdditionalHeaderHidden} = useContext(AdditionalHeaderContext)
     const getBurgerStyle = () => {
         if (isBurgerOpened)
             return [styles.headerBurger, styles.headerBurgerOpened].join(' ')
@@ -26,12 +24,6 @@ const Navbar: FC = () => {
     }
     const setIsAuthCallback = (value: boolean) => {
         setIsAuth(value)
-    }
-    const showAdditionalHeader = () => {
-        setIsAdditionalHeaderHidden(false)
-    }
-    const hideAdditionalHeader = () => {
-        setIsAdditionalHeaderHidden(true)
     }
     return (
         <header className="header">
@@ -60,7 +52,6 @@ const Navbar: FC = () => {
                                     <Link 
                                         to='/catalog' 
                                         className={styles.navLink}
-                                        onClick={e => showAdditionalHeader()}
                                     >
                                         <img src='/img/all_books.png' className={styles.navLinkImg} />
                                         <span>Каталог</span>
@@ -70,7 +61,6 @@ const Navbar: FC = () => {
                                     <Link 
                                         to='/my_books' 
                                         className={styles.navLink}
-                                        onClick={e => hideAdditionalHeader()}
                                     >
                                         <img src='/img/my_books.png' className={styles.navLinkImg} />
                                         <span>Мои книги</span>
@@ -80,7 +70,6 @@ const Navbar: FC = () => {
                                     <Link 
                                         to='/new_book' 
                                         className={styles.navLink}
-                                        onClick={e => hideAdditionalHeader()}
                                     >
                                         <img src='/img/add_books.png' className={styles.navLinkImg} />
                                         <span>Новая книга</span>
@@ -105,9 +94,6 @@ const Navbar: FC = () => {
                     </div>
                 </div>
             </nav>
-            {!isAdditionalHeaderHidden &&
-                <AdditionalHeader />
-            }
         </header>
     )
 }

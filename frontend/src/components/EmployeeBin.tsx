@@ -60,13 +60,13 @@ const MyBooks: FC = () => {
         await getBooksTaken()
     }
     return (
-        <>
+        <div className="container">
             <div className={styles.buttonContainerEmployeeBinPage}>
                 <CustomButton text={'Вернуть'} styles={styles.customButtonEmployeeBinPage} onClick={() => returnBooks()} />
                 <CustomButton text={'Продлить'} styles={styles.customButtonEmployeeBinPage} onClick={() => extendBooks()} />
             </div>
             <CustomTable headerData={EMPLOYEE_BIN_TABLE_HEADERS} data={books.books} onCheckboxChanged={test} />
-        </>
+        </div>
     )
 }
 

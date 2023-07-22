@@ -10,7 +10,7 @@ interface ICustomTableProps {
 }
 
 const CustomTable: FC<ICustomTableProps> = ({headerData, data, isIdColumnHidden = true, onCheckboxChanged}) => {
-    const tableRowCheckboxStates: boolean[] = new Array(data.length).fill(false)
+    const tableRowCheckboxStates: boolean[] = new Array(data?.length).fill(false)
     const [isHeaderCheckboxChecked, setIsHeaderCheckboxChecked] = useState(false)
     const [isRowChecked, setIsRowChecked] = useState(tableRowCheckboxStates)
     const onSelectAllHandler = (isChecked: boolean, tableRowIndex: number) => {

@@ -1,4 +1,4 @@
-export interface IBook {
+export interface IBookEmployeeBin {
     bookId: number;
     title: string;
     author: string;

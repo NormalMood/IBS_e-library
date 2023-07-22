@@ -6,9 +6,10 @@ interface ICustomTabProps {
     name: string;
     text: string;
     selectedId: string;
+    onClickCallback: () => void
 }
 
-const CustomTab: FC<ICustomTabProps> = ({id, name, text, selectedId}) => {
+const CustomTab: FC<ICustomTabProps> = ({id, name, text, selectedId, onClickCallback}) => {
     const [isSelectedId, setIsSelectedId] = useState(selectedId)
     return (
         <>
@@ -22,7 +23,10 @@ const CustomTab: FC<ICustomTabProps> = ({id, name, text, selectedId}) => {
             <label  
                 htmlFor={id}
                 className={styles.tabTitle}
-                onClick={() => setIsSelectedId(id)}
+                onClick={() => {
+                    setIsSelectedId(id)
+                    onClickCallback()
+                }}
             >
                 {text}
             </label>

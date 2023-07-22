@@ -1,7 +1,7 @@
-import { IBook } from "./IBook";
+import { IBookEmployeeBin } from "./IBookEmployeeBin";
 
 export interface IEmployeeBin {
     fullName: string;
-    books: IBook[];
+    books: IBookEmployeeBin[];
     pages: number;
 }

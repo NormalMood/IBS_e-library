@@ -1,0 +1,59 @@
+.bookInfoContainer {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+@media (min-width: 1500px) {
+    .bookInfoContainer {
+        width: 170px;
+    }
+}
+
+
+
+.bookCover {
+    width: 100%;
+}
+
+
+
+.bookInfoContainer {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    .bookInfoContainer {
+        font-size: 16px;
+    }
+}
+
+
+
+.bookRatingContainer {
+    display: flex;
+    vertical-align: middle;
+}
+
+
+
+.bookRatingImg {
+    width: 20px;
+}
+
+@media (min-width: 768px) {
+    .bookRatingImg {
+        width: 28px;
+    }
+}
+
+
+
+.bookRatingValue {
+    font-size: 17px;
+}
+
+@media (min-width: 768px) {
+    .bookRatingValue {
+        font-size: 20px;
+    }
+}
