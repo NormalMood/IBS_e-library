@@ -23,7 +23,7 @@ public class VBooks {
 
     private String genres;
 
-    private String averageRating;
+    private Float averageRating;
 
     private String provider;
 
