@@ -1,4 +1,4 @@
-.filterTab:hover {
+.filterTab:active {
     background-color: #000000;
     color: #FFFFFF
 }

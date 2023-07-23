@@ -13,7 +13,7 @@ const CatalogBook: FC<ICatalogBookProps> = ({title, author, averageRating}) => {
             <img src='/img/cover.jpg' className={styles.bookCover} />
             <span>{title}</span> <br />
             <span>{author}</span> <br />
-            {!isNaN(averageRating) &&
+            {averageRating !== 0 &&
                 <div className={styles.bookRatingContainer}>
                     <img src='/img/star_filled.png' className={styles.bookRatingImg} />
                     <span className={styles.bookRatingValue}>{averageRating}</span>

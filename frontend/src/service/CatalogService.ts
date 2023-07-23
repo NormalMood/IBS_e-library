@@ -12,7 +12,7 @@ export default class CatalogService {
 
     static async getTopTenBooks() {
         const response = await axiosInstance.get<ICatalog>(
-            BASE_CATALOG_API + '/all'
+            BASE_CATALOG_API + '/top-10'
         )
         return response.data
     }
