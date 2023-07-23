@@ -3,6 +3,7 @@ package com.informationsystem.library.repository;
 import com.informationsystem.library.entity.VBooks;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -19,5 +20,12 @@ public interface VBooksRepository extends PagingAndSortingRepository<VBooks, Lon
     Page<VBooks> findByProviderContainingIgnoreCase(String provider, Pageable pageable);
 
     Page<VBooks> findByStatusContainingIgnoreCase(String status, Pageable pageable);
+    
+    @Query("SELECT book "
+    		+ "FROM VBooks book "
+    		+ "WHERE book.averageRating > 0 "
+    		+ "ORDER BY book.averageRating DESC "
+    		+ "LIMIT 10")
+    Page<VBooks> findTop10Books(Pageable pageable);
 
 }

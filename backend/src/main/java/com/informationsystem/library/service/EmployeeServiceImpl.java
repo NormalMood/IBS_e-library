@@ -137,6 +137,13 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .findAll(pageable);
         return new ObjectResponseDTO(libraryBooks.toList(), libraryBooks.getTotalPages());
     }
+    
+    @Override
+    public ObjectResponseDTO getTop10Books(Pageable pageable) {
+    	Page<VBooks> top10Books = vBooksRepository
+    			.findTop10Books(pageable);
+    	return new ObjectResponseDTO(top10Books.toList(), top10Books.getTotalPages());
+    }
 
     @Override
     public ObjectResponseDTO getByParameter(ParameterSearchRequestDTO paramRequest,

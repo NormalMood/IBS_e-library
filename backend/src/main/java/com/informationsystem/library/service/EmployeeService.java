@@ -24,6 +24,8 @@ public interface EmployeeService {
     void saveActionOnBook(Long employeeId, List<Long> booksIds, Short actionId);
     
     ObjectResponseDTO getAllBooks(Pageable pageable);
+    
+    ObjectResponseDTO getTop10Books(Pageable pageable);
 
     ObjectResponseDTO getByParameter(ParameterSearchRequestDTO paramRequest,
                                      Pageable pageable);

@@ -27,6 +27,11 @@ public class BooksCheckoutController {
     public ResponseEntity<?> getAllBooks(Pageable pageable){
         return ResponseEntity.ok(employeeService.getAllBooks(pageable));
     }
+    
+    @GetMapping("/top-10")
+    public ResponseEntity<?> getTop10Books(Pageable pageable) {
+    	return ResponseEntity.ok(employeeService.getTop10Books(pageable));
+    }
 
     @GetMapping("/search")
     public ResponseEntity<?> getByParameter(@RequestBody ParameterSearchRequestDTO paramRequest,
