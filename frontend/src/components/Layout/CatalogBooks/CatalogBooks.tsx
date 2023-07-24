@@ -11,7 +11,7 @@ const CatalogBooks = () => {
     }, [])
     return (
         <div className={styles.catalogBooksContainer}>
-            {books.map(book =>
+            {books?.map(book =>
                 <CatalogBook
                     title={book.title}
                     author={book.author}

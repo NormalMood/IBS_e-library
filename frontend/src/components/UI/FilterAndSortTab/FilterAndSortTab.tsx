@@ -4,11 +4,15 @@ import styles from './FilterAndSortTab.module.css';
 
 interface IFilterAndSortTabProps {
     text: string;
+    onClickCallback: () => void;
 }
 
-const FilterAndSortTab: FC<IFilterAndSortTabProps> = ({text}) => {
+const FilterAndSortTab: FC<IFilterAndSortTabProps> = ({text, onClickCallback}) => {
     return (
-        <label className={[customTabStyles.tabTitle, styles.filterTab].join(' ')}>
+        <label 
+            className={[customTabStyles.tabTitle, styles.filterTab].join(' ')}
+            onClick={() => onClickCallback()}
+        >
             {text}
         </label>
     )

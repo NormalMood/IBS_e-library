@@ -3,6 +3,8 @@
     justify-content: center;
 }
 
+
+
 .tabs {
     margin: 0 10px;
     max-width: 1600px;
@@ -15,9 +17,17 @@
     }
 }
 
+
+
 .toolbarContainer {
     position: fixed;
     width: 100%;
     max-width: 1600px;
     background-color: #FFFFFF;
+}
+
+.horizontalLine {
+    background: #CCD3F5;
+    height: 2px;
+    border: none;
 }

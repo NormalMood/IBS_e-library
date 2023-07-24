@@ -1,0 +1,26 @@
+.sidebar {
+    display: inherit;
+    position: fixed;
+    left: 0;
+    margin-top: 168px;
+    background-color: #FFFFFF;
+    width: 100%;
+    border-top: 2px solid #CCD3F5;
+    border-bottom: 2px solid #CCD3F5;
+    flex-direction: column;
+}
+
+.sidebarClosed {
+    display: none;
+}
+
+.sidebarCloseImg {
+    float: right;
+    width: 45px;
+    margin-top: 5px;
+}
+
+.closeImgWrapper {
+    display: block;
+    width: 100%;
+}
