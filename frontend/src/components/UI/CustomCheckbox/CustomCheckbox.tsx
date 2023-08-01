@@ -3,7 +3,7 @@ import styles from './CustomCheckbox.module.css';
 
 interface CustomCheckboxProps {
     additionalStyles?: React.HTMLAttributes<any>;
-    isChecked: boolean;
+    isChecked: boolean | undefined;
     tableRowIndex?: number;
     onChangeHandler: (isChecked: boolean, tableRowIndex: number ) => void;
 }

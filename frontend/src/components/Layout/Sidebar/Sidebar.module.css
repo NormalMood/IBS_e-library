@@ -2,25 +2,154 @@
     display: inherit;
     position: fixed;
     left: 0;
-    margin-top: 168px;
+    top: 60px;
+    bottom: 0;
     background-color: #FFFFFF;
     width: 100%;
     border-top: 2px solid #CCD3F5;
     border-bottom: 2px solid #CCD3F5;
     flex-direction: column;
+    transition: all 0.3s ease 0s;
+    overflow: auto;
 }
 
+@media (min-width: 768px) {
+    .sidebar {
+        top: 80px;
+    }
+}
+
+@media (min-width: 900px) {
+    .sidebar {
+        height: fit-content;
+        position: relative;
+        top: 96px;
+        max-width: 330px;
+        border: 2px solid #CCD3F5;
+        border-left: none;
+        z-index: 1;
+    }
+}
+
+@media (min-width: 1024px) {
+    .sidebar {
+        top: 102px;
+        max-width: 340px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .sidebar {
+        top: 108px;
+        max-width: 360px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .sidebar {
+        max-width: 380px;
+    }
+}
+
+
+
 .sidebarClosed {
-    display: none;
+    left: -100%;
+    transition: all 0.3s ease 0s;
+}
+
+@media (min-width: 900px) {
+    .sidebarClosed {
+        width: 0px;
+        border-right: 0px;
+    }
 }
 
 .sidebarCloseImg {
-    float: right;
     width: 45px;
     margin-top: 5px;
+    cursor: pointer;
 }
 
-.closeImgWrapper {
-    display: block;
+.sidebarHeader {
+    font-size: 18px;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.closeImgHeaderWrapper {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
+    align-items: center;
+}
+
+.buttonsContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.buttonsWrapper {
+    display: inherit;
+    width: 250px;
+    justify-content: space-between;
+}
+
+.sidebarButtons {
+    width: 115px;
+}
+
+.sidebarContentContainer {
+    margin-top: 30px;
+}
+
+.customInputsWrapper {
+    display: block;
+    margin: 0px 10px;
+}
+
+.averageRatingHeader {
+    font-weight: bold;
+}
+
+.customInputsContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.customInputContainer {
+    width: 60px;
+}
+
+.dashBetweenInputs {
+    width: 10px;
+    height: 1px;
+    background-color: #000000;
+    margin: 0px 20px;
+}
+
+.sortCriteriaWrapper {
+    display: flex;
+    margin: 0 10px;
+    flex-direction: column;
+}
+
+.sortFieldsContainer {
+    display: grid;
+    grid-template-rows: repeat(4, 35px);
+    margin-bottom: 30px;
+}
+
+.sortOptionHeader {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.sortOrdersContainer {
+    display: grid;
+    grid-template-rows: repeat(3, 35px);
+    margin-bottom: 10px;
 }

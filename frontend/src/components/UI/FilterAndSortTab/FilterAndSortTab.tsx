@@ -1,16 +1,16 @@
 import { FC } from 'react';
 import customTabStyles from '../CustomTab/CustomTab.module.css';
-import styles from './FilterAndSortTab.module.css';
 
 interface IFilterAndSortTabProps {
     text: string;
+    additionalStyle: React.HTMLAttributes<any>;
     onClickCallback: () => void;
 }
 
-const FilterAndSortTab: FC<IFilterAndSortTabProps> = ({text, onClickCallback}) => {
+const FilterAndSortTab: FC<IFilterAndSortTabProps> = ({text, additionalStyle, onClickCallback}) => {
     return (
         <label 
-            className={[customTabStyles.tabTitle, styles.filterTab].join(' ')}
+            className={[customTabStyles.tabTitle, additionalStyle].join(' ')}
             onClick={() => onClickCallback()}
         >
             {text}

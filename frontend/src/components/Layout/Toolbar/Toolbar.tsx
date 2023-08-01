@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { CatalogToolsEnum } from '../../../@types/CatalogToolsEnum';
 import { TabsEnum } from '../../../@types/TabsEnum';
 import CatalogService from '../../../service/CatalogService';
@@ -5,12 +6,21 @@ import useCatalogStore from '../../../store/useCatalogStore';
 import CustomTab from '../../UI/CustomTab/CustomTab';
 import FilterAndSortTab from '../../UI/FilterAndSortTab/FilterAndSortTab';
 import styles from './Toolbar.module.css';
+import CatalogToolsService from '../../../service/CatalogToolsService';
+import useCatalogFilterStore from '../../../store/useCatalogFilterStore';
+import useCatalogSortingStore from '../../../store/useCatalogSortingStore';
 
-const Toolbar = () => {
+const Toolbar: FC = () => {
     const getAllBooks = useCatalogStore(state => state.getAllBooks)
     const getTopTenBooks = useCatalogStore(state => state.getTopTenBooks)
     const openTab = useCatalogStore(state => state.openTab)
     const clickTool = useCatalogStore(state => state.clickTool)
+    const toolClicked = useCatalogStore(state => state.toolClicked)
+    const getFilterCriteria = useCatalogFilterStore(state => state.getFilterCriteria)
+    const averageRatingFrom = useCatalogFilterStore(state => state.averageRatingFrom)
+    const averageRatingTo = useCatalogFilterStore(state => state.averageRatingTo)
+    const sortingField = useCatalogSortingStore(state => state.sortingField)
+    const sortingOrder = useCatalogSortingStore(state => state.sortingOrder)
     return (
         <section className={styles.toolbarContainer}>
             <div>
@@ -19,22 +29,20 @@ const Toolbar = () => {
             <div className={styles.tabsWrapper}>
                 <div className={styles.tabs}>
                     <CustomTab 
-                        id={'1'} 
+                        id={TabsEnum.CATALOG_ALL_BOOKS} 
                         name={'topGroup'} 
                         text={'Все книги'} 
-                        selectedId={'1'} 
                         onClickCallback={() => {
                             getAllBooks(); 
                             openTab(TabsEnum.CATALOG_ALL_BOOKS)
                         }} 
                     />
                     <CustomTab 
-                        id={'2'} 
+                        id={TabsEnum.CATALOG_TOP_TEN} 
                         name={'topGroup'} 
                         text={'Топ 10'} 
-                        selectedId={'1'} 
                         onClickCallback={() => {
-                            getTopTenBooks();
+                            getTopTenBooks(getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder);
                             openTab(TabsEnum.CATALOG_TOP_TEN)
                         }} 
                     />
@@ -45,10 +53,12 @@ const Toolbar = () => {
                 <div className={styles.tabs}>
                     <FilterAndSortTab 
                         text={'Сортировка'}
+                        additionalStyle={toolClicked === CatalogToolsEnum.CATALOG_SORT && styles.toolBarToolActive}
                         onClickCallback={() => clickTool(CatalogToolsEnum.CATALOG_SORT)}
                     />
                     <FilterAndSortTab 
                         text={'Фильтр'} 
+                        additionalStyle={toolClicked === CatalogToolsEnum.CATALOG_FILTER && styles.toolBarToolActive}
                         onClickCallback={() => clickTool(CatalogToolsEnum.CATALOG_FILTER)}
                     />
                 </div>

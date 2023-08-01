@@ -1,0 +1,13 @@
+.customInput {
+    border: none;
+    border-bottom: solid #000000 1px;
+    width: 100%;
+    height: 35px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.customInput:focus {
+    outline: none;
+    border-bottom: solid #0022CC 2px;
+}

@@ -1,7 +1,7 @@
 .customCheckbox {
     display: flex;
-    width: 17px;
-    height: 17px;
+    width: 18px;
+    height: 18px;
 }
 
 @media (min-width: 1024px) {
@@ -22,8 +22,8 @@
 
 .checkbox {
     position: relative;
-    width: 17px;
-    height: 17px;
+    width: 18px;
+    height: 18px;
     background: #fff;
     border: 1px solid #02C;
 }

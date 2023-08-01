@@ -165,7 +165,6 @@
     left: 0;
     top: -100%;
     width: 100%;
-    height: 100%;
     background-color: #336791;
     padding-top: 60px;
     transition: all 0.3s ease 0s;
@@ -173,6 +172,7 @@
 
 .navMenuOpened {
     top: 0;
+    bottom: 0;
 }
 
 @media (min-width: 768px) {

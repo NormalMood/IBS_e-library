@@ -2,12 +2,13 @@ import { FC } from 'react';
 import styles from '../style/CatalogBook.module.css';
 
 interface ICatalogBookProps {
+    id: number;
     title: string;
     author: string;
     averageRating: number;
 }
 
-const CatalogBook: FC<ICatalogBookProps> = ({title, author, averageRating}) => {
+const CatalogBook: FC<ICatalogBookProps> = ({id, title, author, averageRating}) => {
     return (
         <article className={styles.bookInfoContainer}>
             <img src='/img/cover.jpg' className={styles.bookCover} />

@@ -26,8 +26,19 @@
     background-color: #FFFFFF;
 }
 
+@media (min-width: 900px) {
+    .toolbarContainer {
+        z-index: 10;
+    }
+}
+
 .horizontalLine {
     background: #CCD3F5;
     height: 2px;
     border: none;
+}
+
+.toolBarToolActive {
+    background-color: #000000;
+    color: #FFFFFF;
 }
