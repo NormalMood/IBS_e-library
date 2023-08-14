@@ -1,5 +1,6 @@
 package com.informationsystem.library.controller;
 
+import com.informationsystem.library.dto.request.FilterAndSortingRequestDTO;
 import com.informationsystem.library.dto.request.ParameterSearchRequestDTO;
 import com.informationsystem.library.dto.request.ParameterSortRequestDTO;
 import com.informationsystem.library.dto.response.StatusResponseDTO;
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/user/library")
@@ -24,8 +27,28 @@ public class BooksCheckoutController {
     private final EmployeeService employeeService;
 
     @GetMapping("/all")
-    public ResponseEntity<?> getAllBooks(Pageable pageable){
-        return ResponseEntity.ok(employeeService.getAllBooks(pageable));
+    public ResponseEntity<?> getAllBooks(
+    		@RequestParam String genres, 
+    		@RequestParam Set<String> providers,
+    		@RequestParam Set<String> status,
+    		 Float averageRatingFrom,
+    		 Float averageRatingTo,
+    		@RequestParam String sortingField,
+    		@RequestParam String sortingOrder,
+    		Pageable pageable) {
+        return ResponseEntity.ok(
+        		employeeService
+        			.getAllBooks(
+        					genres, 
+        					providers, 
+        					status, 
+        					averageRatingFrom, 
+        					averageRatingTo, 
+        					sortingField, 
+        					sortingOrder, 
+        					pageable
+        				)
+        		);
     }
     
     @GetMapping("/top-10")

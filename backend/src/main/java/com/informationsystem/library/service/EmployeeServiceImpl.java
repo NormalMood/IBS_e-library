@@ -7,11 +7,22 @@ import com.informationsystem.library.dto.response.EmployeeBinResponseDTO;
 import com.informationsystem.library.dto.response.ForbiddenExtendingsResponseDTO;
 import com.informationsystem.library.dto.response.ObjectResponseDTO;
 import com.informationsystem.library.dto.response.StatusResponseDTO;
-import com.informationsystem.library.entity.*;
+import com.informationsystem.library.entity.Employee;
+import com.informationsystem.library.entity.EmployeeBin;
+import com.informationsystem.library.entity.History;
+import com.informationsystem.library.entity.Books;
+import com.informationsystem.library.entity.VBooks;
 import com.informationsystem.library.mapper.EmployeeBinPageListMapper;
-import com.informationsystem.library.model.*;
-import com.informationsystem.library.repository.*;
-import lombok.AllArgsConstructor;
+import com.informationsystem.library.model.Status;
+import com.informationsystem.library.model.StatusName;
+import com.informationsystem.library.model.Action;
+import com.informationsystem.library.model.ActionsName;
+import com.informationsystem.library.model.SortOrder;
+import com.informationsystem.library.repository.EmployeeRepository;
+import com.informationsystem.library.repository.EmployeeBinRepository;
+import com.informationsystem.library.repository.HistoryRepository;
+import com.informationsystem.library.repository.BooksRepository;
+import com.informationsystem.library.repository.VBooksRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.mapstruct.factory.Mappers;
@@ -19,16 +30,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -132,9 +142,32 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     //BooksCheckoutController
     @Override
-    public ObjectResponseDTO getAllBooks(Pageable pageable) {
+    public ObjectResponseDTO getAllBooks(
+    		String genres, 
+    		Set<String> providers,
+    		Set<String> status,
+    		Float averageRatingFrom,
+    		Float averageRatingTo,
+    		String sortingField,
+    		String sortingOrder,
+    		Pageable pageable) {
+    	Sort sort = Sort.unsorted();
+    	if (!sortingField.equals("NONE"))
+    		sort = Sort
+    			.by(
+    					Direction
+    						.fromString(sortingOrder), 
+    					sortingField
+    				);
         Page<VBooks> libraryBooks = vBooksRepository
-                .findAll(pageable);
+        		.findAllFilteredAndSorted(
+        				genres.isEmpty() ? null : genres, 
+        				providers.isEmpty() ? null : providers, 
+        				status.isEmpty() ? null : status, 
+        				averageRatingFrom, 
+        				averageRatingTo, 
+        				PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort)
+        			);
         return new ObjectResponseDTO(libraryBooks.toList(), libraryBooks.getTotalPages());
     }
     
