@@ -1,6 +1,6 @@
 export enum CatalogSortingFieldsEnum {
-    TITLE,
-    AUTHOR,
-    AVERAGE_RATING,
-    NONE
+    TITLE = 'title',
+    AUTHOR = 'author',
+    AVERAGE_RATING = 'average_rating',
+    NONE = 'NONE'
 }

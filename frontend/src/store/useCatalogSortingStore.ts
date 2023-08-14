@@ -22,7 +22,7 @@ interface IUseCatalogSortingStoreState {
 }
 
 const useCatalogSortingStore = create<IUseCatalogSortingStoreState>((set) => ({
-    sortingField: CatalogSortingFieldsEnum.TITLE,
+    sortingField: CatalogSortingFieldsEnum.NONE,
     setSortingField: (field: CatalogSortingFieldsEnum) => {
         set({ sortingField: field })
     },
@@ -30,7 +30,7 @@ const useCatalogSortingStore = create<IUseCatalogSortingStoreState>((set) => ({
     setSelectedSortingField: (selectedField: CatalogSortingFieldsEnum) => {
         set({ selectedSortingField: selectedField })
     },
-    sortingOrder: SortingOrdersEnum.ASC,
+    sortingOrder: SortingOrdersEnum.NONE,
     setSortingOrder: (order: SortingOrdersEnum) => {
         set({ sortingOrder: order })
     },

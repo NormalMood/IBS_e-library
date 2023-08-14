@@ -27,14 +27,18 @@ const Sidebar: FC = () => {
     }
     
     useEffect(() => {
+        console.log('2 times!')
+        console.log('tool: ' + toolClicked)
         if (toolClicked !== CatalogToolsEnum.DEFAULT_NONE) {
-            setIsSidebarOpened(false)
-            setTimeout(() => {
+            setIsSidebarOpened(true)
+            /*setTimeout(() => {
                 setIsSidebarOpened(true)
-            }, SIDEBAR_ANIMATION_TIME)
+            }, SIDEBAR_ANIMATION_TIME)*/
+        }
+        else {
+            setIsSidebarOpened(false)
         }
     }, [toolClicked])
-
 
     const genresTitles = useCatalogFilterStore(state => state.genresTitles)
     const isAllGenresChecked = useCatalogFilterStore(state => state.isAllGenresChecked)
@@ -204,6 +208,7 @@ const Sidebar: FC = () => {
 
     const openedTab = useCatalogStore(state => state.openedTab)
     const getTopTenBooks = useCatalogStore(state => state.getTopTenBooks)
+    const getAllBooks = useCatalogStore(state => state.getAllBooks)
     const getFilterCriteria = useCatalogFilterStore(state => state.getFilterCriteria)
 
     const resetGenreCheckboxes = useCatalogFilterStore(state => state.resetGenreCheckboxes)
@@ -218,7 +223,7 @@ const Sidebar: FC = () => {
         if (openedTab === TabsEnum.CATALOG_TOP_TEN)
             getTopTenBooks(getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder)
         else if (openedTab === TabsEnum.CATALOG_ALL_BOOKS) {
-
+            getAllBooks(getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder)
         }
     }
     return (
@@ -250,25 +255,28 @@ const Sidebar: FC = () => {
                                 resetFilters()
                             }
                             else if (toolClicked === CatalogToolsEnum.CATALOG_SORT) {
+                                resetSelectedSorting()
                                 sortingField = CatalogSortingFieldsEnum.NONE
                                 sortingOrder = SortingOrdersEnum.NONE
-                                resetSelectedSorting()
+                                resetSorting()
                             }
                             toolsOptionClickHandler()
-                            sortingField = CatalogSortingFieldsEnum.TITLE
-                            sortingOrder = SortingOrdersEnum.ASC
-                            resetSorting()
+                            
                         }} 
                         type={ButtonTypeEnum.SECONDARY} 
                         styles={styles.sidebarButtons} />
                     <CustomButton 
                         text={'Применить'} 
                         onClick={() => {
-                            if (sortingField === CatalogSortingFieldsEnum.NONE) {
-                                sortingField = CatalogSortingFieldsEnum.TITLE
-                                sortingOrder = SortingOrdersEnum.ASC
-                                setSortingField(CatalogSortingFieldsEnum.TITLE)
-                                setSortingOrder(SortingOrdersEnum.ASC)
+                            if (toolClicked === CatalogToolsEnum.CATALOG_SORT) {
+                                if (sortingField === CatalogSortingFieldsEnum.NONE) {
+                                    sortingField = selectedSortingField
+                                    setSortingField(selectedSortingField)
+                                }
+                                if (sortingOrder === SortingOrdersEnum.NONE) {
+                                    sortingOrder = selectedOrder
+                                    setSortingOrder(selectedOrder)
+                                }
                             }
                             toolsOptionClickHandler()
                         }} 

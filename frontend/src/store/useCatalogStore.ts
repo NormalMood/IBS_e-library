@@ -13,13 +13,20 @@ interface IUseCatalogStoreState {
     books: IBookCatalog[];
     openedTab: TabsEnum;
     toolClicked: CatalogToolsEnum;
-    getAllBooks: () => {};
+    getAllBooks: (
+        filterCriteria: Map<FilterKeysEnum, Set<string>>, 
+        averageRatingFrom: string, 
+        averageRatingTo: string,
+        sortingField: CatalogSortingFieldsEnum,
+        sortingOrder: SortingOrdersEnum
+    ) => {};
     getTopTenBooks: (
         filterCriteria: Map<FilterKeysEnum, Set<string>>, 
         averageRatingFrom: string, 
         averageRatingTo: string,
         sortingField: CatalogSortingFieldsEnum,
-        sortingOrder: SortingOrdersEnum) => {};
+        sortingOrder: SortingOrdersEnum
+        ) => {};
     openTab: (tab: TabsEnum) => void;
     clickTool: (tool: CatalogToolsEnum) => void;
 }
@@ -28,8 +35,23 @@ const useCatalogStore = create<IUseCatalogStoreState>((set) => ({
     books: [],
     openedTab: TabsEnum.CATALOG_ALL_BOOKS,
     toolClicked: CatalogToolsEnum.DEFAULT_NONE,
-    getAllBooks: async () => {
-        const data = await CatalogService.getAllBooks()
+    getAllBooks: async (
+        filterCriteria: Map<FilterKeysEnum, Set<string>>, 
+        averageRatingFrom: string, 
+        averageRatingTo: string,
+        sortingField: CatalogSortingFieldsEnum,
+        sortingOrder: SortingOrdersEnum
+        ) => {
+        console.log(sortingField)
+        const data = await CatalogService
+            .getAllBooks(
+                filterCriteria, 
+                averageRatingFrom, 
+                averageRatingTo, 
+                sortingField, 
+                sortingOrder
+            )
+        console.log('set all books')
         set({ books: data.objects })
     },
     getTopTenBooks: async (

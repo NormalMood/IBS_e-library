@@ -1,0 +1,6 @@
+.catalogContentContainer {
+    display: flex; 
+    width: 100%;
+    flex-direction: row;
+    max-width: 1600px;
+}

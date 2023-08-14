@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { CatalogToolsEnum } from '../../../@types/CatalogToolsEnum';
 import { TabsEnum } from '../../../@types/TabsEnum';
 import CatalogService from '../../../service/CatalogService';
@@ -9,18 +9,34 @@ import styles from './Toolbar.module.css';
 import CatalogToolsService from '../../../service/CatalogToolsService';
 import useCatalogFilterStore from '../../../store/useCatalogFilterStore';
 import useCatalogSortingStore from '../../../store/useCatalogSortingStore';
+import { CatalogSortingFieldsEnum } from '../../../@types/CatalogSortingFieldsEnum';
+import { SortingOrdersEnum } from '../../../@types/SortingOrdersEnum';
 
 const Toolbar: FC = () => {
     const getAllBooks = useCatalogStore(state => state.getAllBooks)
     const getTopTenBooks = useCatalogStore(state => state.getTopTenBooks)
     const openTab = useCatalogStore(state => state.openTab)
     const clickTool = useCatalogStore(state => state.clickTool)
-    const toolClicked = useCatalogStore(state => state.toolClicked)
+    let toolClicked = useCatalogStore(state => state.toolClicked)
     const getFilterCriteria = useCatalogFilterStore(state => state.getFilterCriteria)
     const averageRatingFrom = useCatalogFilterStore(state => state.averageRatingFrom)
     const averageRatingTo = useCatalogFilterStore(state => state.averageRatingTo)
-    const sortingField = useCatalogSortingStore(state => state.sortingField)
-    const sortingOrder = useCatalogSortingStore(state => state.sortingOrder)
+    let sortingField = useCatalogSortingStore(state => state.sortingField)
+    let sortingOrder = useCatalogSortingStore(state => state.sortingOrder)
+    const resetSorting = useCatalogSortingStore(state => state.resetSorting)
+    const resetSelectedSorting = useCatalogSortingStore(state => state.resetSelectedSorting)
+    useEffect(() => {
+        console.log('****************')
+        sortingField = CatalogSortingFieldsEnum.NONE
+        sortingOrder = SortingOrdersEnum.NONE
+        resetSorting()
+        resetSelectedSorting()
+        console.log(sortingField)
+        //toolClicked = CatalogToolsEnum.DEFAULT_NONE
+        //clickTool(CatalogToolsEnum.DEFAULT_NONE)
+        getAllBooks(getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder);
+        console.log('****************')
+    }, [])
     return (
         <section className={styles.toolbarContainer}>
             <div>
@@ -33,7 +49,7 @@ const Toolbar: FC = () => {
                         name={'topGroup'} 
                         text={'Все книги'} 
                         onClickCallback={() => {
-                            getAllBooks(); 
+                            getAllBooks(getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder); 
                             openTab(TabsEnum.CATALOG_ALL_BOOKS)
                         }} 
                     />

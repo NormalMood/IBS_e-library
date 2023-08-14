@@ -6,6 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { IFilterCriteria } from '../@types/IFilterCriteria';
 import useCatalogFilterStore from '../store/useCatalogFilterStore';
 import useCatalogSortingStore from '../store/useCatalogSortingStore';
+import styles from '../style/Catalog.module.css';
+import { CatalogSortingFieldsEnum } from '../@types/CatalogSortingFieldsEnum';
+import { SortingOrdersEnum } from '../@types/SortingOrdersEnum';
+import useCatalogStore from '../store/useCatalogStore';
+import { CatalogToolsEnum } from '../@types/CatalogToolsEnum';
 
 const Catalog: FC = () => {
     const genresTitles = useCatalogFilterStore(state => state.genresTitles)
@@ -21,29 +26,42 @@ const Catalog: FC = () => {
     const resetSorting = useCatalogSortingStore(state => state.resetSorting)
     const resetSelectedSorting = useCatalogSortingStore(state => state.resetSelectedSorting)
 
+    const getAllBooks = useCatalogStore(state => state.getAllBooks)
+    const getFilterCriteria = useCatalogFilterStore(state => state.getFilterCriteria)
+    const averageRatingFrom = useCatalogFilterStore(state => state.averageRatingFrom)
+    const averageRatingTo = useCatalogFilterStore(state => state.averageRatingTo)
+    let sortingField = useCatalogSortingStore(state => state.sortingField)
+    let sortingOrder = useCatalogSortingStore(state => state.sortingOrder)
+    const clickTool = useCatalogStore(state => state.clickTool)
+
     useEffect(() => {
         setIsGenreChecked(new Array(genresTitles.length).fill(false))
 
         setIsProviderChecked(new Array(providersTitles.length).fill(false))
 
         setIsStatusChecked(new Array(statusesTitles.length).fill(false))
-
         resetFilters()
         resetSorting()
         resetSelectedSorting()
+        clickTool(CatalogToolsEnum.DEFAULT_NONE)
+    //    console.log('=====')
+     //   sortingField = CatalogSortingFieldsEnum.NONE
+     //   sortingOrder = SortingOrdersEnum.NONE
+
+      //  console.log(sortingField)
+     //   console.log(sortingOrder)
+       // getAllBooks(getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder)
+       // console.log('=====')
     }, [])
     return (
         <>
             <Toolbar />
             
-            <div style={{display: 'flex', width: '100%', flexDirection: 'row', maxWidth: '1600px'}}>
-            
-            <Sidebar />
-            <div className="container">
-                {/* <div className="catalog-container" style={{display: 'flex', flexDirection: 'row', marginTop: '0'}}> */}
+            <div className={styles.catalogContentContainer}>
+                <Sidebar />
+                <div className="container">
                     <CatalogBooks />
-                {/* </div> */}
-            </div>
+                </div>
             </div>
         </>
     )
