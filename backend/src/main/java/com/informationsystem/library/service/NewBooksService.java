@@ -12,8 +12,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface NewBooksService {
 
-    ObjectResponseDTO getAllGenres(Pageable pageable);
-
     StatusResponseDTO saveGenres(List<String> genres);
 
     StatusResponseDTO addBook(NewBooksUserRequestDTO newBook);

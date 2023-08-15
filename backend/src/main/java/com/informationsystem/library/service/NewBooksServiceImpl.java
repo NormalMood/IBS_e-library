@@ -39,14 +39,6 @@ public class NewBooksServiceImpl implements NewBooksService {
     private final NewBooksUserRequestMapper newBooksUserRequestMapper = Mappers.getMapper(NewBooksUserRequestMapper.class);
 
     @Override
-    public ObjectResponseDTO getAllGenres(Pageable pageable) {
-        Page<VGenres> allGenres = vGenresRepository
-                .findAll(pageable);
-
-        return new ObjectResponseDTO(allGenres.toList(), allGenres.getTotalPages());
-    }
-
-    @Override
     public StatusResponseDTO saveGenres(List<String> genres) {
         for (String genre : genres) {
             vGenresRepository.save(new VGenres(genre));

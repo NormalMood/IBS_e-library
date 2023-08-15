@@ -18,11 +18,6 @@ public class AddBooksController {
 
     private final NewBooksService newBooksService;
 
-    @GetMapping("/genres/all")
-    public ResponseEntity<?> getAllGenres(Pageable pageable){
-        return ResponseEntity.ok(newBooksService.getAllGenres(pageable));
-    }
-
     @PostMapping("/genres/add")
     public ResponseEntity<?> saveGenres(@RequestBody List<String> genres){
         return ResponseEntity.ok(newBooksService.saveGenres(genres));
