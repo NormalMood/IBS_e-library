@@ -1,16 +1,12 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { CatalogToolsEnum } from '../../../@types/CatalogToolsEnum';
 import { TabsEnum } from '../../../@types/TabsEnum';
-import CatalogService from '../../../service/CatalogService';
 import useCatalogStore from '../../../store/useCatalogStore';
 import CustomTab from '../../UI/CustomTab/CustomTab';
 import FilterAndSortTab from '../../UI/FilterAndSortTab/FilterAndSortTab';
 import styles from './Toolbar.module.css';
-import CatalogToolsService from '../../../service/CatalogToolsService';
 import useCatalogFilterStore from '../../../store/useCatalogFilterStore';
 import useCatalogSortingStore from '../../../store/useCatalogSortingStore';
-import { CatalogSortingFieldsEnum } from '../../../@types/CatalogSortingFieldsEnum';
-import { SortingOrdersEnum } from '../../../@types/SortingOrdersEnum';
 
 const Toolbar: FC = () => {
     const getAllBooks = useCatalogStore(state => state.getAllBooks)
@@ -23,20 +19,6 @@ const Toolbar: FC = () => {
     const averageRatingTo = useCatalogFilterStore(state => state.averageRatingTo)
     let sortingField = useCatalogSortingStore(state => state.sortingField)
     let sortingOrder = useCatalogSortingStore(state => state.sortingOrder)
-    const resetSorting = useCatalogSortingStore(state => state.resetSorting)
-    const resetSelectedSorting = useCatalogSortingStore(state => state.resetSelectedSorting)
-    useEffect(() => {
-        console.log('****************')
-        sortingField = CatalogSortingFieldsEnum.NONE
-        sortingOrder = SortingOrdersEnum.NONE
-        resetSorting()
-        resetSelectedSorting()
-        console.log(sortingField)
-        //toolClicked = CatalogToolsEnum.DEFAULT_NONE
-        //clickTool(CatalogToolsEnum.DEFAULT_NONE)
-        getAllBooks(getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder);
-        console.log('****************')
-    }, [])
     return (
         <section className={styles.toolbarContainer}>
             <div>

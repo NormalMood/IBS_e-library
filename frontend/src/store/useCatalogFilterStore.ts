@@ -45,7 +45,7 @@ interface IUseCatalogFilterStoreState {
 }
 
 const useCatalogFilterStore = create<IUseCatalogFilterStoreState>((set, get) => ({
-    genresTitles: ['Роман', 'Фантастика', 'Приключения', 'Литература по саморазвитию', 'Справочник', 'Проза'],
+    genresTitles: [],
     isAllGenresChecked: false,
     isGenreChecked: [],
     setGenresTitles: (titles: string[]) => {
@@ -67,7 +67,7 @@ const useCatalogFilterStore = create<IUseCatalogFilterStoreState>((set, get) => 
     },
 
 
-    providersTitles: ['IBS', 'employee'],
+    providersTitles: [],
     isAllProvidersChecked: false,
     isProviderChecked: [],
     setProvidersTitles: (titles: string[]) => {
@@ -89,7 +89,7 @@ const useCatalogFilterStore = create<IUseCatalogFilterStoreState>((set, get) => 
     },
 
 
-    statusesTitles: ['В наличии', 'Взята в пользование', 'Изъята из библиотеки', 'Утеряна'],
+    statusesTitles: [],
     isAllStatusesChecked: false,
     isStatusChecked: [],
     setStatusesTitles: (titles: string[]) => {

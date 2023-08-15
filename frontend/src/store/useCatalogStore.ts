@@ -42,7 +42,6 @@ const useCatalogStore = create<IUseCatalogStoreState>((set) => ({
         sortingField: CatalogSortingFieldsEnum,
         sortingOrder: SortingOrdersEnum
         ) => {
-        console.log(sortingField)
         const data = await CatalogService
             .getAllBooks(
                 filterCriteria, 
@@ -51,7 +50,6 @@ const useCatalogStore = create<IUseCatalogStoreState>((set) => ({
                 sortingField, 
                 sortingOrder
             )
-        console.log('set all books')
         set({ books: data.objects })
     },
     getTopTenBooks: async (
@@ -62,7 +60,6 @@ const useCatalogStore = create<IUseCatalogStoreState>((set) => ({
         sortingOrder: SortingOrdersEnum
         ) => {
         const data = await CatalogService.getTopTenBooks()
-        console.log('sdf')
         const updatedBooks = CatalogToolsService
             .getTopTenBooksSortedAndFiltered(
                 filterCriteria, 
@@ -78,6 +75,7 @@ const useCatalogStore = create<IUseCatalogStoreState>((set) => ({
         set({ openedTab: tab })
     },
     clickTool: (tool: CatalogToolsEnum) => {
+        console.log('TOOL WAS CLICKED!')
         set({ toolClicked: tool })
     }
 }))

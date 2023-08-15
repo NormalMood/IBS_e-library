@@ -13,8 +13,7 @@ import CustomRadioButton from '../../UI/CustomRadioButton/CustomRadioButton';
 import { CatalogSortingFieldsEnum } from '../../../@types/CatalogSortingFieldsEnum';
 import { SortingOrdersEnum } from '../../../@types/SortingOrdersEnum';
 import useCatalogSortingStore from '../../../store/useCatalogSortingStore';
-
-const SIDEBAR_ANIMATION_TIME = 300
+import { ProvidersMap } from '../../../map/ProvidersMap';
 
 const Sidebar: FC = () => {
     const [isSidebarOpened, setIsSidebarOpened] = useState(false);
@@ -27,13 +26,9 @@ const Sidebar: FC = () => {
     }
     
     useEffect(() => {
-        console.log('2 times!')
-        console.log('tool: ' + toolClicked)
+        console.log('2 times!: ' + CatalogToolsEnum[toolClicked])
         if (toolClicked !== CatalogToolsEnum.DEFAULT_NONE) {
             setIsSidebarOpened(true)
-            /*setTimeout(() => {
-                setIsSidebarOpened(true)
-            }, SIDEBAR_ANIMATION_TIME)*/
         }
         else {
             setIsSidebarOpened(false)
@@ -219,13 +214,27 @@ const Sidebar: FC = () => {
     const resetSelectedSorting = useCatalogSortingStore(state => state.resetSelectedSorting)
 
     const toolsOptionClickHandler = () => {
-        console.log('haha: ' + averageRatingFrom, ', ' + averageRatingTo)
         if (openedTab === TabsEnum.CATALOG_TOP_TEN)
             getTopTenBooks(getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder)
         else if (openedTab === TabsEnum.CATALOG_ALL_BOOKS) {
             getAllBooks(getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder)
         }
     }
+
+    useEffect(() => {
+        setIsGenreChecked(new Array(genresTitles.length).fill(false))
+        setIsProviderChecked(new Array(providersTitles.length).fill(false))
+        setIsStatusChecked(new Array(statusesTitles.length).fill(false))
+    }, [genresTitles])
+
+    const getProvidersTitlesMapped = (titles: string[]) => {
+        const titlesMapped: string[] = []
+        titles.forEach(title => {
+            titlesMapped.push(ProvidersMap.get(title) as string)
+        })
+        return titlesMapped
+    }
+    
     return (
         <aside className={getSidebarStyles()}>
             <div className={styles.closeImgHeaderWrapper}>
@@ -342,7 +351,7 @@ const Sidebar: FC = () => {
                     />
                     <CheckboxListLayout 
                         header={'Поставщик'}
-                        content={providersTitles}
+                        content={getProvidersTitlesMapped(providersTitles)}
                         isCheckedAll={isAllProvidersChecked}
                         isChecked={isProviderChecked}
                         onSelectAllHandler={onSelectAllProvidersHandler}
