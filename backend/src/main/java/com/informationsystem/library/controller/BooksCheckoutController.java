@@ -1,8 +1,5 @@
 package com.informationsystem.library.controller;
 
-import com.informationsystem.library.dto.request.FilterAndSortingRequestDTO;
-import com.informationsystem.library.dto.request.ParameterSearchRequestDTO;
-import com.informationsystem.library.dto.request.ParameterSortRequestDTO;
 import com.informationsystem.library.dto.response.StatusResponseDTO;
 import com.informationsystem.library.service.EmployeeService;
 import lombok.AllArgsConstructor;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -31,8 +27,8 @@ public class BooksCheckoutController {
     		@RequestParam String genres, 
     		@RequestParam Set<String> providers,
     		@RequestParam Set<String> status,
-    		 Float averageRatingFrom,
-    		 Float averageRatingTo,
+    		Float averageRatingFrom,
+    		Float averageRatingTo,
     		@RequestParam String sortingField,
     		@RequestParam String sortingOrder,
     		Pageable pageable) {
@@ -57,19 +53,35 @@ public class BooksCheckoutController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> getByParameter(@RequestBody ParameterSearchRequestDTO paramRequest,
-                                            Pageable pageable){
-        return ResponseEntity.ok(employeeService.getByParameter(paramRequest, pageable));
-    }
-
-    @GetMapping("/sort")
-    public ResponseEntity<?> sortByParameter(@RequestBody ParameterSortRequestDTO paramRequest,
-                                             Pageable pageable){
-        return ResponseEntity.ok(employeeService.sortByParameter(paramRequest, pageable));
+    public ResponseEntity<?> getBooksBySearchQuery(
+    		@RequestParam String searchQuery,
+    		@RequestParam String genres, 
+    		@RequestParam Set<String> providers,
+    		@RequestParam Set<String> status,
+    		Float averageRatingFrom,
+    		Float averageRatingTo,
+    		@RequestParam String sortingField,
+    		@RequestParam String sortingOrder,
+    		Pageable pageable
+    		) {
+        return ResponseEntity.ok(
+        		employeeService
+        			.getBooksBySearchQuery(
+        					searchQuery,
+        					genres, 
+        					providers, 
+        					status, 
+        					averageRatingFrom, 
+        					averageRatingTo, 
+        					sortingField, 
+        					sortingOrder, 
+        					pageable
+        				)
+        	);
     }
 
     @PostMapping("/checkout")
-    public ResponseEntity<?> checkoutBook(@RequestBody Long bookId){
+    public ResponseEntity<?> checkoutBook(@RequestBody Long bookId) {
         StatusResponseDTO statusResponseDTO = employeeService.checkoutBook(bookId);
         return new ResponseEntity<>(statusResponseDTO, statusResponseDTO.getStatus());
     }

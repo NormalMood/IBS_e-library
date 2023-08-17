@@ -1,7 +1,5 @@
 package com.informationsystem.library.service;
 
-import com.informationsystem.library.dto.request.ParameterSearchRequestDTO;
-import com.informationsystem.library.dto.request.ParameterSortRequestDTO;
 import com.informationsystem.library.dto.response.BinBooksResponseDTO;
 import com.informationsystem.library.dto.response.EmployeeBinResponseDTO;
 import com.informationsystem.library.dto.response.ForbiddenExtendingsResponseDTO;
@@ -17,7 +15,6 @@ import com.informationsystem.library.model.Status;
 import com.informationsystem.library.model.StatusName;
 import com.informationsystem.library.model.Action;
 import com.informationsystem.library.model.ActionsName;
-import com.informationsystem.library.model.SortOrder;
 import com.informationsystem.library.repository.EmployeeRepository;
 import com.informationsystem.library.repository.EmployeeBinRepository;
 import com.informationsystem.library.repository.HistoryRepository;
@@ -177,66 +174,31 @@ public class EmployeeServiceImpl implements EmployeeService {
     			.findTop10Books(pageable);
     	return new ObjectResponseDTO(top10Books.toList(), top10Books.getTotalPages());
     }
-
+    
     @Override
-    public ObjectResponseDTO getByParameter(ParameterSearchRequestDTO paramRequest,
-                                            Pageable pageable) {
-        Page<VBooks> searchResult;
-        switch (paramRequest.getParameterName()) {
-            case "title":
-                searchResult = vBooksRepository
-                        .findByTitleContainingIgnoreCase(paramRequest.getParameterValue(),
-                                pageable);
-                break;
-            case "author":
-                searchResult = vBooksRepository
-                        .findByAuthorContainingIgnoreCase(paramRequest.getParameterValue(),
-                                pageable);
-                break;
-            case "genres":
-                searchResult = vBooksRepository
-                        .findByGenresContainingIgnoreCase(paramRequest.getParameterValue(),
-                                pageable);
-                break;
-            case "provider":
-                searchResult = vBooksRepository
-                        .findByProviderContainingIgnoreCase(paramRequest.getParameterValue(),
-                                pageable);
-                break;
-            case "status":
-                searchResult = vBooksRepository
-                        .findByStatusContainingIgnoreCase(paramRequest.getParameterValue(),
-                                pageable);
-                break;
-            default:
-                searchResult = null;
-                break;
-        }
-        return new ObjectResponseDTO(searchResult == null ? null : searchResult.toList(),
-                searchResult == null ? 0 : searchResult.getTotalPages());
-    }
-
-    @Override
-    public ObjectResponseDTO sortByParameter(ParameterSortRequestDTO paramRequest,
-                                             Pageable pageable) {
-        Page<VBooks> sortResult = null;
-        if (paramRequest.getSortOrder().equals(SortOrder.ASC))
-            sortResult = vBooksRepository
-                    .findAll(PageRequest.of(pageable.getPageNumber(), 
-                    		pageable.getPageSize(),
-                            Sort.by(paramRequest
-                            		.getParameterName())
-                            		.ascending()));
-        else if (paramRequest.getSortOrder().equals(SortOrder.DESC))
-            sortResult = vBooksRepository
-                    .findAll(PageRequest.of(pageable.getPageNumber(),
-                    		pageable.getPageSize(),
-                            Sort.by(paramRequest
-                            		.getParameterName())
-                            		.descending()));
-        return new ObjectResponseDTO(sortResult.toList(),
-                sortResult.getTotalPages());
-    }
+	public ObjectResponseDTO getBooksBySearchQuery(String searchQuery, String genres, Set<String> providers,
+			Set<String> status, Float averageRatingFrom, Float averageRatingTo, String sortingField,
+			String sortingOrder, Pageable pageable) {
+    	Sort sort = Sort.unsorted();
+    	if (!sortingField.equals("NONE"))
+    		sort = Sort
+    			.by(
+    					Direction
+    						.fromString(sortingOrder), 
+    					sortingField
+    				);
+        Page<VBooks> libraryBooks = vBooksRepository
+        		.findBySearchQueryFilteredAndSorted(
+        				searchQuery,
+        				genres.isEmpty() ? null : genres, 
+        				providers.isEmpty() ? null : providers, 
+        				status.isEmpty() ? null : status, 
+        				averageRatingFrom, 
+        				averageRatingTo, 
+        				PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort)
+        			);
+        return new ObjectResponseDTO(libraryBooks.toList(), libraryBooks.getTotalPages());
+	}
 
     @Override
     public boolean isCheckoutPossible(Long bookId) {

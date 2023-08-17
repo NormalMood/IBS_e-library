@@ -1,7 +1,5 @@
 package com.informationsystem.library.service;
 
-import com.informationsystem.library.dto.request.ParameterSearchRequestDTO;
-import com.informationsystem.library.dto.request.ParameterSortRequestDTO;
 import com.informationsystem.library.dto.response.EmployeeBinResponseDTO;
 import com.informationsystem.library.dto.response.ObjectResponseDTO;
 import com.informationsystem.library.dto.response.StatusResponseDTO;
@@ -35,12 +33,17 @@ public interface EmployeeService {
     		Pageable pageable);
     
     ObjectResponseDTO getTop10Books(Pageable pageable);
-
-    ObjectResponseDTO getByParameter(ParameterSearchRequestDTO paramRequest,
-                                     Pageable pageable);
-
-    ObjectResponseDTO sortByParameter(ParameterSortRequestDTO paramRequest,
-                                      Pageable pageable);
+    
+    ObjectResponseDTO getBooksBySearchQuery(
+			String searchQuery, 
+			String genres, 
+			Set<String> providers, 
+			Set<String> status,
+			Float averageRatingFrom, 
+			Float averageRatingTo, 
+			String sortingField, 
+			String sortingOrder,
+			Pageable pageable);
 
     boolean isCheckoutPossible(Long bookId);
 
