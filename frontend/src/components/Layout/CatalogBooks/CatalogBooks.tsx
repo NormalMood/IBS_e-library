@@ -23,6 +23,7 @@ const CatalogBooks = () => {
 
     const resetFilters = useCatalogFilterStore(state => state.resetFilters)
 
+    const openedTab = useCatalogStore(state => state.openedTab)
     const openTab = useCatalogStore(state => state.openTab)
     useEffect(() => {
         averageRatingFrom = ''
@@ -39,15 +40,24 @@ const CatalogBooks = () => {
         openTab(TabsEnum.CATALOG_ALL_BOOKS)
     }, [])
     return (
-        <div className={styles.catalogBooksContainer}>
-            {books?.map(book =>
-                <CatalogBook
+        <>
+            {books?.length !== 0 &&
+                <div className={styles.catalogBooksContainer}>
+                    {books.map(book => 
+                    <CatalogBook
                     id={book.id}
                     title={book.title}
                     author={book.author}
                     averageRating={book.averageRating}
                 />)}
-        </div>
+                </div>
+            }
+            {(books?.length === 0 && openedTab === TabsEnum.NONE) &&
+                <div className={[styles.catalogBooksContainer, styles.notFoundBooksContainer].join(' ')}>
+                    <h2>Ничего не найдено</h2>
+                </div>
+            }
+        </>
     )
 }
 

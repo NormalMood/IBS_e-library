@@ -2,34 +2,41 @@
     display: grid;
     justify-items: center;
     grid-template-columns: repeat(1, 1fr);
-    margin-top: 190px;
+    margin-top: 230px;
     width: 100%;
 }
 
 @media (min-width: 425px) {
     .catalogBooksContainer {
-        margin-top: 140px;
+        margin-top: 180px;
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (min-width: 768px) {
     .catalogBooksContainer {
-        margin-top: 140px;
+        margin-top: 180px;
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (min-width: 1024px) {
     .catalogBooksContainer {
-        margin-top: 140px;
+        margin-top: 190px;
         grid-template-columns: repeat(4, 1fr);
     }
 }
 
 @media (min-width: 1440px) {
     .catalogBooksContainer {
-        margin-top: 140px;
+        margin-top: 200px;
         grid-template-columns: repeat(5, 1fr);
     }
+}
+
+
+
+.notFoundBooksContainer {
+    display: flex;
+    justify-content: center;
 }

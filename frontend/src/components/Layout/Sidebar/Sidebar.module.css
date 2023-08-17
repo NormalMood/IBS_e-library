@@ -33,14 +33,14 @@
 
 @media (min-width: 1024px) {
     .sidebar {
-        top: 102px;
+        top: 171px;
         max-width: 340px;
     }
 }
 
 @media (min-width: 1440px) {
     .sidebar {
-        top: 108px;
+        top: 177px;
         max-width: 360px;
     }
 }

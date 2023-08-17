@@ -11,6 +11,7 @@ import { SortingOrdersEnum } from '../@types/SortingOrdersEnum';
 
 interface IUseCatalogStoreState {
     books: IBookCatalog[];
+    setBooks: (books: IBookCatalog[]) => void;
     openedTab: TabsEnum;
     toolClicked: CatalogToolsEnum;
     getAllBooks: (
@@ -26,13 +27,16 @@ interface IUseCatalogStoreState {
         averageRatingTo: string,
         sortingField: CatalogSortingFieldsEnum,
         sortingOrder: SortingOrdersEnum
-        ) => {};
+    ) => {};
     openTab: (tab: TabsEnum) => void;
     clickTool: (tool: CatalogToolsEnum) => void;
 }
 
 const useCatalogStore = create<IUseCatalogStoreState>((set) => ({
     books: [],
+    setBooks: (books: IBookCatalog[]) => {
+        set({ books: books })
+    },
     openedTab: TabsEnum.CATALOG_ALL_BOOKS,
     toolClicked: CatalogToolsEnum.DEFAULT_NONE,
     getAllBooks: async (

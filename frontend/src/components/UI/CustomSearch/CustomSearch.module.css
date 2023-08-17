@@ -1,0 +1,175 @@
+.searchContainer {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    height: 70px;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
+    .searchContainer {
+        height: 90px;
+        z-index: 5;
+    }
+}
+
+
+
+.searchWrapper {
+    display: flex;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    height: fit-content;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 5px;
+    align-items: center;
+}
+
+.searchInput {
+    border: none;
+    cursor: pointer;
+    outline: none;
+    font-size: 12px;
+    height: 40px;
+    width: 100%;
+    padding-left: 5px;
+}
+
+@media (min-width: 425px) {
+    .searchInput {
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 425px) {
+    .searchInput {
+        font-size: 16px;
+    }
+}
+
+
+
+.clearButton {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+
+
+.searchButtonWrapper {
+    display: flex;
+    background-color: #02C;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+@media (min-width: 1024px) {
+    .searchButtonWrapper {
+        display: none;
+    }
+}
+
+
+
+.searchButton {
+    width: 25px;
+    height: 25px;
+}
+
+
+
+.hiddenElement {
+    display: none;
+}
+
+
+.searchPopupContainer {
+    display: none;
+    border: 3px solid #CCD3F5; 
+    border-top-width: 2px;
+    width: 100%;
+    max-width: 800px;
+    background-color: white;
+    top: 65px;
+    position: absolute;
+    max-height: 500px;
+    flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+    .searchPopupContainer {
+        display: flex;
+    }
+}
+
+
+
+.searchPopupContent {
+    display: grid;
+    grid-auto-flow: row;
+    row-gap: 10px;
+    width: 100%;
+    max-height: 400px;
+    overflow: auto;
+}
+
+
+
+.bookRowContainer {
+    display: grid;
+    grid-template-columns: 70px auto;
+    column-gap: 20px;
+    margin: 0px 25px;
+    cursor: pointer;
+}
+
+.bookRowContainer:hover {
+    background-color: #F5F5F5;
+}
+
+.bookRowContainer:first-child {
+    margin-top: 30px;
+}
+
+.bookCoverContainer {
+    width: 70px;
+    height: 110px;
+}
+
+.bookCover {
+    width: 70px;
+    height: 110px;
+    object-fit: cover;
+}
+
+.bookInfoContainer {
+    display: grid;
+    grid-template-rows: 31px repeat(3, 1fr);
+}
+
+
+.averageRatingImg {
+    width: 20px;
+    height: 20px;
+}
+
+.averageRatingContainer {
+    display: flex;
+}
+
+.showResultsButtonContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.showResultsButton {
+    width: 240px;
+    margin: 20px 0;
+}

@@ -7,6 +7,7 @@ import styles from '../style/Catalog.module.css';
 import useCatalogStore from '../store/useCatalogStore';
 import { CatalogToolsEnum } from '../@types/CatalogToolsEnum';
 import FiltersService from '../service/FiltersService';
+import CustomSearch from './UI/CustomSearch/CustomSearch';
 
 const Catalog: FC = () => {
     const genresTitles = useCatalogFilterStore(state => state.genresTitles)
@@ -48,8 +49,8 @@ const Catalog: FC = () => {
     
     return (
         <>
+            <CustomSearch />
             <Toolbar />
-            
             <div className={styles.catalogContentContainer}>
                 <Sidebar />
                 <div className="container">

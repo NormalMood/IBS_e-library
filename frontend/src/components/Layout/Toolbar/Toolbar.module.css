@@ -23,14 +23,23 @@
     position: fixed;
     width: 100%;
     max-width: 1600px;
+    margin-top: 70px;
     background-color: #FFFFFF;
 }
 
 @media (min-width: 900px) {
     .toolbarContainer {
-        z-index: 10;
+        z-index: 2;
     }
 }
+
+@media (min-width: 1024px) {
+    .toolbarContainer {
+        margin-top: 90px;
+    }
+}
+
+
 
 .horizontalLine {
     background: #CCD3F5;

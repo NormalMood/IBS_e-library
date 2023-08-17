@@ -1,6 +1,7 @@
 .bookInfoContainer {
     width: 150px;
     margin-bottom: 20px;
+    cursor: pointer;
 }
 
 @media (min-width: 1500px) {

@@ -21,9 +21,6 @@ const Toolbar: FC = () => {
     let sortingOrder = useCatalogSortingStore(state => state.sortingOrder)
     return (
         <section className={styles.toolbarContainer}>
-            <div>
-                    Search
-            </div>
             <div className={styles.tabsWrapper}>
                 <div className={styles.tabs}>
                     <CustomTab 

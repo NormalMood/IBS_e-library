@@ -45,4 +45,30 @@ export default class CatalogService {
         return response.data
     }
 
+    static async getBooksBySearchQuery(
+        searchQuery: string,
+        filterCriteria: Map<FilterKeysEnum, Set<string>>, 
+        averageRatingFrom: string, 
+        averageRatingTo: string,
+        sortingField: CatalogSortingFieldsEnum,
+        sortingOrder: SortingOrdersEnum
+    ) {
+        const response = await axiosInstance.get<ICatalog>(
+            BASE_CATALOG_API + '/search',
+            {
+                params: {
+                    searchQuery: searchQuery,
+                    genres: Array.from(filterCriteria.get(FilterKeysEnum.GENRES) as Set<string>).join(','),
+                    providers: Array.from(filterCriteria.get(FilterKeysEnum.PROVIDERS) as Set<string>).join(','),
+                    status: Array.from(filterCriteria.get(FilterKeysEnum.STATUS) as Set<string>).join(','),
+                    averageRatingFrom,
+                    averageRatingTo,
+                    sortingField: sortingField,
+                    sortingOrder: SortingOrdersEnum[sortingOrder]
+                }
+            }
+        )
+        return response.data
+    }
+
 }
