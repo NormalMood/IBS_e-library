@@ -1,0 +1,86 @@
+.bookReviewContainer {
+    display: grid;
+    grid-template-columns: 40px auto;
+    column-gap: 15px;
+    border-bottom: 1px solid black;
+    margin-bottom: 50px;
+}
+
+.profileImageContainer {
+    width: 40px;
+    height: 40px;
+}
+
+.profileImage {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.reviewContentContainer {
+    display: grid;
+    grid-template-rows: 40px repeat(2, auto);
+}
+
+.bookReviewHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.bookReviewHeaderLeft {
+    display: flex;
+    flex-direction: column;
+}
+
+.reviewDate {
+    color: #444B54;
+}
+
+.bookReviewHeaderRight {
+    display: flex;
+    align-items: center;
+}
+
+.bookReviewHeaderRight > span {
+    font-size: 18px;
+}
+
+.bookReviewStars {
+    width: 23px;
+}
+
+.bookReviewMain {
+    margin: 20px 0;
+}
+
+.bookReviewFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.bookReviewFooterLeft {
+    display: flex;
+    cursor: pointer;
+}
+
+.likeImg {
+    width: 22px;
+}
+
+.likesValue {
+    color: #444B54;
+}
+
+.bookReviewFooterRight {
+
+}
+
+.deleteReviewButton {
+    padding-left: 10px;
+    padding-right: 10px;
+}

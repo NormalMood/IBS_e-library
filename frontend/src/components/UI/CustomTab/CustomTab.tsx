@@ -7,10 +7,11 @@ interface ICustomTabProps {
     id: TabsEnum;
     name: string;
     text: string;
-    onClickCallback: () => void
+    onClickCallback: () => void;
+    additionalStyles?: React.HTMLAttributes<any>;
 }
 
-const CustomTab: FC<ICustomTabProps> = ({id, name, text, onClickCallback}) => {
+const CustomTab: FC<ICustomTabProps> = ({id, name, text, onClickCallback, additionalStyles = null}) => {
     const openedTab = useCatalogStore(state => state.openedTab)
     return (
         <>
@@ -23,7 +24,7 @@ const CustomTab: FC<ICustomTabProps> = ({id, name, text, onClickCallback}) => {
             />
             <label  
                 htmlFor={id.toString()}
-                className={styles.tabTitle}
+                className={[styles.tabTitle, additionalStyles].join(' ')}
                 onClick={() =>
                     onClickCallback()
                 }
