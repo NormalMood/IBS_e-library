@@ -1,17 +1,19 @@
-.customInput {
+.customTextarea {
+    display: block;
     border: none;
     border-bottom: solid #000000 1px;
     width: 100%;
-    height: 35px;
     font-size: 16px;
     cursor: pointer;
+    overflow-y: auto;
+    resize: none;
 }
 
-.customInput::placeholder {
+.customTextarea::placeholder {
     color: #999B9E;
 }
 
-.customInput:focus {
+.customTextarea:focus {
     outline: none;
     border-bottom: solid #0022CC 2px;
 }

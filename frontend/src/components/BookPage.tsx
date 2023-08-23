@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styles from '../style/BookPage.module.css';
 import CustomButton from './UI/CustomButton/CustomButton';
 import CustomTab from './UI/CustomTab/CustomTab';
@@ -10,19 +10,9 @@ import BookReview from './UI/BookReview/BookReview';
 
 const BookPage: FC = () => {
     const { id } = useParams()
-    const [scrollY, setScrollY] = useState(0)
     const openedTab = useCatalogStore(state => state.openedTab)
     const openTab = useCatalogStore(state => state.openTab)
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY <= window.screen.height / 3)
-            setScrollY(window.scrollY)
-        }
-        handleScroll()
-        console.log(scrollY)
-        window.addEventListener('scroll', handleScroll)
-        return () => window.removeEventListener('scroll', handleScroll)
-    })
+    const navigate = useNavigate()
     const bookReviews: IBookReview[] = [
         {
             profileImageUrl: 'http://timemongers.com/wp-content/uploads/2017/04/Christian-Bale-as-Patrick-Bateman-in-American-Psycho-Rolex-Datejust.jpg',
@@ -57,7 +47,10 @@ const BookPage: FC = () => {
                         <div className={styles.bookCoverContainer}>
                             <img src='/img/cover.jpg' className={styles.bookCover} />
                         </div>
-                        <div className={styles.reviewLinkContainer}>
+                        <div 
+                            className={styles.reviewLinkContainer}
+                            onClick={() => navigate(`/book/${id}/review`)}
+                        >
                             <img src='/img/add_review.png' className={styles.reviewLinkImg} />
                             <span className={styles.reviewLinkText}>Написать<br />рецензию</span>
                         </div>

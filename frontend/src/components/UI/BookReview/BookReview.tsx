@@ -38,7 +38,7 @@ const BookReview: FC<IBookReviewProps> = ({profileImageUrl, username, reviewDate
                         <img src='/img/like.png' className={styles.likeImg} />
                         <span className={styles.likesValue}>{likes}</span>
                     </div>
-                    <div className={styles.bookReviewFooterRight}>
+                    <div>
                         <CustomButton text={'Удалить'} onClick={() => {}} styles={styles.deleteReviewButton} />
                     </div>
                 </div>
