@@ -1,0 +1,37 @@
+.customFileInput {
+    display: inline-block;
+    position: relative;
+    border: 1px solid black;
+    color: #999B9E;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    min-width: 180px;
+}
+
+.customFileInputImg {
+    width: 50px;
+    height: 50px;
+}
+
+.backgroundContentContainer {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+}
+
+.inputHidden {
+    display: none;
+}
+
+.previewImage {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

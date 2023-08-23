@@ -59,6 +59,7 @@ const ReviewPage: FC = () => {
                         <CustomTextarea 
                             text={reviewText} 
                             onChangeHandler={setReviewText} 
+                            placeholder={'Ваши мысли о книге*'}
                             additionalStyles={styles.pageReviewTextarea}
                         />
                         <div className={styles.bookReviewButtonContainer}>
