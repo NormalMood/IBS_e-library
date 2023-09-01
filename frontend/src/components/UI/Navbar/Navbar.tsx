@@ -67,12 +67,20 @@ const Navbar: FC = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link 
+                                    {/* <Link 
                                         to='/new_book' 
                                         className={styles.navLink}
                                     >
                                         <img src='/img/add_books.png' className={styles.navLinkImg} />
                                         <span>Новая книга</span>
+                                    </Link> */}
+                                    <Link 
+                                        to='/admin_panel' 
+                                        className={styles.navLink}
+                                        onClick={e => {}}
+                                    >
+                                        <img src='/img/admin_panel.png' className={styles.navLinkImg} />
+                                        <span>Админка</span>
                                     </Link>
                                 </li>
                                 <li> 
@@ -80,14 +88,6 @@ const Navbar: FC = () => {
                                         <img src='/img/logout.png' className={styles.navLinkImg} />
                                         <span>Выйти</span>
                                     </Link>
-                                    {/* <Link 
-                                        to='/admin_panel' 
-                                        className={styles.navLink}
-                                        onClick={e => showAdditionalHeader()}
-                                    >
-                                        <img src='/img/admin_panel.png' className={styles.navLinkImg} />
-                                        <span>Админка</span>
-                                    </Link> */}
                                 </li>
                             </ul>
                         </nav>

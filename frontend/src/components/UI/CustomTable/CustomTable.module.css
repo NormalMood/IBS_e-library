@@ -37,7 +37,7 @@
     margin: 0 auto;
 }
 
-.tableHead tr th:first-child {
+.checkboxColumnHeader {
     min-width: 45px;
     max-width: 45px;
     padding: 0;
@@ -50,10 +50,6 @@
     border-right: 0px;
 }
 
-.hiddenIdColumn tr > :nth-child(2) {
-    display: none;
-}
-
 .tableBody tr:nth-child(even) {
     background-color: #E9E9EB;
 }
@@ -63,7 +59,7 @@
     font-weight: normal;
 }
 
-.tableBody tr td:first-child {
+.checkboxColumnRow {
     min-width: 45px;
     max-width: 45px;
     user-select: none;

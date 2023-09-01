@@ -1,0 +1,14 @@
+.adminPanelContent {
+    margin-top: 200px;
+}
+
+.tableToolContainer {
+    display: flex;
+    width:fit-content;
+    margin: 30px 0;
+    align-items: center;
+}
+
+.tableToolContainer label {
+    margin-right: 15px;
+}

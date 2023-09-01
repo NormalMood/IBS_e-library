@@ -5,11 +5,13 @@ import CustomCheckbox from '../CustomCheckbox/CustomCheckbox';
 interface ICustomTableProps {
     headerData: string[];
     data: any[];
-    isIdColumnHidden?: boolean;
+    tableTitle: string;
+    isCheckboxColumnHidden?: boolean;
+    hiddenColumns: Set<number>;
     onCheckboxChanged: (value: boolean, tableRowIndex: number) => void;
 }
 
-const CustomTable: FC<ICustomTableProps> = ({headerData, data, isIdColumnHidden = true, onCheckboxChanged}) => {
+const CustomTable: FC<ICustomTableProps> = ({headerData, data, tableTitle, isCheckboxColumnHidden = true, hiddenColumns, onCheckboxChanged}) => {
     const tableRowCheckboxStates: boolean[] = new Array(data?.length).fill(false)
     const [isHeaderCheckboxChecked, setIsHeaderCheckboxChecked] = useState(false)
     const [isRowChecked, setIsRowChecked] = useState(tableRowCheckboxStates)
@@ -37,34 +39,43 @@ const CustomTable: FC<ICustomTableProps> = ({headerData, data, isIdColumnHidden 
     return (
         <div className={styles.tableContainer}>
             <table className={styles.table}>
-                <caption className={styles.caption}>Взятые книги</caption>
-                <thead className={[styles.tableHead, isIdColumnHidden && styles.hiddenIdColumn].join(' ')}>
+                <caption className={styles.caption}>{tableTitle}</caption>
+                <thead className={styles.tableHead}>
                     <tr>
-                        <th>
-                            <CustomCheckbox 
-                                additionalStyles={styles.customCheckboxTh} 
-                                isChecked={isHeaderCheckboxChecked}
-                                onChangeHandler={onSelectAllHandler}
-                            />
-                        </th>
-                        {headerData.map(title => 
-                            <th key={title}>{title}</th>
+                        {!isCheckboxColumnHidden &&
+                            <th className={styles.checkboxColumnHeader}>
+                                <CustomCheckbox 
+                                    additionalStyles={styles.customCheckboxTh} 
+                                    isChecked={isHeaderCheckboxChecked}
+                                    onChangeHandler={onSelectAllHandler}
+                                />
+                            </th>
+                        }
+                        {headerData.map((title, index) => {
+                            return <>
+                            {!hiddenColumns.has(index) &&
+                                <th key={title}>{title}</th>
+                            }</>}
                         )}
                     </tr>
                 </thead>
-                <tbody className={[styles.tableBody, isIdColumnHidden && styles.hiddenIdColumn].join(' ')}>
+                <tbody className={styles.tableBody}>
                     {data && data.map((dataRow, index) => 
                             <tr key={dataRow}>
-                                <td>
-                                    <CustomCheckbox 
-                                        additionalStyles={styles.customCheckboxTh} 
-                                        tableRowIndex={index}
-                                        isChecked={isRowChecked[index]}
-                                        onChangeHandler={onCheckboxChangeHandler}
-                                    />
-                                </td>
-                                {dataRow && Object.values(dataRow).map(dataCell =>
-                                        <td key={dataCell as any}>{dataCell as string}</td>
+                                {!isCheckboxColumnHidden &&
+                                    <td className={styles.checkboxColumnRow}>
+                                        <CustomCheckbox 
+                                            additionalStyles={styles.customCheckboxTh} 
+                                            tableRowIndex={index}
+                                            isChecked={isRowChecked[index]}
+                                            onChangeHandler={onCheckboxChangeHandler}
+                                        />
+                                    </td>
+                                }
+                                {dataRow && Object.values(dataRow).map((dataCell, index) =>
+                                        {!hiddenColumns.has(index) &&
+                                            <td key={dataCell as any}>{dataCell as string}</td>
+                                        }
                                     )}
                             </tr>
                         )

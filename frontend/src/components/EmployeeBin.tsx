@@ -65,7 +65,14 @@ const MyBooks: FC = () => {
                 <CustomButton text={'Вернуть'} styles={styles.customButtonEmployeeBinPage} onClick={() => returnBooks()} />
                 <CustomButton text={'Продлить'} styles={styles.customButtonEmployeeBinPage} onClick={() => extendBooks()} />
             </div>
-            <CustomTable headerData={EMPLOYEE_BIN_TABLE_HEADERS} data={books.books} onCheckboxChanged={test} />
+            <CustomTable 
+                headerData={EMPLOYEE_BIN_TABLE_HEADERS} 
+                data={books.books} 
+                isCheckboxColumnHidden={false}
+                hiddenColumns={new Set<number>().add(0)}
+                tableTitle={'Взятые книги'} 
+                onCheckboxChanged={test} 
+            />
         </div>
     )
 }
