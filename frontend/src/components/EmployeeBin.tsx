@@ -5,6 +5,7 @@ import styles from '../style/EmployeeBin.module.css';
 import EmployeeBinService from '../service/EmployeeBinService';
 import { IEmployeeBin } from '../@types/IEmployeeBin';
 import { EMPLOYEE_BIN_TABLE_HEADERS } from '../tableHeaders/employeeBinTableHeaders';
+import MessagePopup from './UI/MessagePopup/MessagePopup';
 
 const MyBooks: FC = () => {
     const [books, setBooks] = useState<IEmployeeBin>({
@@ -52,28 +53,39 @@ const MyBooks: FC = () => {
             booksIdSet.delete(books.books[tableRowIndex].bookId)
     }
     const returnBooks = async () => {
-        await EmployeeBinService.returnBooks(Array.from(booksIdSet))
-        await getBooksTaken()
+      //  await EmployeeBinService.returnBooks(Array.from(booksIdSet))
+     //   await getBooksTaken()
+        const arr = [...responses]
+        arr.push('Вернул')
+        setResponses(arr)
     }
     const extendBooks = async () => {
         await EmployeeBinService.extendBooks(Array.from(booksIdSet))
         await getBooksTaken()
     }
+    const [responses, setResponses] = useState<string[]>([])
     return (
-        <div className="container">
-            <div className={styles.buttonContainerEmployeeBinPage}>
-                <CustomButton text={'Вернуть'} styles={styles.customButtonEmployeeBinPage} onClick={() => returnBooks()} />
-                <CustomButton text={'Продлить'} styles={styles.customButtonEmployeeBinPage} onClick={() => extendBooks()} />
+        <>
+            <div className="container">
+                <div className={styles.buttonContainerEmployeeBinPage}>
+                    <CustomButton text={'Вернуть'} styles={styles.customButtonEmployeeBinPage} onClick={() => returnBooks()} />
+                    <CustomButton text={'Продлить'} styles={styles.customButtonEmployeeBinPage} onClick={() => extendBooks()} />
+                </div>
+                <CustomTable 
+                    headerData={EMPLOYEE_BIN_TABLE_HEADERS} 
+                    data={books.books} 
+                    isCheckboxColumnHidden={false}
+                    hiddenColumns={new Set<number>().add(0)}
+                    tableTitle={'Взятые книги'} 
+                    onCheckboxChanged={test} 
+                />
             </div>
-            <CustomTable 
-                headerData={EMPLOYEE_BIN_TABLE_HEADERS} 
-                data={books.books} 
-                isCheckboxColumnHidden={false}
-                hiddenColumns={new Set<number>().add(0)}
-                tableTitle={'Взятые книги'} 
-                onCheckboxChanged={test} 
-            />
-        </div>
+            <div className='messagePopupContainer'>
+                {responses.map(response => 
+                    <MessagePopup />
+                )}
+            </div>
+        </>
     )
 }
 

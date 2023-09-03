@@ -1,0 +1,32 @@
+.messagePopupHidden {
+    margin-left: -600px;
+    transition: all 0.3s ease 0s;
+}
+
+.messagePopup {
+    display: grid;
+    grid-template-columns: auto 30px;
+    padding: 10px 5px;
+    width: 100%;
+    margin-top: 10px;
+    margin-left: 0;
+}
+
+.messagePopupOk {
+    background-color: #B8DFC6;
+    border-bottom: 3px solid #2CA664;
+    color: #506C57;
+}
+
+.messagePopupError {
+    background-color: #FDE3DE;
+    border-bottom: 3px solid #D14C41;
+    color: #4E564D;
+}
+
+.closePopupImg {
+    width: 30px;
+    height: 30px;
+    margin-top: -3px;
+    cursor: pointer;
+}

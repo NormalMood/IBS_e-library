@@ -1,9 +1,10 @@
+import { FC } from 'react';
 import { TabsEnum } from "../../../@types/TabsEnum";
 import useCatalogStore from "../../../store/useCatalogStore";
 import CustomTab from "../../UI/CustomTab/CustomTab";
 import toolbarStyles from '../Toolbar/Toolbar.module.css';
 
-const AdminToolbar = () => {
+const AdminToolbar: FC = () => {
     const openTab = useCatalogStore(state => state.openTab)
     return (
         <section className={toolbarStyles.toolbarContainer}>
