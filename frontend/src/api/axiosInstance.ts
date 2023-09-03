@@ -6,6 +6,8 @@ const SERVER_URL = 'http://localhost:8080'
 
 export const BASE_EMPLOYEE_BIN_API = '/api/user/bin'
 
+export const BASE_ADMIN_API = '/api/admin'
+
 export const BASE_CATALOG_API = '/api/user/library'
 
 export const BASE_FILTERS_API = '/api/filters'

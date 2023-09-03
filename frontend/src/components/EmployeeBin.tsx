@@ -10,7 +10,7 @@ import MessagePopup from './UI/MessagePopup/MessagePopup';
 const MyBooks: FC = () => {
     const [books, setBooks] = useState<IEmployeeBin>({
         fullName: '',
-        books: [/*{
+        books: [{
             bookId: 11,
             title: 'test',
             author: 'test',
@@ -36,14 +36,14 @@ const MyBooks: FC = () => {
             actionsName: 'test',
             actionsDate: '2023-12-16',
             returnDate: '2023-12-17'
-        }*/],
+        }],
         pages: 0
     })
      useEffect(() => {
         getBooksTaken()
     }, [])
     const getBooksTaken = async () => {
-        setBooks(await EmployeeBinService.getBooksTaken())
+        //setBooks(await EmployeeBinService.getBooksTaken())
     }
     let booksIdSet = new Set<number>()
     const test = (value: boolean, tableRowIndex: number) => {

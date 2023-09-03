@@ -3,6 +3,7 @@ import { TabsEnum } from "../../../@types/TabsEnum";
 import useCatalogStore from "../../../store/useCatalogStore";
 import CustomTab from "../../UI/CustomTab/CustomTab";
 import toolbarStyles from '../Toolbar/Toolbar.module.css';
+import AdminPanelService from '../../../service/AdminPanelService';
 
 const AdminToolbar: FC = () => {
     const openTab = useCatalogStore(state => state.openTab)

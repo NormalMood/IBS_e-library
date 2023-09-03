@@ -1,5 +1,5 @@
 export const EMPLOYEE_BIN_TABLE_HEADERS = [
-   'id книги',
+   'id',
    'Название',
    'Автор',
    'Жанр',

@@ -61,7 +61,7 @@ const CustomTable: FC<ICustomTableProps> = ({headerData, data, tableTitle, isChe
                 </thead>
                 <tbody className={styles.tableBody}>
                     {data && data.map((dataRow, index) => 
-                            <tr key={dataRow}>
+                            <tr key={index}>
                                 {!isCheckboxColumnHidden &&
                                     <td className={styles.checkboxColumnRow}>
                                         <CustomCheckbox 
@@ -72,10 +72,11 @@ const CustomTable: FC<ICustomTableProps> = ({headerData, data, tableTitle, isChe
                                         />
                                     </td>
                                 }
-                                {dataRow && Object.values(dataRow).map((dataCell, index) =>
-                                        {!hiddenColumns.has(index) &&
-                                            <td key={dataCell as any}>{dataCell as string}</td>
-                                        }
+                                {dataRow && Object.values(dataRow as any).map((dataCell, dataRowIndex) => 
+                                    !hiddenColumns.has(dataRowIndex) ?      
+                                            <td key={dataRowIndex}>{dataCell as string}</td> 
+                                        :
+                                            null
                                     )}
                             </tr>
                         )

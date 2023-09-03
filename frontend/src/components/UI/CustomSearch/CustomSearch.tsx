@@ -55,7 +55,6 @@ const CustomSearch: FC = () => {
     }
     useEffect(() => {
         getBooksBySearchQueryRequest()
-        console.log(foundBooks)
     }, [searchQuery])
     const getBooksBySearchQueryRequest = async () => {
         if (searchQuery !== null && searchQuery !== '') {
