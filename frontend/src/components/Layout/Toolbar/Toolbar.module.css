@@ -23,7 +23,7 @@
     position: fixed;
     width: 100%;
     max-width: 1600px;
-    margin-top: 70px;
+    margin-top: 80px;
     background-color: #FFFFFF;
 }
 
@@ -35,7 +35,7 @@
 
 @media (min-width: 1024px) {
     .toolbarContainer {
-        margin-top: 90px;
+        margin-top: 100px;
     }
 }
 
@@ -50,4 +50,44 @@
 .toolBarToolActive {
     background-color: #000000;
     color: #FFFFFF;
+}
+
+
+
+@media (min-width: 425px) {
+    .toolBarCustomTab {
+        width: 100px;
+    }    
+}
+
+@media (min-width: 1024px) {
+    .toolBarCustomTab {
+        width: 110px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .toolBarCustomTab {
+        width: 125px;
+    }
+}
+
+
+
+@media (min-width: 425px) {
+    .toolBarFilterAndSortTab {
+        width: 100px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .toolBarFilterAndSortTab {
+        width: 110px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .toolBarFilterAndSortTab {
+        width: 125px;
+    }
 }

@@ -23,7 +23,7 @@
     .sidebar {
         height: fit-content;
         position: relative;
-        top: 96px;
+        top: 195px;
         max-width: 330px;
         border: 2px solid #CCD3F5;
         border-left: none;
@@ -33,14 +33,14 @@
 
 @media (min-width: 1024px) {
     .sidebar {
-        top: 171px;
+        top: 205px;
         max-width: 340px;
     }
 }
 
 @media (min-width: 1440px) {
     .sidebar {
-        top: 177px;
+        top: 225px;
         max-width: 360px;
     }
 }
@@ -71,11 +71,21 @@
     cursor: pointer;
 }
 
+
+
 .sidebarHeader {
     font-size: 18px;
     margin-left: 10px;
     font-weight: bold;
 }
+
+@media (min-width: 1440px) {
+    .sidebarHeader {
+        font-size: 20px;
+    }
+}
+
+
 
 .closeImgHeaderWrapper {
     display: flex;

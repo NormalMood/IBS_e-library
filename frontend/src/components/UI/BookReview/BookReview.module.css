@@ -44,9 +44,19 @@
     align-items: center;
 }
 
+
+
 .bookReviewHeaderRight > span {
-    font-size: 18px;
+    font-size: 20px;
 }
+
+@media (min-width: 1440px) {
+    .bookReviewHeaderRight > span {
+        font-size: 24px;
+    }
+}
+
+
 
 .bookReviewStars {
     width: 23px;

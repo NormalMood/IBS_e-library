@@ -89,6 +89,7 @@ const AdminPanel: FC = () => {
                                 value={bookId}
                                 placeholder={'id книги'} 
                                 onChangeHandler={customInputChangeHandler} 
+                                additionalStyles={styles.adminPanelCustomInput}
                             />
                         }
                         {openedTab === TabsEnum.ADMIN_PANEL_RETURN_DATE_STATUS &&

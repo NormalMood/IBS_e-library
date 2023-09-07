@@ -36,7 +36,88 @@ const MyBooks: FC = () => {
             actionsName: 'test',
             actionsDate: '2023-12-16',
             returnDate: '2023-12-17'
-        }],
+        },
+        {
+            bookId: 33,
+            title: 'test',
+            author: 'test',
+            genres: 'test',
+            actionsName: 'test',
+            actionsDate: '2023-12-16',
+            returnDate: '2023-12-17'
+        },
+      /*  {
+            bookId: 11,
+            title: 'test',
+            author: 'test',
+            genres: 'test',
+            actionsName: 'test',
+            actionsDate: '2023-12-12',
+            returnDate: '2023-12-13'
+        },
+        {
+            bookId: 22,
+            title: 'test',
+            author: 'test',
+            genres: 'test',
+            actionsName: 'test',
+            actionsDate: '2023-12-14',
+            returnDate: '2023-12-15'
+        },
+        {
+            bookId: 33,
+            title: 'test',
+            author: 'test',
+            genres: 'test',
+            actionsName: 'test',
+            actionsDate: '2023-12-16',
+            returnDate: '2023-12-17'
+        },
+        {
+            bookId: 33,
+            title: 'test',
+            author: 'test',
+            genres: 'test',
+            actionsName: 'test',
+            actionsDate: '2023-12-16',
+            returnDate: '2023-12-17'
+        },
+        {
+            bookId: 11,
+            title: 'test',
+            author: 'test',
+            genres: 'test',
+            actionsName: 'test',
+            actionsDate: '2023-12-12',
+            returnDate: '2023-12-13'
+        },
+        {
+            bookId: 22,
+            title: 'test',
+            author: 'test',
+            genres: 'test',
+            actionsName: 'test',
+            actionsDate: '2023-12-14',
+            returnDate: '2023-12-15'
+        },
+        {
+            bookId: 33,
+            title: 'test',
+            author: 'test',
+            genres: 'test',
+            actionsName: 'test',
+            actionsDate: '2023-12-16',
+            returnDate: '2023-12-17'
+        },
+        {
+            bookId: 33,
+            title: 'test',
+            author: 'test',
+            genres: 'test',
+            actionsName: 'test',
+            actionsDate: '2023-12-16',
+            returnDate: '2023-12-17'
+        }*/],
         pages: 0
     })
      useEffect(() => {

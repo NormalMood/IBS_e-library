@@ -1,11 +1,13 @@
 .newBookWrapper {
     display: flex;
+    width: 100%;
     justify-content: center;
+    margin-top: 20px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 650px) {
     .newBookWrapper {
-        margin-top: 20px;
+        justify-content: unset;
     }
 }
 
@@ -24,13 +26,14 @@
 
 
 .newBookContainer {
-    display: inline;
+    width: 100%;
 }
 
 
 
 .newBookInfoContainer {
     display: grid;
+    width: 100%;
     justify-items: center;
     grid-template-rows: repeat(3, auto);
     row-gap: 30px;
@@ -39,15 +42,15 @@
 @media (min-width: 650px) {
     .newBookInfoContainer {
         grid-template-rows: none;
-        grid-template-columns: 180px auto auto;
+        grid-template-columns: 180px 1fr 2fr;
         row-gap: unset;
-        column-gap: 20px;
+        column-gap: 30px;
     }
 }
 
 @media (min-width: 1024px) {
     .newBookInfoContainer {
-        column-gap: 40px;
+        column-gap: 90px;
     }
 }
 
@@ -71,13 +74,6 @@
     .newBookInputContainer {
         grid-template-rows: repeat(4, 35px);
         row-gap: 20px;
-        width: 150px;
-    }
-}
-
-@media (min-width: 1440px) {
-    .newBookInputContainer {
-        width: 200px;
     }
 }
 
@@ -86,31 +82,6 @@
 .newBookTextareaContainer {
     width: 100%;
 }
-
-@media (min-width: 650px) {
-    .newBookTextareaContainer {
-        width: 250px;
-    }
-}
-
-@media (min-width: 768px) {
-    .newBookTextareaContainer {
-        width: 350px;
-    }
-}
-
-@media (min-width: 1024px) {
-    .newBookTextareaContainer {
-        width: 450px;
-    }
-}
-
-@media (min-width: 1440px) {
-    .newBookTextareaContainer {
-        width: 600px;
-    }
-}
-
 
 
 
@@ -151,7 +122,7 @@
 @media (min-width: 650px) {
     .newBookButtonContainer {
         margin-top: 50px;
-        width: 150px;
+        width: 170px;
     }
 }
 

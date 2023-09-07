@@ -1,6 +1,14 @@
 .adminPanelContent {
-    margin-top: 200px;
+    margin-top: 120px;
 }
+
+@media (min-width: 425px) {
+    .adminPanelContent {
+        margin-top: 80px;
+    }
+}
+
+
 
 .tableToolContainer {
     display: flex;
@@ -11,4 +19,8 @@
 
 .tableToolContainer label {
     margin-right: 15px;
+}
+
+.adminPanelCustomInput {
+    max-width: 130px;
 }

@@ -38,7 +38,7 @@ const BookPage: FC = () => {
                     <img src='/img/cover.jpg' className={styles.backgroundCover} />
                     <div className={styles.backgroundMask}></div>
                     <div className={styles.bookTitleAuthorContainer}>
-                        <h2 className={styles.bookTitle}>Портрет Дориана Грея</h2>
+                        <span className={styles.bookTitle}>Портрет Дориана Грея</span>
                         <span>Оскар Уайльд</span>
                     </div>
                 </div>
@@ -47,12 +47,8 @@ const BookPage: FC = () => {
                         <div className={styles.bookCoverContainer}>
                             <img src='/img/cover.jpg' className={styles.bookCover} />
                         </div>
-                        <div 
-                            className={styles.reviewLinkContainer}
-                            onClick={() => navigate(`/book/${id}/review`)}
-                        >
-                            <img src='/img/add_review.png' className={styles.reviewLinkImg} />
-                            <span className={styles.reviewLinkText}>Написать<br />рецензию</span>
+                        <div className={styles.checkoutBookButtonContainer}>
+                            <CustomButton text={'Взять книгу'} onClick={() => {}} styles={styles.checkoutBookButton} />
                         </div>
                     </div>
                     <div className={styles.bookInfoContainer}>
@@ -70,8 +66,12 @@ const BookPage: FC = () => {
                                 <span>Зарубежная литература, Роман</span>
                             </div>
                         </div>
-                        <div className={styles.checkoutBookButtonContainer}>
-                            <CustomButton text={'Взять книгу'} onClick={() => {}} styles={styles.checkoutBookButton} />
+                        <div 
+                            className={styles.reviewLinkContainer}
+                            onClick={() => navigate(`/book/${id}/review`)}
+                        >
+                            <img src='/img/add_review.png' className={styles.reviewLinkImg} />
+                            <span className={styles.reviewLinkText}>Написать<br />рецензию</span>
                         </div>
                     </div>
                     <div className={styles.tabsContainer}>

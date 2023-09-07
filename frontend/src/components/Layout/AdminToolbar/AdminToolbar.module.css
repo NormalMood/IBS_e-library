@@ -1,0 +1,13 @@
+.adminToolbarContainer {
+    position: fixed;
+    width: 100%;
+    max-width: 1600px;
+    margin-top: 30px;
+    background-color: #FFFFFF;
+}
+
+@media (min-width: 900px) {
+    .adminToolbarContainer {
+        z-index: 2;
+    }
+}

@@ -1,6 +1,5 @@
 .customRadioButton {
     display: inline-flex;
-    font-size: 16px;
     cursor: pointer;
     width: fit-content;
     max-height: 25px;

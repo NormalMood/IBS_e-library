@@ -31,6 +31,7 @@ const Toolbar: FC = () => {
                             getAllBooks(getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder); 
                             openTab(TabsEnum.CATALOG_ALL_BOOKS)
                         }} 
+                        additionalStyles={styles.toolBarCustomTab}
                     />
                     <CustomTab 
                         id={TabsEnum.CATALOG_TOP_TEN} 
@@ -40,6 +41,7 @@ const Toolbar: FC = () => {
                             getTopTenBooks(getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder);
                             openTab(TabsEnum.CATALOG_TOP_TEN)
                         }} 
+                        additionalStyles={styles.toolBarCustomTab}
                     />
                 </div>
             </div>
@@ -48,12 +50,12 @@ const Toolbar: FC = () => {
                 <div className={styles.tabs}>
                     <FilterAndSortTab 
                         text={'Сортировка'}
-                        additionalStyle={toolClicked === CatalogToolsEnum.CATALOG_SORT && styles.toolBarToolActive}
+                        additionalStyles={[styles.toolBarFilterAndSortTab, toolClicked === CatalogToolsEnum.CATALOG_SORT && styles.toolBarToolActive].join(' ')}
                         onClickCallback={() => clickTool(CatalogToolsEnum.CATALOG_SORT)}
                     />
                     <FilterAndSortTab 
                         text={'Фильтр'} 
-                        additionalStyle={toolClicked === CatalogToolsEnum.CATALOG_FILTER && styles.toolBarToolActive}
+                        additionalStyles={[styles.toolBarFilterAndSortTab, toolClicked === CatalogToolsEnum.CATALOG_FILTER && styles.toolBarToolActive].join(' ')}
                         onClickCallback={() => clickTool(CatalogToolsEnum.CATALOG_FILTER)}
                     />
                 </div>

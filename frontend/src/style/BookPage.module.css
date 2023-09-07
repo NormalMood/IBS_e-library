@@ -39,10 +39,17 @@
     margin-left: 10px;
 }
 
+@media (min-width: 768px) {
+    .bookTitleAuthorContainer {
+        margin-left: 13px;
+    }
+}
+
 @media (min-width: 1440px) {
     .bookTitleAuthorContainer {
         padding-left: 230px;
-        padding-top: 20px;
+        padding-top: 20px;  
+        margin-bottom: 25px;
     }
 }
 
@@ -53,8 +60,24 @@
     text-shadow: -2px 2px 4px black;
 }
 
+@media (min-width: 1440px) {
+    .bookTitleAuthorContainer > * {
+        font-size: 20px;
+    }
+}
+
+
+
 .bookTitle {
     width: 100%;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+@media (min-width: 1440px) {
+    .bookTitle {
+        font-size: 24px;
+    }
 }
 
 
@@ -102,7 +125,6 @@
 .reviewLinkContainer {
     display: flex;
     align-items: center;
-    padding-top: 10px;
     cursor: pointer;
 }
 
@@ -113,7 +135,6 @@
 
 .reviewLinkText {
     margin-left: 10px;
-    font-size: 14px;
 }
 
 
@@ -173,10 +194,6 @@
 
 
 
-.bookInfoContainer > * {
-    font-size: 14px;
-}
-
 .averageRatingContainer {
     display: flex;
     height: fit-content;
@@ -189,7 +206,7 @@
 }
 
 .averageRatingValue {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: lighter;
 }
 
@@ -198,33 +215,14 @@
 .checkoutBookButtonContainer {
     display: flex;
     justify-content: center;
-}
-
-@media (min-width: 510px) {
-    .checkoutBookButtonContainer {
-        justify-content: left;
-    }
+    width: 100%;
 }
 
 
 
 .checkoutBookButton {
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-@media (min-width: 375px) {
-    .checkoutBookButton {
-        padding-left: 25px;
-        padding-right: 25px;
-    }
-}
-
-@media (min-width: 375px) {
-    .checkoutBookButton {
-        padding-left: 35px;
-        padding-right: 35px;
-    }
+    width: 90%;
+    margin-top: 10px;
 }
 
 
@@ -272,14 +270,14 @@
     .tabsContainer {
         padding-top: 0px;
         padding-bottom: 50px;
-        margin-top: -38px;
+        margin-top: -39px;
         grid-column: 2;
     }
 }
 
 @media (min-width: 1024px) {
     .tabsContainer {
-        margin-top: 10px;
+        margin-top: 15px;
     }
 }
 
@@ -288,7 +286,7 @@
 
 .bookPageCustomTab {
     width: 100%;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 @media (min-width: 510px) {
@@ -300,6 +298,7 @@
 @media (min-width: 768px) {
     .bookPageCustomTab {
         max-width: 162px;
+        font-size: 16px;
     }
 }
 

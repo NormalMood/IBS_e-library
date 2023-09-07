@@ -4,6 +4,13 @@
     box-sizing: border-box;
     font-family: 'Noto Sans';
     font-style: normal;
+    font-size: 16px;
+}
+
+@media (min-width: 1024px) {
+    * {
+        font-size: 18px;
+    }
 }
 
 .header {
@@ -17,7 +24,6 @@
 
 
 .navContainer {
-    height: 60px;
     position: relative;
 }
 
@@ -28,35 +34,21 @@
     left: 0;
     width: 100%;
     height: 100%;
-    /*background: linear-gradient(69deg, rgba(36,32,77,0.85) 53%, rgba(69,114,182,1) 100%);*/
     background: linear-gradient(69deg, rgba(68,65,103,1) 56%, rgba(68,112,178,1) 91%);
     z-index: 2;
 }
 
-@media (min-width: 768px) {
-    .navContainer {
-        height: 80px;
-    }
+main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
-
-@media (min-width: 1024px) {
-    .navContainer {
-        height: 90px;
-    }
-}
-
-@media (min-width: 1440px) {
-    .navContainer {
-        height: 140px;
-    }
-}
-
-
 
 .main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: unset;
     margin-top: 60px;
 }
 
@@ -69,12 +61,6 @@
 @media (min-width: 1024px) {
     .main {
         margin-top: 90px;
-    }
-}
-
-@media (min-width: 1440px) {
-    .main {
-        margin-top: 140px;
     }
 }
 

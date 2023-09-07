@@ -67,13 +67,13 @@ const Navbar: FC = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    {/* <Link 
+                                     {/* <Link 
                                         to='/new_book' 
                                         className={styles.navLink}
                                     >
                                         <img src='/img/add_books.png' className={styles.navLinkImg} />
                                         <span>Новая книга</span>
-                                    </Link> */}
+                                    </Link>  */}
                                     <Link 
                                         to='/admin_panel' 
                                         className={styles.navLink}

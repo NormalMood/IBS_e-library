@@ -4,14 +4,9 @@
     border: 0;
     cursor: pointer;
     padding: 10px 0;
-    font-size: 14px;
 }
 
-@media (min-width: 768px) {
-    .customButton {
-        font-size: 16px;
-    }
-}
+
 
 .customButton:hover {
     background-color: #001BA3;

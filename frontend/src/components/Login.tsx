@@ -25,27 +25,29 @@ const Login: FC = () => {
     return (
         <section className={classes.Login}>
             <div className={classes.background}>
-                <img src='/img/ibs_library_background.png' className={classes.backgroundImg} />
-                <div className={classes.backgroundContentContainer}>
-                    <span className={classes.backgroundImgText}>Библиотека</span>
-                    <img src='/img/ibs_logo.png' className={classes.backgroundLogo} />
-                    <img src='/img/book_shelf.png' className={classes.backgroundIcon} />
-                </div>
-                <div className={classes.inputAndButtonContainer}>
-                    <LoginPageInput type={'email'} placeholder={'E-mail'} value={username} setCredential={setUsername} />
-                    <LoginPageInput placeholder={'Пароль'} value={password} setCredential={setPassword} />
-                    <CustomButton text={'Войти'} styles={classes.customButtonLoginPage} onClick={async () => await submit()} />
+                <div className={classes.backgroundContentWrapper}>
+                    <div className={classes.inputAndButtonWrapper}>
+                        <div className={classes.inputAndButtonContainer}>
+                            <div className={classes.backgroundContentContainer}>
+                                <span className={classes.backgroundImgText}>Библиотека</span>
+                                <img src='/img/ibs_logo.png' className={classes.backgroundLogo} />
+                                <img src='/img/book_shelf.png' className={classes.backgroundIcon} />
+                            </div>
+                            <LoginPageInput type={'email'} placeholder={'E-mail'} value={username} setCredential={setUsername} />
+                            <LoginPageInput placeholder={'Пароль'} value={password} setCredential={setPassword} />
+                            <CustomButton text={'Войти'} styles={classes.customButtonLoginPage} onClick={async () => await submit()} />
+                        </div>
+                    </div>
+                    <div className={classes.greetingTextContainer}>
+                        <p className={classes.greetingText}>
+                            &emsp;<b>Добро пожаловать в электронную библиотеку IBS!</b> <br /> 
+                            &emsp;Смотрите книги в "Каталоге", берите их и оставляйте рецензии. <br />
+                            &emsp;Чтобы добавить в библиотеку свою книгу, зайдите в раздел "Новая книга". <br /> 
+                            &emsp;<b>Приятного чтения!</b>
+                        </p>
+                    </div>
                 </div>
             </div>
-            <p className={classes.greetingText}>
-                &emsp;<b>Добро пожаловать в электронную библиотеку IBS!</b> <br/>
-                &emsp;Вы можете посмотреть все книги в разделе "Каталог". Можно взять понравившиеся книги на один месяц, если они в наличии.
-                Имеется возможность продлить взятые книги один раз на две недели. После возврата можно взять ту же книгу, если никто ее не читает.
-                Также у Вас есть возможность оставлять рецензии, которые будут видны другим сотрудникам. При желании рецензии можно удалить. 
-                Если хотите отдать в библиотеку свою книгу, то необходимо заполнить информацию о ней в разделе "Новая книга". <br />
-                &emsp;Приятного чтения!
-            </p>
-
         </section>
     )
 }
