@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import styles from './Navbar.module.css';
 import { Link } from 'react-router-dom';
 import { logoutServer } from '../../../service/AuthService';
@@ -25,6 +25,12 @@ const Navbar: FC = () => {
     const setIsAuthCallback = (value: boolean) => {
         setIsAuth(value)
     }
+    useEffect(() => {
+        if (isBurgerOpened)
+            document.body.style.overflow = 'hidden'
+        else
+            document.body.style.overflow = 'visible'
+    }, [isBurgerOpened])
     return (
         <header className="header">
             <nav className="navContainer">

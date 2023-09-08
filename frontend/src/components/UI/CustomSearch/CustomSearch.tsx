@@ -110,32 +110,34 @@ const CustomSearch: FC = () => {
             <div className={getSearchPopupStyle()} ref={customSearchPopupRef} onClick={handleClickInside}>
                 <div className={styles.searchPopupContent}>
                 {
-                    foundBooks.map(foundBook => {
-                        return <article 
-                            className={styles.bookRowContainer}
-                            onClick={() => navigate(`/book/${foundBook.id}`)}
-                        >
-                            <div className={styles.bookCoverContainer}>
-                                <img src='/img/cover.jpg' className={styles.bookCover} />
-                            </div>
-                            <div className={styles.bookInfoContainer}>
-                                <h3>
-                                    {foundBook.title}
-                                </h3>
-                                <span>
-                                    {foundBook.author}
-                                </span>
-                                <span>
-                                    {foundBook.genres}
-                                </span>
-                                {foundBook.averageRating !== 0 &&
-                                    <div className={styles.averageRatingContainer}>
-                                        <img src='/img/star_filled.png' className={styles.averageRatingImg} />
-                                        {foundBook.averageRating}
-                                    </div>
-                                }
-                            </div>
-                        </article>
+                    foundBooks.map((foundBook, index) => {
+                        return index <= 4 ? <article 
+                                className={styles.bookRowContainer}
+                                onClick={() => navigate(`/book/${foundBook.id}`)}
+                            >
+                                <div className={styles.bookCoverContainer}>
+                                    <img src='/img/cover.jpg' className={styles.bookCover} />
+                                </div>
+                                <div className={styles.bookInfoContainer}>
+                                    <h3>
+                                        {foundBook.title}
+                                    </h3>
+                                    <span>
+                                        {foundBook.author}
+                                    </span>
+                                    <span>
+                                        {foundBook.genres}
+                                    </span>
+                                    {foundBook.averageRating !== 0 &&
+                                        <div className={styles.averageRatingContainer}>
+                                            <img src='/img/star_filled.png' className={styles.averageRatingImg} />
+                                            {foundBook.averageRating}
+                                        </div>
+                                    }
+                                </div>
+                            </article>
+                        :
+                            null
                     })
                 }
                 </div>

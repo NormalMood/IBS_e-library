@@ -17,6 +17,14 @@ import { ProvidersMap } from '../../../map/ProvidersMap';
 
 const Sidebar: FC = () => {
     const [isSidebarOpened, setIsSidebarOpened] = useState(false);
+
+    useEffect(() => {
+        if (isSidebarOpened)
+            document.body.style.overflow = 'hidden'
+        else
+            document.body.style.overflow = 'visible'
+    }, [isSidebarOpened])
+
     const toolClicked = useCatalogStore(state => state.toolClicked)
     const clickTool = useCatalogStore(state => state.clickTool)
     const getSidebarStyles = () => {
