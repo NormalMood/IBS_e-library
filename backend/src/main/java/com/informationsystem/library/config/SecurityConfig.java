@@ -1,15 +1,15 @@
 package com.informationsystem.library.config;
 
 import com.informationsystem.library.handler.CustomAuthenticationSuccessHandler;
+import com.informationsystem.library.handler.CustomLogoutHandler;
 import com.informationsystem.library.model.APIRoutes;
 import com.informationsystem.library.model.Role;
+import com.informationsystem.library.service.EmployeeService;
 
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -20,6 +20,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.session.data.redis.RedisIndexedSessionRepository;
 import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
@@ -28,6 +30,10 @@ import org.springframework.web.cors.CorsConfiguration;
 public class SecurityConfig {
 
     private final UserDetailsService employeeDetailsService;
+    
+    private final RedisIndexedSessionRepository sessionRepository;
+	
+   	private final EmployeeService employeeService;
     
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -44,6 +50,7 @@ public class SecurityConfig {
     			})
     			.and()
     			.csrf().disable()
+    			.addFilterBefore(new CookieExpiryFilter(), BasicAuthenticationFilter.class)
     			.authorizeHttpRequests(requests -> 
     					requests
     						.requestMatchers(APIRoutes.EMPLOYEE_BIN_CONTROLLER_MAPPING + "/**")
@@ -62,6 +69,7 @@ public class SecurityConfig {
     			.logout(configurer ->
     					configurer
     						.logoutSuccessUrl("/login")
+    						.addLogoutHandler(new CustomLogoutHandler(sessionRepository, employeeService))
     						.invalidateHttpSession(true)
     						.clearAuthentication(true)
     						.deleteCookies("SESSION"))

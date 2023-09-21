@@ -8,8 +8,10 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.informationsystem.library.model.CookieExpiry;
+
 @SpringBootApplication
-@EnableRedisIndexedHttpSession(maxInactiveIntervalInSeconds = 259200)
+@EnableRedisIndexedHttpSession(maxInactiveIntervalInSeconds = CookieExpiry.MAX_AGE)
 public class LibraryApplication {
 
 	public static void main(String[] args) {

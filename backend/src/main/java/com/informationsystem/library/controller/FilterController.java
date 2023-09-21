@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class FilterController {
 	
 	private final FilterService filterService;
-	
+
 	@GetMapping("/genres")
     public ResponseEntity<?> getAllGenres() {
         return ResponseEntity.ok(filterService.getAllGenres());
