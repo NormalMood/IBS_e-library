@@ -4,7 +4,7 @@ import classes from './CustomButton.module.css';
 
 interface CustomButtonProps {
     text: string;
-    styles?: React.HTMLAttributes<any>;
+    styles?: React.HTMLAttributes<any> | string;
     disabled?: boolean;
     type?: ButtonTypeEnum;
     onClick: () => void;

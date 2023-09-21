@@ -5,17 +5,19 @@ import CustomButton from './UI/CustomButton/CustomButton';
 import { loginServer } from '../service/AuthService';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { AdditionalHeaderContext } from '../context/AdditionalHeaderContext';
 
 const Login: FC = () => {
     const [username, setUsername] = useState<string>('ymvenediktov@ibs.ru')
     const navigate = useNavigate()
     const [password, setPassword] = useState<string>('user1')
     const {isAuth, setIsAuth} = useContext(AuthContext)
+    const [isLoading, setIsLoading] = useState(false)
     const submit = async () => {
+        setIsLoading(true)
         localStorage.setItem('username', username)
         localStorage.setItem('password', password)
         await loginServer(setIsAuthCallback)
+            .then(response => setIsLoading(false))
     }
     const setIsAuthCallback = (value: boolean) => {
         setIsAuth(value)
@@ -35,7 +37,11 @@ const Login: FC = () => {
                             </div>
                             <LoginPageInput type={'email'} placeholder={'E-mail'} value={username} setCredential={setUsername} />
                             <LoginPageInput placeholder={'Пароль'} value={password} setCredential={setPassword} />
-                            <CustomButton text={'Войти'} styles={classes.customButtonLoginPage} onClick={async () => await submit()} />
+                            {isLoading ?
+                                <CustomButton text={'Войти'} styles={[classes.customButtonLoginPage, classes.customButtonLoadingLoginPage].join(' ')} onClick={() => {}} disabled={true} />
+                                :
+                                <CustomButton text={'Войти'} styles={classes.customButtonLoginPage} onClick={async () => await submit()} />
+                            }
                         </div>
                     </div>
                     <div className={classes.greetingTextContainer}>

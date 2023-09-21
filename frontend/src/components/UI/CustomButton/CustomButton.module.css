@@ -1,5 +1,6 @@
 .customButton {
     background-color: #0022CC;
+    position: relative;
     color: white;
     border: 0;
     cursor: pointer;
