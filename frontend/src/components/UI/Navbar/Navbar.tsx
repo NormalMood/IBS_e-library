@@ -5,6 +5,7 @@ import { logoutServer } from '../../../service/AuthService';
 import { AuthContext } from '../../../context/AuthContext';
 import { AdditionalHeaderContext } from '../../../context/AdditionalHeaderContext';
 import Toolbar from '../../Layout/Toolbar/Toolbar';
+import useWindowWidth from '../../../hooks/useWindowWidth';
 
 const Navbar: FC = () => {
     const {isAuth, setIsAuth} = useContext(AuthContext)
@@ -25,12 +26,15 @@ const Navbar: FC = () => {
     const setIsAuthCallback = (value: boolean) => {
         setIsAuth(value)
     }
+
+    const isWidthLess = useWindowWidth(768)
+
     useEffect(() => {
-        if (isBurgerOpened)
-            document.body.style.overflow = 'hidden'
+        if (isBurgerOpened && isWidthLess)
+            document.documentElement.style.overflow = 'hidden'
         else
-            document.body.style.overflow = 'visible'
-    }, [isBurgerOpened])
+            document.documentElement.removeAttribute('style')
+    }, [isBurgerOpened, isWidthLess])
     return (
         <header className="header">
             <nav className="navContainer">

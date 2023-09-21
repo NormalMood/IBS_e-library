@@ -14,16 +14,20 @@ import { CatalogSortingFieldsEnum } from '../../../@types/CatalogSortingFieldsEn
 import { SortingOrdersEnum } from '../../../@types/SortingOrdersEnum';
 import useCatalogSortingStore from '../../../store/useCatalogSortingStore';
 import { ProvidersMap } from '../../../map/ProvidersMap';
+import useWindowWidth from '../../../hooks/useWindowWidth';
 
 const Sidebar: FC = () => {
     const [isSidebarOpened, setIsSidebarOpened] = useState(false);
+    
+    const isWidthLess = useWindowWidth(900)
 
     useEffect(() => {
-        if (isSidebarOpened)
+       if (isSidebarOpened && isWidthLess)
             document.body.style.overflow = 'hidden'
         else
-            document.body.style.overflow = 'visible'
-    }, [isSidebarOpened])
+            document.body.removeAttribute('style')
+    }, [isSidebarOpened, isWidthLess])
+
 
     const toolClicked = useCatalogStore(state => state.toolClicked)
     const clickTool = useCatalogStore(state => state.clickTool)
