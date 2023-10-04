@@ -159,6 +159,8 @@
     bottom: 0;
 }
 
+
+
 @media (min-width: 768px) {
     .navMenu {
         display: flex;
@@ -169,13 +171,7 @@
         top: 0;
         justify-content: center;
         align-items: center;
-        width: 360px;
-    }
-}
-
-@media (min-width: 1440px) {
-    .navMenu {
-        width: 380px;
+        width: fit-content;
     }
 }
 
