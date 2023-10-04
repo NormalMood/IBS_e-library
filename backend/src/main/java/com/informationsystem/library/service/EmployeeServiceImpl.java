@@ -2,6 +2,7 @@ package com.informationsystem.library.service;
 
 import com.informationsystem.library.dto.response.BinBooksResponseDTO;
 import com.informationsystem.library.dto.response.EmployeeBinResponseDTO;
+import com.informationsystem.library.dto.response.EmployeeResponseDTO;
 import com.informationsystem.library.dto.response.ForbiddenExtendingsResponseDTO;
 import com.informationsystem.library.dto.response.ObjectResponseDTO;
 import com.informationsystem.library.dto.response.StatusResponseDTO;
@@ -57,6 +58,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee getCurrentEmployee() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return employeeRepository.findByEmail(email);
+    }
+    
+    @Override
+    public EmployeeResponseDTO getUserData() {
+    	Employee currentEmployee = getCurrentEmployee();
+    	return new EmployeeResponseDTO(
+    			currentEmployee.getFullName(), 
+    			currentEmployee.getRole(), 
+    			currentEmployee.getPosition()
+    	);
     }
 
     //EmployeeBinController

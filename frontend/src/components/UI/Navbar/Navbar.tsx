@@ -6,6 +6,8 @@ import { AuthContext } from '../../../context/AuthContext';
 import { AdditionalHeaderContext } from '../../../context/AdditionalHeaderContext';
 import Toolbar from '../../Layout/Toolbar/Toolbar';
 import useWindowWidth from '../../../hooks/useWindowWidth';
+import EmployeeService from '../../../service/EmployeeService';
+import { EmployeeDataEnum } from '../../../@types/EmployeeDataEnum';
 
 const Navbar: FC = () => {
     const {isAuth, setIsAuth} = useContext(AuthContext)
@@ -35,6 +37,14 @@ const Navbar: FC = () => {
         else
             document.documentElement.removeAttribute('style')
     }, [isBurgerOpened, isWidthLess])
+
+    useEffect(() => {
+        const setUserData = async () => {
+            await EmployeeService.setUserData()
+        }
+        setUserData()
+    }, [])
+    
     return (
         <header className="header">
             <nav className="navContainer">
@@ -46,8 +56,8 @@ const Navbar: FC = () => {
                                 className={styles.profileImage}
                             />
                             <div className={styles.employeesInfoContainer}>
-                                        <span className={styles.employeesName}>Венедиктов Юрий Михайлович</span>
-                                        <span className={styles.employeesPosition}>frontend - разработчик</span>
+                                        <span className={styles.employeesName}>{localStorage.getItem(EmployeeDataEnum.FULLNAME.toString())}</span>
+                                        <span className={styles.employeesPosition}>{localStorage.getItem(EmployeeDataEnum.POSITION.toString())}</span>
                             </div>
                         </div>
                         <div 

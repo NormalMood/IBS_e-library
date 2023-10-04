@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.RedisHash;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.informationsystem.library.model.Position;
 import com.informationsystem.library.model.Role;
 
 import jakarta.persistence.Column;
@@ -44,6 +45,9 @@ public class Employee implements UserDetails {
 
     @Enumerated(value = EnumType.STRING)
     private Role role;
+    
+    @Enumerated(value = EnumType.STRING)
+    private Position position;
 
     public String getFullName(){
         return getLastName() + " "

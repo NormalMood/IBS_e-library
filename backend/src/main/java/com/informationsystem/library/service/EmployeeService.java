@@ -1,6 +1,7 @@
 package com.informationsystem.library.service;
 
 import com.informationsystem.library.dto.response.EmployeeBinResponseDTO;
+import com.informationsystem.library.dto.response.EmployeeResponseDTO;
 import com.informationsystem.library.dto.response.ObjectResponseDTO;
 import com.informationsystem.library.dto.response.StatusResponseDTO;
 import com.informationsystem.library.entity.Employee;
@@ -13,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 public interface EmployeeService {
 
     Employee getCurrentEmployee();
+    
+    EmployeeResponseDTO getUserData();
 
     EmployeeBinResponseDTO getBinData(Pageable pageable);
 
