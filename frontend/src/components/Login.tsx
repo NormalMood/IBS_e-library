@@ -1,10 +1,11 @@
-import React, { FC, useContext, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import classes from '../style/Login.module.css';
 import LoginPageInput from './UI/LoginPageInput/LoginPageInput';
 import CustomButton from './UI/CustomButton/CustomButton';
 import { loginServer } from '../service/AuthService';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import EmployeeService from '../service/EmployeeService';
 
 const Login: FC = () => {
     const [username, setUsername] = useState<string>('ymvenediktov@ibs.ru')
@@ -19,10 +20,13 @@ const Login: FC = () => {
         await loginServer(setIsAuthCallback)
             .then(response => setIsLoading(false))
     }
-    const setIsAuthCallback = (value: boolean) => {
-        setIsAuth(value)
-        if (value)
+    const setIsAuthCallback = async (isAuth: boolean) => {
+        setIsAuth(isAuth)
+        if (isAuth) 
             navigate('/my_books')
+    }
+    const getUserData = async () => {
+        return await EmployeeService.getUserData()
     }
     return (
         <section className={classes.Login}>

@@ -1,13 +1,13 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import styles from './Navbar.module.css';
 import { Link } from 'react-router-dom';
 import { logoutServer } from '../../../service/AuthService';
 import { AuthContext } from '../../../context/AuthContext';
-import { AdditionalHeaderContext } from '../../../context/AdditionalHeaderContext';
-import Toolbar from '../../Layout/Toolbar/Toolbar';
 import useWindowWidth from '../../../hooks/useWindowWidth';
 import EmployeeService from '../../../service/EmployeeService';
-import { EmployeeDataEnum } from '../../../@types/EmployeeDataEnum';
+import { RolesEnum } from '../../../@types/RolesEnum';
+import { PositionsMap } from '../../../map/PositionsMap';
+import useEmployeeDataStore from '../../../store/useEmployeeDataStore';
 
 const Navbar: FC = () => {
     const {isAuth, setIsAuth} = useContext(AuthContext)
@@ -25,8 +25,8 @@ const Navbar: FC = () => {
     const logout = async () => {
         await logoutServer(setIsAuthCallback)
     }
-    const setIsAuthCallback = (value: boolean) => {
-        setIsAuth(value)
+    const setIsAuthCallback = (isAuth: boolean) => {
+        setIsAuth(isAuth)
     }
 
     const isWidthLess = useWindowWidth(768)
@@ -38,9 +38,21 @@ const Navbar: FC = () => {
             document.documentElement.removeAttribute('style')
     }, [isBurgerOpened, isWidthLess])
 
+    const employeeFullName = useEmployeeDataStore(state => state.fullName)
+    const setFullName = useEmployeeDataStore(state => state.setFullName)
+
+    const employeePosition = useEmployeeDataStore(state => state.position)
+    const setPosition = useEmployeeDataStore(state => state.setPosition)
+
+    const isAdmin = useEmployeeDataStore(state => state.isAdmin)
+    const setIsAdmin = useEmployeeDataStore(state => state.setIsAdmin)
+
     useEffect(() => {
         const setUserData = async () => {
-            await EmployeeService.setUserData()
+            const userData = await EmployeeService.getUserData()
+            setFullName(userData.fullName)
+            setPosition(userData.position)
+            setIsAdmin(userData.isAdmin)
         }
         setUserData()
     }, [])
@@ -56,8 +68,8 @@ const Navbar: FC = () => {
                                 className={styles.profileImage}
                             />
                             <div className={styles.employeesInfoContainer}>
-                                        <span className={styles.employeesName}>{localStorage.getItem(EmployeeDataEnum.FULLNAME.toString())}</span>
-                                        <span className={styles.employeesPosition}>{localStorage.getItem(EmployeeDataEnum.POSITION.toString())}</span>
+                                        <span className={styles.employeesName}>{employeeFullName}</span>
+                                        <span className={styles.employeesPosition}>{employeePosition}</span>
                             </div>
                         </div>
                         <div 
@@ -95,16 +107,18 @@ const Navbar: FC = () => {
                                         <span>Новая книга</span>
                                     </Link>
                                 </li>
-                                <li>
-                                    <Link 
-                                        to='/admin_panel' 
-                                        className={styles.navLink}
-                                        onClick={e => {}}
-                                    >
-                                        <img src='/img/admin_panel.png' className={styles.navLinkImg} />
-                                        <span>Админка</span>
-                                    </Link>
-                                </li>
+                                {isAdmin && 
+                                    <li>
+                                        <Link 
+                                            to='/admin_panel' 
+                                            className={styles.navLink}
+                                            onClick={e => {}}
+                                        >
+                                            <img src='/img/admin_panel.png' className={styles.navLinkImg} />
+                                            <span>Админка</span>
+                                        </Link>
+                                    </li>
+                                }
                                 <li> 
                                     <Link to='/login' className={styles.navLink} onClick={async () => await logout()}>
                                         <img src='/img/logout.png' className={styles.navLinkImg} />

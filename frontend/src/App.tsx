@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import Login from './components/Login';
-import { BrowserRouter, Outlet, Route, Router, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import AppRouter from './components/AppRouter';
 import Navbar from './components/UI/Navbar/Navbar';
 import { AuthContext } from './context/AuthContext';
-import { AdditionalHeaderContext } from './context/AdditionalHeaderContext';
+import { AxiosInterceptor } from './api/AxiosInterceptor';
 
 function App() {
   const [isAuth, setIsAuth] = useState(false)
-  const [isAdditionalHeaderHidden, setIsAdditionalHeaderHidden] = useState(true)
   useEffect(() => {
     if (localStorage.getItem('isAuth'))
       setIsAuth(true)
@@ -20,17 +18,16 @@ function App() {
       isAuth,
       setIsAuth
     }}>
+      <AxiosInterceptor>
+
       <BrowserRouter>
         {isAuth && 
-          <AdditionalHeaderContext.Provider value={{
-            isAdditionalHeaderHidden,
-            setIsAdditionalHeaderHidden
-          }}>
-            <Navbar />
-          </AdditionalHeaderContext.Provider>
+          
+          <Navbar />
         }
         <AppRouter />
       </BrowserRouter>
+      </AxiosInterceptor>
     </AuthContext.Provider>
   );
 }
