@@ -40,3 +40,9 @@
     display: flex;
     justify-content: center;
 }
+
+.booksPaginationElement {
+    display: flex;
+    background-color: transparent;
+    height: 20px;
+}

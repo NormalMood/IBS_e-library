@@ -19,6 +19,7 @@ const Toolbar: FC = () => {
     const averageRatingTo = useCatalogFilterStore(state => state.averageRatingTo)
     let sortingField = useCatalogSortingStore(state => state.sortingField)
     let sortingOrder = useCatalogSortingStore(state => state.sortingOrder)
+
     return (
         <section className={styles.toolbarContainer}>
             <div className={styles.tabsWrapper}>
@@ -28,8 +29,8 @@ const Toolbar: FC = () => {
                         name={'topGroup'} 
                         text={'Все книги'} 
                         onClickCallback={() => {
-                            getAllBooks(getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder); 
                             openTab(TabsEnum.CATALOG_ALL_BOOKS)
+                            getAllBooks(getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder, 0); 
                         }} 
                         additionalStyles={styles.toolBarCustomTab}
                     />

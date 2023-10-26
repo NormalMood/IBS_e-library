@@ -225,11 +225,12 @@ const Sidebar: FC = () => {
     const resetSorting = useCatalogSortingStore(state => state.resetSorting)
     const resetSelectedSorting = useCatalogSortingStore(state => state.resetSelectedSorting)
 
+
     const toolsOptionClickHandler = () => {
         if (openedTab === TabsEnum.CATALOG_TOP_TEN)
             getTopTenBooks(getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder)
         else if (openedTab === TabsEnum.CATALOG_ALL_BOOKS) {
-            getAllBooks(getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder)
+            getAllBooks(getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder, 0)
         }
     }
 

@@ -19,12 +19,15 @@ export default class CatalogService {
         averageRatingFrom: string, 
         averageRatingTo: string,
         sortingField: CatalogSortingFieldsEnum,
-        sortingOrder: SortingOrdersEnum
+        sortingOrder: SortingOrdersEnum,
+        page: number
     ) {
         const response = await axiosInstance.get<ICatalog>(
             BASE_CATALOG_API + '/all',
             {
                 params: {
+                    page: page,
+                    size: 5,
                     genres: Array.from(filterCriteria.get(FilterKeysEnum.GENRES) as Set<string>).join(','),
                     providers: Array.from(filterCriteria.get(FilterKeysEnum.PROVIDERS) as Set<string>).join(','),
                     status: Array.from(filterCriteria.get(FilterKeysEnum.STATUS) as Set<string>).join(','),

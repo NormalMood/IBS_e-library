@@ -14,7 +14,6 @@ const AxiosInterceptor: FC<IAxiosInterceptorProps> = ({children}) => {
     useEffect(() => {
         const responseInterceptor = (response: any) => {
             if (response?.request?.responseURL === FETCH_ERROR_RESPONSE_URL) {
-                console.log('oooooooooooooooooooops!')
                 setIsAuth(false)
             }
             return response

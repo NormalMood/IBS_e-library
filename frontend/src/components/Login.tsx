@@ -5,13 +5,12 @@ import CustomButton from './UI/CustomButton/CustomButton';
 import { loginServer } from '../service/AuthService';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import EmployeeService from '../service/EmployeeService';
 
 const Login: FC = () => {
     const [username, setUsername] = useState<string>('ymvenediktov@ibs.ru')
     const navigate = useNavigate()
     const [password, setPassword] = useState<string>('user1')
-    const {isAuth, setIsAuth} = useContext(AuthContext)
+    const { setIsAuth} = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(false)
     const submit = async () => {
         setIsLoading(true)
@@ -24,9 +23,6 @@ const Login: FC = () => {
         setIsAuth(isAuth)
         if (isAuth) 
             navigate('/my_books')
-    }
-    const getUserData = async () => {
-        return await EmployeeService.getUserData()
     }
     return (
         <section className={classes.Login}>

@@ -11,7 +11,11 @@ import { SortingOrdersEnum } from '../@types/SortingOrdersEnum';
 
 interface IUseCatalogStoreState {
     books: IBookCatalog[];
+    totalPages: number;
+    isBooksLoading: boolean;
     setBooks: (books: IBookCatalog[]) => void;
+    page: number;
+    setPage: (page: number) => void;
     openedTab: TabsEnum;
     toolClicked: CatalogToolsEnum;
     getAllBooks: (
@@ -19,7 +23,8 @@ interface IUseCatalogStoreState {
         averageRatingFrom: string, 
         averageRatingTo: string,
         sortingField: CatalogSortingFieldsEnum,
-        sortingOrder: SortingOrdersEnum
+        sortingOrder: SortingOrdersEnum,
+        page: number
     ) => {};
     getTopTenBooks: (
         filterCriteria: Map<FilterKeysEnum, Set<string>>, 
@@ -32,10 +37,16 @@ interface IUseCatalogStoreState {
     clickTool: (tool: CatalogToolsEnum) => void;
 }
 
-const useCatalogStore = create<IUseCatalogStoreState>((set) => ({
+const useCatalogStore = create<IUseCatalogStoreState>((set, get) => ({
     books: [],
+    totalPages: -1,
+    isBooksLoading: false,
     setBooks: (books: IBookCatalog[]) => {
         set({ books: books })
+    },
+    page: 0,
+    setPage: (page: number) => {
+        set({ page: page })
     },
     openedTab: TabsEnum.CATALOG_ALL_BOOKS,
     toolClicked: CatalogToolsEnum.DEFAULT_NONE,
@@ -44,17 +55,31 @@ const useCatalogStore = create<IUseCatalogStoreState>((set) => ({
         averageRatingFrom: string, 
         averageRatingTo: string,
         sortingField: CatalogSortingFieldsEnum,
-        sortingOrder: SortingOrdersEnum
+        sortingOrder: SortingOrdersEnum,
+        page: number
         ) => {
-        const data = await CatalogService
+        set({ page: page })
+        console.log('page 0? -> ' + page)
+        console.log('books: ' + get().books)
+        set({ isBooksLoading: true })
+        await CatalogService
             .getAllBooks(
                 filterCriteria, 
                 averageRatingFrom, 
                 averageRatingTo, 
                 sortingField, 
-                sortingOrder
-            )
-        set({ books: data.objects })
+                sortingOrder,
+                page
+            ).then(response => {
+                set({ isBooksLoading: false })
+                set({ totalPages: response.pages })
+                if (page === 0)
+                    set({ books: response.objects })
+                else
+                    set({ books: [...get().books, ...response.objects] })
+            })
+        
+        console.log(get().books)
     },
     getTopTenBooks: async (
         filterCriteria: Map<FilterKeysEnum, Set<string>>, 
