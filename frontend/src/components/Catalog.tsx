@@ -34,17 +34,17 @@ const Catalog: FC = () => {
 
     const setAllGenres =  async () => {
         const genres = await FiltersService.getAllGenres()
-        setGenresTitles(genres)
+        setGenresTitles(genres.map(genre => genre.genre))
     }
 
     const setAllProviders = async () => {
         const providers = await FiltersService.getAllProviders()
-        setProvidersTitles(providers)
+        setProvidersTitles(providers.map(provider => provider.name))
     }
 
     const setAllStatuses = async () => {
         const statuses = await FiltersService.getAllStatuses()
-        setStatusesTitles(statuses)
+        setStatusesTitles(statuses.map(status => status.name))
     }
     
     return (

@@ -9,9 +9,10 @@ interface ICheckboxListLayoutProps {
     isChecked : boolean[];
     onSelectAllHandler: (value: boolean, rowIndex: number) => void;
     onCheckboxChangeHandler: (value: boolean, rowIndex: number) => void;
+    additionalStyles?: React.HTMLAttributes<any> | string;
 }
 
-const CheckboxListLayout: FC<ICheckboxListLayoutProps> = ({header, content, isCheckedAll, isChecked, onSelectAllHandler, onCheckboxChangeHandler}) => {
+const CheckboxListLayout: FC<ICheckboxListLayoutProps> = ({header, content, isCheckedAll, isChecked, onSelectAllHandler, onCheckboxChangeHandler, additionalStyles}) => {
     const [isListClosed, setIsListClosed] = useState(true);
     const [isShowAllClicked, setIsShowAllClicked] = useState(false)
     
@@ -37,7 +38,7 @@ const CheckboxListLayout: FC<ICheckboxListLayoutProps> = ({header, content, isCh
         return null
     }
     return (
-        <article className={styles.listLayoutContainer}>
+        <article className={[styles.listLayoutContainer, additionalStyles].join(' ')}>
             <div className={styles.listLayoutHeader}>
                 {header}
                 <div className={styles.toggleWrapper} onClick={() => setIsListClosed(!isListClosed)}>

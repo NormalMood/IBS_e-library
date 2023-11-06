@@ -1,11 +1,14 @@
 import { FC } from 'react';
 import styles from './CustomFileInput.module.css';
+import useCoverStore from '../../../store/useCoverStore';
 
 const CustomFileInput: FC = () => {
+    const setCover = useCoverStore(state => state.setCover);
     const setPreviewImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (FileReader && e.target.files !== null && e.target.files[0] !== undefined) {
             const fileReader = new FileReader()
             fileReader.readAsDataURL(e.target.files[0])
+            setCover(e.target.files[0])
             fileReader.onload = (onloadEvent) => {
                 const image = new Image()
                 image.src = onloadEvent.target?.result as string
@@ -19,8 +22,7 @@ const CustomFileInput: FC = () => {
         <label htmlFor='image' className={styles.customFileInput}>
             <div className={styles.backgroundContentContainer}>
                 <span>Загрузите</span>
-                <span>или</span>
-                <span>перетащите*</span>
+                <span>обложку*</span>
                 <img src='/img/image_upload.png' className={styles.customFileInputImg} />
             </div>
             <img id='previewImage' className={styles.previewImage} />
