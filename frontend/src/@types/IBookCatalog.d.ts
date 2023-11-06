@@ -5,5 +5,7 @@ export interface IBookCatalog {
     genres: string;
     provider: string;
     status: string;
+    coverName: string;
     averageRating: number;
+    description: string;
 }

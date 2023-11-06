@@ -21,8 +21,6 @@ const CatalogBooks = () => {
 
     const isBooksLoading = useCatalogStore(state => state.isBooksLoading)
 
-   // const [books, setBooks] = useState<IBookCatalog[]>([])
-
     const getFilterCriteria = useCatalogFilterStore(state => state.getFilterCriteria)
     let averageRatingFrom = useCatalogFilterStore(state => state.averageRatingFrom)
     let averageRatingTo = useCatalogFilterStore(state => state.averageRatingTo)
@@ -79,6 +77,7 @@ const CatalogBooks = () => {
                                 title={book?.title}
                                 author={book?.author}
                                 averageRating={book?.averageRating}
+                                coverName={book?.coverName}
                             />)
                         }
                     </div>
