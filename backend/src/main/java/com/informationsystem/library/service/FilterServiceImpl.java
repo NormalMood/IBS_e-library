@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.informationsystem.library.entity.Providers;
+import com.informationsystem.library.entity.Statuses;
+import com.informationsystem.library.entity.VGenres;
 import com.informationsystem.library.repository.ProvidersRepository;
 import com.informationsystem.library.repository.StatusesRepository;
 import com.informationsystem.library.repository.VGenresRepository;
@@ -21,18 +24,18 @@ public class FilterServiceImpl implements FilterService {
 	private final StatusesRepository statusesRepository;
 	
 	@Override
-	public List<String> getAllGenres() {
-		return vGenresRepository.findAllGenre();
+	public List<VGenres> getAllGenres() {
+		return vGenresRepository.findAll();
 	}
 
 	@Override
-	public List<String> getAllProviders() {
-		return providersRepository.findAllName();
+	public List<Providers> getAllProviders() {
+		return providersRepository.findAll();
 	}
 
 	@Override
-	public List<String> getAllStatuses() {
-		return statusesRepository.findAllName();
+	public List<Statuses> getAllStatuses() {
+		return statusesRepository.findAll();
 	}
 
 }

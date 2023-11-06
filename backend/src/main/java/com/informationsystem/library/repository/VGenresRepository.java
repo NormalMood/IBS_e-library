@@ -11,7 +11,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VGenresRepository extends JpaRepository<VGenres, Long> {
 	
-	@Query(value = "SELECT genre FROM v_genres", nativeQuery = true)
-	List<String> findAllGenre();
-	
 }

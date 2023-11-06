@@ -28,5 +28,9 @@ public class VBooks {
     private String provider;
 
     private String status;
+    
+    private String coverName;
+    
+    private String description;
 
 }

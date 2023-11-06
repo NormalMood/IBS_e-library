@@ -21,8 +21,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
+import static com.informationsystem.library.model.ImageContentTypeMapper.contentTypeToFileExtension;;
 
 @Service
 @RequiredArgsConstructor
@@ -50,32 +57,84 @@ public class NewBooksServiceImpl implements NewBooksService {
 
     @Override
     public StatusResponseDTO addBook(NewBooksUserRequestDTO newBookRequest) {
-    	System.out.println("in addbook");
-        Books book = newBooksUserRequestMapper.newBooksUserRequestToBooks(newBookRequest);
-        System.out.println("mapped to book");
-        saveBook(book, newBookRequest.getGenresIds());
-        System.out.println("book saved");
-        return new StatusResponseDTO("Books were added",
-                HttpStatus.OK, HttpStatus.OK.value());
+    	if (new File("C:/Library_project/IBS_e-library/backend/src/main/resources/covers/" + newBookRequest.getCoverName()).isFile()) {
+    		Books book = newBooksUserRequestMapper.newBooksUserRequestToBooks(newBookRequest);
+            saveBook(book, newBookRequest.getGenresIds());
+            return new StatusResponseDTO(
+        		"Книга была добавлена",
+                HttpStatus.OK, 
+                HttpStatus.OK.value()
+            );
+    	}
+        return new StatusResponseDTO(
+        		"Нет обложки с таким именем",
+        	    HttpStatus.BAD_REQUEST, 
+        	    HttpStatus.BAD_REQUEST.value()
+        	);
     }
 
     @Override
     public StatusResponseDTO addBook(NewBooksAdminRequestDTO newBookRequest) {
-        Books book = newBooksAdminRequestMapper
-                .newBooksAdminRequestToBooks(newBookRequest);
-        saveBook(book, newBookRequest.getGenresIds());
-        return new StatusResponseDTO("Books were added",
-                HttpStatus.OK, HttpStatus.OK.value());
+    	if (new File("C:/Library_project/IBS_e-library/backend/src/main/resources/covers/" + newBookRequest.getCoverName()).isFile()) {
+    		Books book = newBooksAdminRequestMapper
+    		    .newBooksAdminRequestToBooks(newBookRequest);
+    		saveBook(book, newBookRequest.getGenresIds());
+    		return new StatusResponseDTO(
+    			"Книга была добавлена",
+    			HttpStatus.OK, 
+    			HttpStatus.OK.value()
+    		);
+    	}
+    	return new StatusResponseDTO(
+    		"Нет обложки с таким именем",
+    	    HttpStatus.BAD_REQUEST, 
+    	    HttpStatus.BAD_REQUEST.value()
+    	);
     }
 
 	@Override
-	public void saveBook(Books book, List<Short> genresIds) {
+	public void saveBook(Books book, Set<Short> genresIds) {
 		Books addedBook = booksRepository.save(book);
-		System.out.println("added book");
         for (Short genreId : genresIds) {
             booksGenresRepository.save(new BooksGenres(addedBook.getId(), genreId));
         }
-        System.out.println("add genre");
+	}
+
+	@Override
+	public StatusResponseDTO saveCover(MultipartFile cover) {
+		if (!cover.isEmpty()) {
+			if (contentTypeToFileExtension.containsKey(cover.getContentType())) {
+				String coverName = UUID.randomUUID().toString() + contentTypeToFileExtension.get(cover.getContentType());
+				File destination = new File(
+		   		    	"C:/Library_project/IBS_e-library/backend/src/main/resources/covers/" 
+		   		    	+ coverName
+		   		    );
+				try {
+					cover.transferTo(destination);
+				} catch (IllegalStateException | IOException e) {
+					return new StatusResponseDTO(
+						"Не удалось сохранить обложку", 
+						HttpStatus.INTERNAL_SERVER_ERROR, 
+						HttpStatus.INTERNAL_SERVER_ERROR.value()
+					);
+				}
+				return new StatusResponseDTO(
+					coverName, 
+					HttpStatus.OK,
+	                HttpStatus.OK.value()
+		        );
+			}
+			return new StatusResponseDTO(
+				"Выберите обложку в формате png или jpg", 
+				HttpStatus.UNSUPPORTED_MEDIA_TYPE, 
+				HttpStatus.UNSUPPORTED_MEDIA_TYPE.value()
+			);
+   		}
+		return new StatusResponseDTO(
+			"Выберите обложку", 
+			HttpStatus.BAD_REQUEST, 
+			HttpStatus.BAD_REQUEST.value()
+		);
 	}
 	
 }

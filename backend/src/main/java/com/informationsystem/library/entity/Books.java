@@ -34,15 +34,21 @@ public class Books {
 
     @Column(name = "statuses_num")
     private Short statusesId;
+    
+    private String coverName;
+    
+    private String description;
 
     public Books(String title, String lastName, String firstName,
-                 String fatherName, Short providersId, Short statusesId){
+                 String fatherName, Short providersId, Short statusesId, String coverName, String description){
         this.title = title;
         this.lastName = lastName;
         this.firstName = firstName;
         this.fatherName = fatherName;
         this.providersId = providersId;
         this.statusesId = statusesId;
+        this.coverName = coverName;
+        this.description = description;
     }
 
 }

@@ -2,12 +2,16 @@ package com.informationsystem.library.service;
 
 import java.util.List;
 
+import com.informationsystem.library.entity.Providers;
+import com.informationsystem.library.entity.Statuses;
+import com.informationsystem.library.entity.VGenres;
+
 public interface FilterService {
 	
-	List<String> getAllGenres();
+	List<VGenres> getAllGenres();
 	
-	List<String> getAllProviders();
+	List<Providers> getAllProviders();
 	
-	List<String> getAllStatuses();
+	List<Statuses> getAllStatuses();
 
 }
