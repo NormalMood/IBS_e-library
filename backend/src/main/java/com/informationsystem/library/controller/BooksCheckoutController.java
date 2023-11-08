@@ -47,6 +47,11 @@ public class BooksCheckoutController {
         		);
     }
     
+    @GetMapping("/book")
+    public ResponseEntity<?> getBookDataById(@RequestParam Long bookId) {
+    	return ResponseEntity.ok(employeeService.getBookDataById(bookId));
+    }
+    
     @GetMapping("/top-10")
     public ResponseEntity<?> getTop10Books(Pageable pageable) {
     	return ResponseEntity.ok(employeeService.getTop10Books(pageable));

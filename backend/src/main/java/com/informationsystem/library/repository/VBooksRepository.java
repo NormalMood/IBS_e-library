@@ -57,4 +57,7 @@ public interface VBooksRepository extends PagingAndSortingRepository<VBooks, Lon
     		Float averageRatingTo,
     		Pageable pageable
 			);
+    
+    VBooks findById(Long id);
+    
 }

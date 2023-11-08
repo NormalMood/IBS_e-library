@@ -240,6 +240,11 @@ public class EmployeeServiceImpl implements EmployeeService {
                 HttpStatus.OK, HttpStatus.OK.value());
     }
 
+	@Override
+	public VBooks getBookDataById(Long bookId) {
+		return vBooksRepository.findById(bookId);
+	}
+
     //////////////////////
 
 }

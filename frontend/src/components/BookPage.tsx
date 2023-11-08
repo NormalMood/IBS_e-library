@@ -7,6 +7,9 @@ import { TabsEnum } from '../@types/TabsEnum';
 import useCatalogStore from '../store/useCatalogStore';
 import { IBookReview } from '../@types/IBookReview';
 import BookReview from './UI/BookReview/BookReview';
+import CatalogService from '../service/CatalogService';
+import { CUSTOM_BLOB_SERVER_URL } from '../api/axiosInstance';
+import { ProvidersMap } from '../map/ProvidersMap';
 
 const BookPage: FC = () => {
     const { id } = useParams()
@@ -31,21 +34,47 @@ const BookPage: FC = () => {
             likes: 0
         }
     ]
+
+    useEffect(() => {
+        setBookDataById(Number(id))
+    }, [])
+
+    const setBookDataById = async (bookId: number) => {
+        const bookData = await CatalogService.getBookDataById(bookId)
+        setTitle(bookData.title)
+        setAuthor(bookData.author)
+        setAverageRating(bookData.averageRating)
+        setGenres(bookData.genres)
+        setStatus(bookData.status)
+        setProvider(bookData.provider)
+        setCoverPath(CUSTOM_BLOB_SERVER_URL + '/' + bookData.coverName)
+        setDescription(bookData.description)
+    }
+
+    const [title, setTitle] = useState('')
+    const [author, setAuthor] = useState('')
+    const [averageRating, setAverageRating] = useState<number>(0)
+    const [genres, setGenres] = useState('')
+    const [status, setStatus] = useState('')
+    const [provider, setProvider] = useState('')
+    const [coverPath, setCoverPath] = useState('')
+    const [description, setDescription] = useState('')
+
     return (
         <div className='container'>
             <div className={styles.bookPageWrapper}>
                 <div className={styles.backgroundCoverContainer}>
-                    <img src='/img/cover.jpg' className={styles.backgroundCover} />
+                    <img src={coverPath} className={styles.backgroundCover} />
                     <div className={styles.backgroundMask}></div>
                     <div className={styles.bookTitleAuthorContainer}>
-                        <span className={styles.bookTitle}>Портрет Дориана Грея</span>
-                        <span>Оскар Уайльд</span>
+                        <span className={styles.bookTitle}>{title}</span>
+                        <span>{author}</span>
                     </div>
                 </div>
                 <div className={styles.bookInfoWrapper}>
                     <div className={styles.bookCoverReviewLinkWrapper}>
                         <div className={styles.bookCoverContainer}>
-                            <img src='/img/cover.jpg' className={styles.bookCover} />
+                            <img src={coverPath} className={styles.bookCover} />
                         </div>
                         <div className={styles.checkoutBookButtonContainer}>
                             <CustomButton text={'Взять книгу'} onClick={() => {}} styles={styles.checkoutBookButton} />
@@ -53,17 +82,19 @@ const BookPage: FC = () => {
                     </div>
                     <div className={styles.bookInfoContainer}>
                         <div className={styles.rightContentContainer}>
-                            <span>Поставщик: IBS</span>
+                            <span>Поставщик: {ProvidersMap.get(provider)}</span>
                             <div>
-                                <span>Статус: </span><span>В наличии</span>
+                                <span>Статус: </span><span>{status}</span>
                             </div>
-                            <div className={styles.averageRatingContainer}>
-                                <img src='/img/star_filled.png' className={styles.averageRatingImg} />
-                                <span className={styles.averageRatingValue}>5</span>
-                            </div>
+                            {averageRating !== 0 &&
+                                <div className={styles.averageRatingContainer}>
+                                    <img src='/img/star_filled.png' className={styles.averageRatingImg} />
+                                    <span className={styles.averageRatingValue}>{averageRating}</span>
+                                </div>
+                            }
                             <div className={styles.bookGenresContainer}>
                                 <span>Жанр:</span><br />
-                                <span>Зарубежная литература, Роман</span>
+                                <span>{genres}</span>
                             </div>
                         </div>
                         <div 
@@ -94,7 +125,7 @@ const BookPage: FC = () => {
                 <div className={styles.tabContentContainer}>
                     {openedTab === TabsEnum.BOOK_PAGE_DESCRIPTION &&
                         <div>
-                            Описание книги "Портрет Дориана Грея" от писателя Оскара Уайльда
+                            {description}
                         </div>
                     }
                     {openedTab === TabsEnum.BOOK_PAGE_REVIEWS &&

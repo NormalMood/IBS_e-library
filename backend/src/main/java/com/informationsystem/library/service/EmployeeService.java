@@ -5,6 +5,7 @@ import com.informationsystem.library.dto.response.EmployeeResponseDTO;
 import com.informationsystem.library.dto.response.ObjectResponseDTO;
 import com.informationsystem.library.dto.response.StatusResponseDTO;
 import com.informationsystem.library.entity.Employee;
+import com.informationsystem.library.entity.VBooks;
 
 import java.util.List;
 import java.util.Set;
@@ -51,5 +52,7 @@ public interface EmployeeService {
     boolean isCheckoutPossible(Long bookId);
 
     StatusResponseDTO checkoutBook(Long bookId);
+
+    VBooks getBookDataById(Long bookId);
 
 }

@@ -1,5 +1,6 @@
 import { CatalogSortingFieldsEnum } from "../@types/CatalogSortingFieldsEnum";
 import { FilterKeysEnum } from "../@types/FilterKeysEnum";
+import { IBookCatalog } from "../@types/IBookCatalog";
 import { ICatalog } from "../@types/ICatalog";
 import { SortingOrdersEnum } from "../@types/SortingOrdersEnum";
 import axiosInstance, { BASE_CATALOG_API } from "../api/axiosInstance";
@@ -60,6 +61,18 @@ export default class CatalogService {
                     averageRatingTo,
                     sortingField: sortingField,
                     sortingOrder: SortingOrdersEnum[sortingOrder]
+                }
+            }
+        )
+        return response.data
+    }
+
+    static async getBookDataById(bookId: number) {
+        const response = await axiosInstance.get<IBookCatalog>(
+            BASE_CATALOG_API + '/book',
+            {
+                params: {
+                    bookId
                 }
             }
         )
