@@ -39,9 +39,15 @@
     margin-left: 10px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 470px) {
     .bookTitleAuthorContainer {
-        margin-left: 13px;
+        margin-left: 20px;
+    }
+}
+
+@media (min-width: 500px) {
+    .bookTitleAuthorContainer {
+        margin-left: 30px;
     }
 }
 
@@ -82,37 +88,42 @@
 
 
 
-.bookCoverReviewLinkWrapper {
-    display: inline-flex;
-    width: 100%;
-    flex-direction: column;
+.bookCoverWrapper {
+    display: flex;
     justify-content: center;
-    margin-top: -20px;
     align-items: center;
-    max-width: 240px;
+    justify-self: center;
+    width: 98%;
+    height: 100%;
+    z-index: 1;
+    margin-top: -15px;
+    grid-column: 1;
+    grid-row: 1;
+    max-width: 230px;
+    max-height: 300px;
 }
 
-@media (min-width: 1024px) {
-    .bookCoverReviewLinkWrapper {
-        position: fixed;
-        margin-top: -15px;
-    }
-}
-
-@media (min-width: 1440px) {
-    .bookCoverReviewLinkWrapper {
-        margin-top: -80px;
+@media(min-width: 1024px) {
+    .bookCoverWrapper {
+        position: relative;
     }
 }
 
 
 
 .bookCoverContainer {
-    width: 90%;
-    height: 90%;
-    z-index: 1;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    max-width: 230px;
+    max-height: 300px;
 }
 
+@media(min-width: 1024px) {
+    .bookCoverContainer {
+        position: fixed;
+    }
+}
 
 
 
@@ -122,12 +133,43 @@
     object-fit: contain;
 }
 
+
+
+.reviewLinkWrapper {
+    display: flex;
+    grid-column: 2;
+    grid-row: 2;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+@media (min-width: 510px) {
+    .reviewLinkWrapper {
+        grid-row: 1;
+        justify-content: flex-end;
+        flex-direction: column;
+        align-items: start;
+        margin-bottom: 15px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .reviewLinkWrapper {
+        margin-bottom: 60px;
+    }
+}
+
+
+
 .reviewLinkContainer {
     display: flex;
-    align-items: center;
     cursor: pointer;
+    align-items: center;
     width: fit-content;
 }
+
+
 
 .reviewLinkImg {
     width: 35px;
@@ -143,7 +185,9 @@
 .bookInfoWrapper {
     display: grid;
     grid-template-columns: 50% 50%;
+    grid-template-rows: repeat(3, auto);
     min-width: 240px;
+    row-gap: 15px;
 }
 
 @media (min-width: 510px) {
@@ -152,15 +196,22 @@
     }
 }
 
+@media (min-width: 510px) {
+    .bookInfoWrapper {
+        column-gap: 10px;
+    }
+}
+
 @media (min-width: 1024px) {
     .bookInfoWrapper {
-        min-height: 438px;
+        grid-template-rows: 285px auto;
     }
 }
 
 @media (min-width: 1440px) {
     .bookInfoWrapper {
-        min-height: 379px;
+        margin-top: -30px;
+        column-gap: 20px;
     }
 }
 
@@ -168,29 +219,11 @@
 
 .bookInfoContainer {
     display: flex;
-    justify-content: space-between;
     flex-direction: column;
     grid-column: 2;
-}
-
-@media (min-width: 510px) {
-    .bookInfoContainer {
-        max-height: 336px;
-    }
-}
-
-@media (min-width: 1024px) {
-    .bookInfoContainer {
-        max-height: 339px;
-        min-height: 339px;
-    }
-}
-
-@media (min-width: 1440px) {
-    .bookInfoContainer {
-        min-height: 274px;
-        max-height: 274px;
-    }
+    grid-row: 1;
+    height: fit-content;
+    z-index: 2;
 }
 
 
@@ -213,17 +246,48 @@
 
 
 
-.checkoutBookButtonContainer {
+.checkoutBookButtonWrapper {
     display: flex;
     justify-content: center;
     width: 100%;
+    grid-column: 1;
+    grid-row: 2;
+}
+
+@media(min-width: 510px) {
+    .checkoutBookButtonWrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media(min-width: 1024px) {
+    .checkoutBookButtonWrapper {
+        position: relative;
+        max-width: 240px;
+    }
+}
+
+
+
+.checkoutBookButtonContainer {
+    display: flex;
+    width: 100%;
+    max-width: 240px;
+    justify-content: center;
+}
+
+@media(min-width: 1024px) {
+    .checkoutBookButtonContainer {
+        position: fixed;
+    }
 }
 
 
 
 .checkoutBookButton {
-    width: 90%;
-    margin-top: 10px;
+    width: 93%;
+    max-width: 180px;
 }
 
 
@@ -242,43 +306,20 @@
 
 
 
-.bookGenresContainer {
-    display: block;
-    width: 88%;
-    height: 50px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-}
-
-
-
 .tabsContainer {
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 20px 0;
     grid-column: 1 / 3;
-}
-
-@media (min-width: 425px) {
-    .tabsContainer {
-        padding: 30px 0;
-    }
+    grid-row: 3;
+    margin-top: 25px;
 }
 
 @media (min-width: 510px) {
     .tabsContainer {
-        padding-top: 0px;
-        padding-bottom: 50px;
-        margin-top: -39px;
         grid-column: 2;
-    }
-}
-
-@media (min-width: 1024px) {
-    .tabsContainer {
-        margin-top: 15px;
+        grid-row: 2;
+        margin-top: 0;
     }
 }
 
@@ -292,28 +333,57 @@
 
 @media (min-width: 510px) {
     .bookPageCustomTab {
-        max-width: 151px;
+        max-width: 125px;
     }
 }
 
 @media (min-width: 768px) {
     .bookPageCustomTab {
-        max-width: 162px;
+        max-width: 165px;
         font-size: 16px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .bookPageCustomTab {
+        font-size: 18px;
     }
 }
 
 
 
-@media (min-width: 768px) {
+.tabContentContainer {
+    margin-top: 20px;
+}
+
+@media (min-width: 510px) {
     .tabContentContainer {
-        padding: 0 15px;
+        margin-left: 20px;
+        margin-right: 20px;
     }
 }
 
 @media (min-width: 1024px) {
     .tabContentContainer {
+        margin-left: unset;
+        margin-right: unset;
         padding-left: 240px;
         padding-right: 15px;
     }
+}
+
+@media (min-width: 1440px) {
+    .tabContentContainer {
+        padding-left: 260px;
+    }
+}
+
+
+.rightContentWrapper {
+    display: block;
+    width: 88%;
+    height: fit-content;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;    
 }

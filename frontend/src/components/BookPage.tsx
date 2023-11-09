@@ -72,37 +72,43 @@ const BookPage: FC = () => {
                     </div>
                 </div>
                 <div className={styles.bookInfoWrapper}>
-                    <div className={styles.bookCoverReviewLinkWrapper}>
+                    <div className={styles.bookCoverWrapper}>
                         <div className={styles.bookCoverContainer}>
                             <img src={coverPath} className={styles.bookCover} />
                         </div>
+                    </div>
+                    <div className={styles.checkoutBookButtonWrapper}>
                         <div className={styles.checkoutBookButtonContainer}>
                             <CustomButton text={'Взять книгу'} onClick={() => {}} styles={styles.checkoutBookButton} />
                         </div>
                     </div>
                     <div className={styles.bookInfoContainer}>
-                        <div className={styles.rightContentContainer}>
-                            <span>Поставщик: {ProvidersMap.get(provider)}</span>
-                            <div>
-                                <span>Статус: </span><span>{status}</span>
-                            </div>
-                            {averageRating !== 0 &&
-                                <div className={styles.averageRatingContainer}>
-                                    <img src='/img/star_filled.png' className={styles.averageRatingImg} />
-                                    <span className={styles.averageRatingValue}>{averageRating}</span>
+                        <div className={styles.rightContentWrapper}>
+                            <div className={styles.rightContentContainer}>
+                                <span>Поставщик: {ProvidersMap.get(provider)}</span>
+                                <div>
+                                    <span>Статус: </span><span>{status}</span>
                                 </div>
-                            }
-                            <div className={styles.bookGenresContainer}>
-                                <span>Жанр:</span><br />
-                                <span>{genres}</span>
+                                {averageRating !== 0 &&
+                                    <div className={styles.averageRatingContainer}>
+                                        <img src='/img/star_filled.png' className={styles.averageRatingImg} />
+                                        <span className={styles.averageRatingValue}>{averageRating}</span>
+                                    </div>
+                                }
+                                <div>
+                                    <span>Жанр:</span><br />
+                                    <span>{genres}</span>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <div className={styles.reviewLinkWrapper}>
                         <div 
-                            className={styles.reviewLinkContainer}
-                            onClick={() => navigate(`/book/${id}/review`)}
-                        >
-                            <img src='/img/add_review.png' className={styles.reviewLinkImg} />
-                            <span className={styles.reviewLinkText}>Написать<br />рецензию</span>
+                                className={styles.reviewLinkContainer}
+                                onClick={() => navigate(`/book/${id}/review`)}
+                            >
+                                <img src='/img/add_review.png' className={styles.reviewLinkImg} />
+                                <span className={styles.reviewLinkText}>Написать<br />рецензию</span>
                         </div>
                     </div>
                     <div className={styles.tabsContainer}>
