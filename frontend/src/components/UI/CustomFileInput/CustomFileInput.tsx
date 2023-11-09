@@ -26,7 +26,7 @@ const CustomFileInput: FC = () => {
                 <img src='/img/image_upload.png' className={styles.customFileInputImg} />
             </div>
             <img id='previewImage' className={styles.previewImage} />
-            <input id='image' type='file' accept='image/*' className={styles.inputHidden} onChange={e => setPreviewImage(e)} />
+            <input id='image' type='file' accept='.jpg, .png' className={styles.inputHidden} onChange={e => setPreviewImage(e)} />
         </label>
     )
 }
