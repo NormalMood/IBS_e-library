@@ -95,7 +95,7 @@ const Navbar: FC = () => {
                                         className={styles.navLink}
                                     >
                                         <img src='/img/my_books.png' className={styles.navLinkImg} />
-                                        <span>Мои книги</span>
+                                        <span>Корзина</span>
                                     </Link>
                                 </li>
                                 <li>
@@ -104,7 +104,7 @@ const Navbar: FC = () => {
                                         className={styles.navLink}
                                     >
                                         <img src='/img/add_books.png' className={styles.navLinkImg} />
-                                        <span>Новая книга</span>
+                                        <span>Новая</span>
                                     </Link>
                                 </li>
                                 {isAdmin && 
