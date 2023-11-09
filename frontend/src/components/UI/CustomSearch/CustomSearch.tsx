@@ -9,6 +9,7 @@ import useCatalogFilterStore from '../../../store/useCatalogFilterStore';
 import useCatalogSortingStore from '../../../store/useCatalogSortingStore';
 import CatalogService from '../../../service/CatalogService';
 import { TabsEnum } from '../../../@types/TabsEnum';
+import { CUSTOM_BLOB_SERVER_URL } from '../../../api/axiosInstance';
 
 const CustomSearch: FC = () => {
     const getFilterCriteria = useCatalogFilterStore(state => state.getFilterCriteria)
@@ -116,7 +117,7 @@ const CustomSearch: FC = () => {
                                 onClick={() => navigate(`/book/${foundBook.id}`)}
                             >
                                 <div className={styles.bookCoverContainer}>
-                                    <img src='/img/cover.jpg' className={styles.bookCover} />
+                                    <img src={CUSTOM_BLOB_SERVER_URL + '/' + foundBook.coverName} className={styles.bookCover} />
                                 </div>
                                 <div className={styles.bookInfoContainer}>
                                     <h3>

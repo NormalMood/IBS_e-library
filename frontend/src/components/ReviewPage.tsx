@@ -5,6 +5,8 @@ import styles from '../style/ReviewPage.module.css';
 import CustomInput from './UI/CustomInput/CustomInput';
 import CustomButton from './UI/CustomButton/CustomButton';
 import CustomTextarea from './UI/CustomTextarea/CustomTextarea';
+import CatalogService from '../service/CatalogService';
+import { CUSTOM_BLOB_SERVER_URL } from '../api/axiosInstance';
 
 const ReviewPage: FC = () => {
     const { id } = useParams()
@@ -18,7 +20,27 @@ const ReviewPage: FC = () => {
         setStarsVisible(newStarsState)
         console.log(newStarsState)
     }
-    //fetch data of a book by id 'cause u r gonna update a review
+
+    const [coverPath, setCoverPath] = useState('')
+
+    useEffect(() => {
+        setCoverPathByBookId(Number(id))
+    }, [])
+
+    const setCoverPathByBookId = async (bookId: number) => {
+        const bookData = await CatalogService.getBookDataById(bookId)
+        setTitle(bookData.title)
+        setAuthor(bookData.author)
+        setAverageRating(bookData.averageRating)
+        setGenres(bookData.genres)
+        setCoverPath(CUSTOM_BLOB_SERVER_URL + '/' + bookData.coverName)
+    }
+
+    const [title, setTitle] = useState('')
+    const [author, setAuthor] = useState('')
+    const [averageRating, setAverageRating] = useState<number>(0)
+    const [genres, setGenres] = useState('')
+    
     return (
         <div className='container'>
             <article className={styles.reviewContainer}>
@@ -29,18 +51,20 @@ const ReviewPage: FC = () => {
                     <div className={styles.bookContainer}>
                         <div className={styles.bookCoverContainer}>
                             <img 
-                                src='/img/cover.jpg' 
+                                src={coverPath} 
                                 className={styles.bookCover}
                             />
                         </div>
                         <div className={styles.bookInfoContainer}>
-                            <span className={styles.bookTitle}>Портрет Дориана Грея</span>
-                            <span className={styles.bookAuthor}>Оскар Уайльд</span>
-                            <span className={styles.bookGenres}>Зарубежная литература, Роман</span>
-                            <div className={styles.bookAverageRatingContainer}>
-                                <img src='/img/star_filled.png' className={styles.averageRatingImg} />
-                                <span className={styles.averageRatingValue}>5</span>
-                            </div>
+                            <span className={styles.bookTitle}>{title}</span>
+                            <span className={styles.bookAuthor}>{author}</span>
+                            <span className={styles.bookGenres}>{genres}</span>
+                            {averageRating !== 0 &&
+                                <div className={styles.bookAverageRatingContainer}>
+                                    <img src='/img/star_filled.png' className={styles.averageRatingImg} />
+                                    <span className={styles.averageRatingValue}>{averageRating}</span>
+                                </div>
+                            }
                         </div>
                     </div>
                     <div className={styles.reviewFieldsContainer}>
