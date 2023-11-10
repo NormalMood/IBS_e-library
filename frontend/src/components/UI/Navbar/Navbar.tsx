@@ -8,6 +8,7 @@ import EmployeeService from '../../../service/EmployeeService';
 import { RolesEnum } from '../../../@types/RolesEnum';
 import { PositionsMap } from '../../../map/PositionsMap';
 import useEmployeeDataStore from '../../../store/useEmployeeDataStore';
+import { CUSTOM_BLOB_SERVER_PICTURES_URL } from '../../../api/axiosInstance';
 
 const Navbar: FC = () => {
     const {isAuth, setIsAuth} = useContext(AuthContext)
@@ -47,12 +48,16 @@ const Navbar: FC = () => {
     const isAdmin = useEmployeeDataStore(state => state.isAdmin)
     const setIsAdmin = useEmployeeDataStore(state => state.setIsAdmin)
 
+    const pictureName = useEmployeeDataStore(state => state.pictureName)
+    const setPictureName = useEmployeeDataStore(state => state.setPictureName)
+
     useEffect(() => {
         const setUserData = async () => {
             const userData = await EmployeeService.getUserData()
             setFullName(userData.fullName)
             setPosition(userData.position)
             setIsAdmin(userData.isAdmin)
+            setPictureName(userData.pictureName)
         }
         setUserData()
     }, [])
@@ -64,7 +69,7 @@ const Navbar: FC = () => {
                     <div className={styles.headerBody}>
                         <div className={styles.profileInfoContainer}>
                             <img 
-                                src='https://a1cf74336522e87f135f-2f21ace9a6cf0052456644b80fa06d4f.ssl.cf2.rackcdn.com/images/characters/large/2800/Eddie-Morra.Limitless.webp'
+                                src={CUSTOM_BLOB_SERVER_PICTURES_URL + '/' + pictureName}
                                 className={styles.profileImage}
                             />
                             <div className={styles.employeesInfoContainer}>

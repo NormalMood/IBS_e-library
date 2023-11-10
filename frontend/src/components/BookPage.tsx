@@ -8,7 +8,7 @@ import useCatalogStore from '../store/useCatalogStore';
 import { IBookReview } from '../@types/IBookReview';
 import BookReview from './UI/BookReview/BookReview';
 import CatalogService from '../service/CatalogService';
-import { CUSTOM_BLOB_SERVER_URL } from '../api/axiosInstance';
+import { CUSTOM_BLOB_SERVER_COVERS_URL } from '../api/axiosInstance';
 import { ProvidersMap } from '../map/ProvidersMap';
 
 const BookPage: FC = () => {
@@ -47,7 +47,7 @@ const BookPage: FC = () => {
         setGenres(bookData.genres)
         setStatus(bookData.status)
         setProvider(bookData.provider)
-        setCoverPath(CUSTOM_BLOB_SERVER_URL + '/' + bookData.coverName)
+        setCoverPath(CUSTOM_BLOB_SERVER_COVERS_URL + '/' + bookData.coverName)
         setDescription(bookData.description)
     }
 

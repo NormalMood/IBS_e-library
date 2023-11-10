@@ -48,6 +48,8 @@ public class Employee implements UserDetails {
     
     @Enumerated(value = EnumType.STRING)
     private Position position;
+    
+    private String pictureName;
 
     public String getFullName(){
         return getLastName() + " "

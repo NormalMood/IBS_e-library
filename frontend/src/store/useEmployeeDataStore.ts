@@ -11,20 +11,27 @@ interface IUseEmployeeDataStoreState {
     isAdmin: boolean;
     setIsAdmin: (isAdmin: boolean) => void;
 
+    pictureName: string;
+    setPictureName: (pictureName: string) => void;
+
 }
 
 const useEmployeeDataStore = create<IUseEmployeeDataStoreState>((set) => ({
     fullName: '',
     setFullName: (fullName: string) => {
-        set({ fullName: fullName })
+        set({ fullName })
     },
     position: '',
     setPosition: (position: string) => {
-        set({ position: position })
+        set({ position })
     },
     isAdmin: false,
     setIsAdmin: (isAdmin: boolean) => {
-        set({ isAdmin: isAdmin })
+        set({ isAdmin })
+    },
+    pictureName: '',
+    setPictureName: (pictureName: string) => {
+        set({ pictureName} )
     }
 }))
 

@@ -4,7 +4,9 @@ axios.defaults.withCredentials = true;
 
 const SERVER_URL = 'http://localhost:8080'
 
-export const CUSTOM_BLOB_SERVER_URL = 'http://localhost:8000/static'
+export const CUSTOM_BLOB_SERVER_COVERS_URL = 'http://localhost:8000/covers'
+
+export const CUSTOM_BLOB_SERVER_PICTURES_URL = 'http://localhost:8000/pictures'
 
 export const BASE_EMPLOYEE_BIN_API = '/api/user/bin'
 

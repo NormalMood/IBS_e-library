@@ -6,7 +6,7 @@ import CustomInput from './UI/CustomInput/CustomInput';
 import CustomButton from './UI/CustomButton/CustomButton';
 import CustomTextarea from './UI/CustomTextarea/CustomTextarea';
 import CatalogService from '../service/CatalogService';
-import { CUSTOM_BLOB_SERVER_URL } from '../api/axiosInstance';
+import { CUSTOM_BLOB_SERVER_COVERS_URL } from '../api/axiosInstance';
 
 const ReviewPage: FC = () => {
     const { id } = useParams()
@@ -33,7 +33,7 @@ const ReviewPage: FC = () => {
         setAuthor(bookData.author)
         setAverageRating(bookData.averageRating)
         setGenres(bookData.genres)
-        setCoverPath(CUSTOM_BLOB_SERVER_URL + '/' + bookData.coverName)
+        setCoverPath(CUSTOM_BLOB_SERVER_COVERS_URL + '/' + bookData.coverName)
     }
 
     const [title, setTitle] = useState('')

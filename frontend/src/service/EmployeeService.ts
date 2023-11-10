@@ -12,7 +12,8 @@ export default class EmployeeService {
         const userData: IEmployee = {
             fullName: response.data.fullName,
             isAdmin: response.data.role?.toString() === RolesEnum.ADMIN,
-            position: PositionsMap.get(response.data.position) as string
+            position: PositionsMap.get(response.data.position) as string,
+            pictureName: response.data.pictureName
         }
         return userData
     }

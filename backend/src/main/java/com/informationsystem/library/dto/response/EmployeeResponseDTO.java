@@ -15,5 +15,7 @@ public class EmployeeResponseDTO {
 	private Role role;
 	
 	private Position position;
+	
+	private String pictureName;
 
 }

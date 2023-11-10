@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styles from '../style/CatalogBook.module.css';
 import { useNavigate } from 'react-router-dom';
-import { CUSTOM_BLOB_SERVER_URL } from '../api/axiosInstance';
+import { CUSTOM_BLOB_SERVER_COVERS_URL } from '../api/axiosInstance';
 
 interface ICatalogBookProps {
     id: number;
@@ -13,7 +13,7 @@ interface ICatalogBookProps {
 
 const CatalogBook: FC<ICatalogBookProps> = ({id, title, author, averageRating, coverName}) => {
     const navigate = useNavigate()
-    const coverPath = CUSTOM_BLOB_SERVER_URL + '/' + coverName
+    const coverPath = CUSTOM_BLOB_SERVER_COVERS_URL + '/' + coverName
     return (
         <article className={styles.bookInfoContainer} onClick={() => navigate(`/book/${id}`)}>
             <img src={coverPath} className={styles.bookCover} />
