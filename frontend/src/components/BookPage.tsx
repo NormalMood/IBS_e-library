@@ -11,6 +11,7 @@ import { CUSTOM_BLOB_SERVER_COVERS_URL, CUSTOM_BLOB_SERVER_PICTURES_URL } from '
 import { ProvidersMap } from '../map/ProvidersMap';
 import ReviewsService from '../service/ReviewsService';
 import { IReviewResponse } from '../@types/IReviewResponse';
+import { getDateForReview } from '../utils/DateConverter';
 
 const BookPage: FC = () => {
     const { id } = useParams()
@@ -152,7 +153,7 @@ const BookPage: FC = () => {
                                 reviewerId={bookReview.employeeId}
                                 profileImageUrl={CUSTOM_BLOB_SERVER_PICTURES_URL + '/' + bookReview.pictureName}
                                 username={bookReview.firstName + ' ' + bookReview.lastName}
-                                reviewDate={bookReview.reviewsDate}
+                                reviewDate={getDateForReview(bookReview.reviewsDate)}
                                 text={bookReview.comment}
                                 stars={bookReview.stars}
                                 deleteReviewCallback={() => {

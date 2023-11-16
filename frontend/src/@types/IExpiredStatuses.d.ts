@@ -6,6 +6,7 @@ export interface IExpiredStatuses {
     title: string;
     author: string;
     actionsName: string;
-    actionsDate: string;
-    returnDateExpired: number;
+    actionsDate: Date;
+    returnDate: Date;
+    returnDateExpired: boolean;
 }
