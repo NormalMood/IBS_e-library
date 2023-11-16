@@ -87,22 +87,9 @@
     cursor: pointer;
 }
 
-@media (min-width: 768px) {
-    .editReviewImg {
-        height: 33px;
-    }
-}
-
 
 
 .deleteReviewImg {
     height: 35px;
     cursor: pointer;
 }
-
-@media (min-width: 768px) {
-    .deleteReviewImg {
-        height: 38px;
-    }
-}
-
