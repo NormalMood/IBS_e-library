@@ -1,15 +1,18 @@
 import { FC, useState } from 'react';
-import { useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import styles from '../style/ReviewPage.module.css';
-import CustomInput from './UI/CustomInput/CustomInput';
 import CustomButton from './UI/CustomButton/CustomButton';
 import CustomTextarea from './UI/CustomTextarea/CustomTextarea';
 import CatalogService from '../service/CatalogService';
 import { CUSTOM_BLOB_SERVER_COVERS_URL } from '../api/axiosInstance';
+import ReviewsService from '../service/ReviewsService';
+import useEmployeeDataStore from '../store/useEmployeeDataStore';
 
 const ReviewPage: FC = () => {
     const { id } = useParams()
+    const {reviewId } = useParams()
+    const navigate = useNavigate()
     const [reviewText, setReviewText] = useState('')
     const [starsVisible, setStarsVisible] = useState<boolean[]>(new Array(5).fill(false))
     const starClicked = (index: number) => {
@@ -24,10 +27,19 @@ const ReviewPage: FC = () => {
     const [coverPath, setCoverPath] = useState('')
 
     useEffect(() => {
-        setCoverPathByBookId(Number(id))
+        setBookInfoByBookId(Number(id))
+        if (reviewId !== undefined) {
+            setReviewInfo()
+        }
     }, [])
 
-    const setCoverPathByBookId = async (bookId: number) => {
+    const setReviewInfo = async () => {
+        const reviewResponse = await ReviewsService.getReviewById(Number(reviewId))
+        setReviewText(reviewResponse.comment)
+        starClicked(reviewResponse.stars - 1)
+    }
+
+    const setBookInfoByBookId = async (bookId: number) => {
         const bookData = await CatalogService.getBookDataById(bookId)
         setTitle(bookData.title)
         setAuthor(bookData.author)
@@ -36,10 +48,24 @@ const ReviewPage: FC = () => {
         setCoverPath(CUSTOM_BLOB_SERVER_COVERS_URL + '/' + bookData.coverName)
     }
 
+
+
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [averageRating, setAverageRating] = useState<number>(0)
     const [genres, setGenres] = useState('')
+
+    const currentEmployeeId = useEmployeeDataStore(state => state.id)
+
+    const addReview =  async () => {
+        const starsQuantity = starsVisible.filter(star => star).length
+        return await ReviewsService.addReview(currentEmployeeId, Number(id), starsQuantity, reviewText)
+    }
+
+    const updateReview = async () => {
+        const starsQuantity = starsVisible.filter(star => star).length
+        return await ReviewsService.updateReview(Number(reviewId), currentEmployeeId, Number(id), starsQuantity, reviewText)
+    }
     
     return (
         <div className='container'>
@@ -87,7 +113,32 @@ const ReviewPage: FC = () => {
                             additionalStyles={styles.pageReviewTextarea}
                         />
                         <div className={styles.bookReviewButtonContainer}>
-                            <CustomButton text={'Опубликовать'} onClick={() => {}} styles={styles.bookReviewButton} />
+                            {reviewId === undefined 
+                                ? 
+                                <CustomButton 
+                                    text={'Опубликовать'} 
+                                    onClick={() => {
+                                        addReview().then(response => {
+                                            if (response.status === 200) {
+                                                navigate(`/book/${id}`)
+                                            }
+                                        })
+                                    }} 
+                                    styles={styles.bookReviewButton} 
+                                />
+                                :
+                                <CustomButton 
+                                    text={'Сохранить'} 
+                                    onClick={() => {
+                                        updateReview().then(response => {
+                                            if (response.status === 200) {
+                                                navigate(`/book/${id}`)
+                                            }
+                                        })
+                                    }} 
+                                    styles={styles.bookReviewButton} 
+                                />
+                            }
                         </div>
                     </div>
                 </div>

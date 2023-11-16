@@ -20,6 +20,8 @@ export const BASE_FILTERS_API = '/api/filters'
 
 export const BASE_ADD_BOOK_API = '/api/library'
 
+export const BASE_BOOK_REVIEWS_API = '/api/book'
+
 export const LOGIN_ERROR_RESPONSE_URL = SERVER_URL + '/login?error'
 
 export const FETCH_ERROR_RESPONSE_URL = SERVER_URL + '/login'

@@ -1,43 +1,37 @@
 import { FC, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styles from '../style/BookPage.module.css';
 import CustomButton from './UI/CustomButton/CustomButton';
 import CustomTab from './UI/CustomTab/CustomTab';
 import { TabsEnum } from '../@types/TabsEnum';
 import useCatalogStore from '../store/useCatalogStore';
-import { IBookReview } from '../@types/IBookReview';
 import BookReview from './UI/BookReview/BookReview';
 import CatalogService from '../service/CatalogService';
-import { CUSTOM_BLOB_SERVER_COVERS_URL } from '../api/axiosInstance';
+import { CUSTOM_BLOB_SERVER_COVERS_URL, CUSTOM_BLOB_SERVER_PICTURES_URL } from '../api/axiosInstance';
 import { ProvidersMap } from '../map/ProvidersMap';
+import ReviewsService from '../service/ReviewsService';
+import { IReviewResponse } from '../@types/IReviewResponse';
 
 const BookPage: FC = () => {
     const { id } = useParams()
     const openedTab = useCatalogStore(state => state.openedTab)
     const openTab = useCatalogStore(state => state.openTab)
     const navigate = useNavigate()
-    const bookReviews: IBookReview[] = [
-        {
-            profileImageUrl: 'http://timemongers.com/wp-content/uploads/2017/04/Christian-Bale-as-Patrick-Bateman-in-American-Psycho-Rolex-Datejust.jpg',
-            username: 'Александр Шубин',
-            reviewDate: '9 июня',
-            text: "Impressive. Very nice. Let's see Paul Allen's portrait.",
-            stars: 5,
-            likes: 5
-        },
-        {
-            profileImageUrl: 'http://timemongers.com/wp-content/uploads/2017/04/Christian-Bale-as-Patrick-Bateman-in-American-Psycho-Rolex-Datejust.jpg',
-            username: 'Александр Шубин',
-            reviewDate: '9 июня',
-            text: "Impressive. Very nice. Let's see Paul Allen's portrait.",
-            stars: 0,
-            likes: 0
-        }
-    ]
+    
+    const [bookReviews, setBookReviews] = useState<IReviewResponse[]>([])
 
-    useEffect(() => {
-        setBookDataById(Number(id))
-    }, [])
+    const [reviewsQuantity, setReviewsQuantity] = useState(0)
+
+    const setFirst10Reviews = async () => {
+        const response = await ReviewsService.getFirst10Reviews(Number(id))
+        setBookReviews(response.bookReviews.slice(0, SHOWN_REVIEWS_QUANTITY))
+        setReviewsQuantity(response.quantity)
+    }
+
+    const setAllReviews = async () => {
+       const response = await ReviewsService.getAllReviews(Number(id))
+       setBookReviews(response)
+    }
 
     const setBookDataById = async (bookId: number) => {
         const bookData = await CatalogService.getBookDataById(bookId)
@@ -59,6 +53,22 @@ const BookPage: FC = () => {
     const [provider, setProvider] = useState('')
     const [coverPath, setCoverPath] = useState('')
     const [description, setDescription] = useState('')
+
+    const SHOWN_REVIEWS_QUANTITY = 10;
+
+    const [isOpenReviewsButtonHidden, setIsOpenReviewsButtonHidden] = useState(false)
+
+    const getOpenReviewsButtonStyle = () => {
+        if (isOpenReviewsButtonHidden)
+            return styles.getAllReviewsButtonHidden
+        return styles.getAllReviewsButton
+    }
+
+    const location = useLocation()
+    useEffect(() => {
+        setBookDataById(Number(id))
+        setFirst10Reviews()
+    }, [location])
 
     return (
         <div className='container'>
@@ -137,14 +147,31 @@ const BookPage: FC = () => {
                     {openedTab === TabsEnum.BOOK_PAGE_REVIEWS &&
                         bookReviews.map(bookReview =>
                             <BookReview 
-                                profileImageUrl={bookReview.profileImageUrl}
-                                username={bookReview.username}
-                                reviewDate={bookReview.reviewDate}
-                                text={bookReview.text}
+                                reviewId={bookReview.id}
+                                bookId={Number(id)}
+                                reviewerId={bookReview.employeeId}
+                                profileImageUrl={CUSTOM_BLOB_SERVER_PICTURES_URL + '/' + bookReview.pictureName}
+                                username={bookReview.firstName + ' ' + bookReview.lastName}
+                                reviewDate={bookReview.reviewsDate}
+                                text={bookReview.comment}
                                 stars={bookReview.stars}
-                                likes={bookReview.likes}
+                                deleteReviewCallback={() => {
+                                    setIsOpenReviewsButtonHidden(false)
+                                    setBookDataById(Number(id))
+                                    setFirst10Reviews()
+                                }}
                             />
-                        )
+                        ) 
+                    }
+                    {openedTab === TabsEnum.BOOK_PAGE_REVIEWS && reviewsQuantity > SHOWN_REVIEWS_QUANTITY &&
+                        <CustomButton 
+                            text={'Раскрыть рецензии ('+ (reviewsQuantity - SHOWN_REVIEWS_QUANTITY) + ')'} 
+                            onClick={async () => {
+                                setIsOpenReviewsButtonHidden(true)
+                                await setAllReviews()
+                            }}
+                            styles={getOpenReviewsButtonStyle()}
+                        />
                     }
                 </div>
             </div>

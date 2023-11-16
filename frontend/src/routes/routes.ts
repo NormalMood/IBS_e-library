@@ -11,6 +11,7 @@ export const privateAdminRoutes: IRoute[] = [
     { path: '/catalog', component: Catalog },
     { path: '/book/:id', component: BookPage },
     { path: '/book/:id/review', component: ReviewPage },
+    { path: '/book/:id/review/:reviewId', component: ReviewPage },
     { path: '/my_books', component: MyBooks },
     { path: '/new_book', component: NewBook },
     { path: '/admin_panel', component: AdminPanel }
@@ -20,6 +21,7 @@ export const privateUserRoutes: IRoute[] = [
     { path: '/catalog', component: Catalog },
     { path: '/book/:id', component: BookPage },
     { path: '/book/:id/review', component: ReviewPage },
+    { path: '/book/:id/review/:reviewId', component: ReviewPage },
     { path: '/my_books', component: MyBooks },
     { path: '/new_book', component: NewBook }
 ]

@@ -1,49 +1,66 @@
 import { FC } from 'react';
 import styles from './BookReview.module.css';
-import CustomButton from '../CustomButton/CustomButton';
+import useEmployeeDataStore from '../../../store/useEmployeeDataStore';
+import ReviewsService from '../../../service/ReviewsService';
+import { useNavigate } from 'react-router-dom';
 
 interface IBookReviewProps {
+    reviewId: number;
+    bookId: number;
+    reviewerId: number;
     profileImageUrl: string;
     username: string;
     reviewDate: string;
     text: string;
     stars: number;
-    likes: number;
+    deleteReviewCallback: () => void;
 }
 
-const BookReview: FC<IBookReviewProps> = ({profileImageUrl, username, reviewDate, text, stars, likes}) => {
+const BookReview: FC<IBookReviewProps> = ({reviewId, bookId, reviewerId, profileImageUrl, username, reviewDate, text, stars, deleteReviewCallback}) => {
+    const currentEmployeeId = useEmployeeDataStore(state => state.id)
+    const navigate = useNavigate()
     return (
-        <article className={styles.bookReviewContainer}>
-            <div className={styles.profileImageContainer}>
-                <img src={profileImageUrl} className={styles.profileImage} />
-            </div>
-            <div className={styles.reviewContentContainer}>
-                <div className={styles.bookReviewHeader}>
-                    <div className={styles.bookReviewHeaderLeft}>
-                        <h5>{username}</h5>
-                        <span className={styles.reviewDate}>{reviewDate}</span>
-                    </div>
-                    {likes !== 0 &&
+            <article className={styles.bookReviewContainer}>
+                <div className={styles.profileImageContainer}>
+                    <img src={profileImageUrl} className={styles.profileImage} />
+                </div>
+                <div className={styles.reviewContentContainer}>
+                    <div className={styles.bookReviewHeader}>
+                        <div className={styles.bookReviewHeaderLeft}>
+                            <h5>{username}</h5>
+                            <span className={styles.reviewDate}>{reviewDate}</span>
+                        </div>
                         <div className={styles.bookReviewHeaderRight}>
                             <img src='/img/star_filled.png' className={styles.bookReviewStars} />
                             <span>{stars}</span>
                         </div>
+                    </div>
+                    <div className={styles.bookReviewMain}>
+                        {text}
+                    </div>
+                    {currentEmployeeId === reviewerId &&
+                        <div className={styles.bookReviewFooter}>
+                            <div className={styles.reviewFooterRightContainer}>
+                                <img 
+                                    className={styles.editReviewImg} 
+                                    src='/img/edit_review.png' 
+                                    onClick={() => navigate(`/book/${bookId}/review/${reviewId}`)}
+                                />
+                                <img 
+                                    className={styles.deleteReviewImg} 
+                                    src='/img/delete_review.png' 
+                                    onClick={async () => {
+                                        await ReviewsService.deleteReview(reviewerId, reviewId).then(response => {
+                                            if (response.status === 200)
+                                                deleteReviewCallback()
+                                        })
+                                    }}
+                                />
+                            </div>
+                        </div>
                     }
                 </div>
-                <div className={styles.bookReviewMain}>
-                    {text}
-                </div>
-                <div className={styles.bookReviewFooter}>
-                    <div className={styles.bookReviewFooterLeft}>
-                        <img src='/img/like.png' className={styles.likeImg} />
-                        <span className={styles.likesValue}>{likes}</span>
-                    </div>
-                    <div>
-                        <CustomButton text={'Удалить'} onClick={() => {}} styles={styles.deleteReviewButton} />
-                    </div>
-                </div>
-            </div>
-        </article>
+            </article>
     )
 }
 

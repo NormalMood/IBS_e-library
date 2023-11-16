@@ -2,6 +2,9 @@ import { create } from 'zustand';
 
 interface IUseEmployeeDataStoreState {
 
+    id: number;
+    setId: (id: number) => void;
+
     fullName: string;
     setFullName: (fullName: string) => void;
 
@@ -17,6 +20,10 @@ interface IUseEmployeeDataStoreState {
 }
 
 const useEmployeeDataStore = create<IUseEmployeeDataStoreState>((set) => ({
+    id: -1,
+    setId: (id: number) => {
+        set({ id })
+    },
     fullName: '',
     setFullName: (fullName: string) => {
         set({ fullName })

@@ -5,8 +5,6 @@ import { logoutServer } from '../../../service/AuthService';
 import { AuthContext } from '../../../context/AuthContext';
 import useWindowWidth from '../../../hooks/useWindowWidth';
 import EmployeeService from '../../../service/EmployeeService';
-import { RolesEnum } from '../../../@types/RolesEnum';
-import { PositionsMap } from '../../../map/PositionsMap';
 import useEmployeeDataStore from '../../../store/useEmployeeDataStore';
 import { CUSTOM_BLOB_SERVER_PICTURES_URL } from '../../../api/axiosInstance';
 
@@ -39,6 +37,8 @@ const Navbar: FC = () => {
             document.documentElement.removeAttribute('style')
     }, [isBurgerOpened, isWidthLess])
 
+    const setId = useEmployeeDataStore(state => state.setId)
+
     const employeeFullName = useEmployeeDataStore(state => state.fullName)
     const setFullName = useEmployeeDataStore(state => state.setFullName)
 
@@ -54,6 +54,7 @@ const Navbar: FC = () => {
     useEffect(() => {
         const setUserData = async () => {
             const userData = await EmployeeService.getUserData()
+            setId(userData.id)
             setFullName(userData.fullName)
             setPosition(userData.position)
             setIsAdmin(userData.isAdmin)

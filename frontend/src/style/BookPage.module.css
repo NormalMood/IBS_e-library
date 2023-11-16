@@ -387,3 +387,13 @@
     overflow-y: hidden;
     white-space: nowrap;    
 }
+
+
+
+.getAllReviewsButton {
+    width: 100%;
+}
+
+.getAllReviewsButtonHidden {
+    display: none;
+}
