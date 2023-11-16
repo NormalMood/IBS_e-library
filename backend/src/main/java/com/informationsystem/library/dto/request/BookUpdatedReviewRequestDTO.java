@@ -2,11 +2,12 @@ package com.informationsystem.library.dto.request;
 
 import lombok.Data;
 
-
 @Data
-public class BookNewReviewRequestDTO {
+public class BookUpdatedReviewRequestDTO {
 	
-    private Long employeeId;
+	private Long id;
+	
+	private Long employeeId;
 
     private Long bookId;
 

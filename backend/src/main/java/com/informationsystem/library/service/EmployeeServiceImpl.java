@@ -64,6 +64,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeResponseDTO getUserData() {
     	Employee currentEmployee = getCurrentEmployee();
     	return new EmployeeResponseDTO(
+    			currentEmployee.getId(),
     			currentEmployee.getFullName(), 
     			currentEmployee.getRole(), 
     			currentEmployee.getPosition(),

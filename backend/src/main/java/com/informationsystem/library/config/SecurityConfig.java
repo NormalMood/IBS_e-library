@@ -42,7 +42,7 @@ public class SecurityConfig {
     			.configurationSource(request -> {
     				CorsConfiguration cors = new CorsConfiguration();
     				cors.setAllowedOrigins(List.of("http://localhost:3000", "http://127.0.0.1:3000"));
-    				cors.setAllowedMethods(List.of("GET", "POST", "OPTIONS"));
+    				cors.setAllowedMethods(List.of("GET", "POST", "OPTIONS", "DELETE", "PUT"));
     				cors.setAllowCredentials(true);
     				cors.setExposedHeaders(List.of("*"));
     				cors.setAllowedHeaders(List.of("*"));

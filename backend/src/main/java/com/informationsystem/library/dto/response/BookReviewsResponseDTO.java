@@ -13,6 +13,6 @@ public class BookReviewsResponseDTO {
 
     private List<BookReviewResponseDTO> bookReviews;
 
-    private Integer pages;
+    private Long quantity;
 
 }
