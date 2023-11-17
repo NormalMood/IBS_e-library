@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import styles from './CustomTable.module.css';
 import CustomCheckbox from '../CustomCheckbox/CustomCheckbox';
-import { BooleanMap } from '../../../map/BooleanMap';
 import { getDateForTable, isLessWeekLeftBeforeReturning, isReturnDateExpired } from '../../../utils/DateHandler';
 
 interface ICustomTableProps {

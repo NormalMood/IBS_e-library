@@ -9,9 +9,11 @@ import BookReview from './UI/BookReview/BookReview';
 import CatalogService from '../service/CatalogService';
 import { CUSTOM_BLOB_SERVER_COVERS_URL, CUSTOM_BLOB_SERVER_PICTURES_URL } from '../api/axiosInstance';
 import { ProvidersMap } from '../map/ProvidersMap';
+import { BookStatusMap } from '../map/BookStatusMap'
 import ReviewsService from '../service/ReviewsService';
 import { IReviewResponse } from '../@types/IReviewResponse';
 import { getDateForReview } from '../utils/DateHandler';
+import { BookStatusEnum } from '../@types/BookStatusEnum';
 
 const BookPage: FC = () => {
     const { id } = useParams()
@@ -90,7 +92,12 @@ const BookPage: FC = () => {
                     </div>
                     <div className={styles.checkoutBookButtonWrapper}>
                         <div className={styles.checkoutBookButtonContainer}>
-                            <CustomButton text={'Взять книгу'} onClick={() => {}} styles={styles.checkoutBookButton} />
+                            <CustomButton 
+                                text={'Взять книгу'} 
+                                onClick={() => {}} 
+                                styles={styles.checkoutBookButton} 
+                                disabled={BookStatusMap.get(status) !== BookStatusEnum.IN_STOCK}
+                            />
                         </div>
                     </div>
                     <div className={styles.bookInfoContainer}>
@@ -98,7 +105,22 @@ const BookPage: FC = () => {
                             <div className={styles.rightContentContainer}>
                                 <span>Поставщик: {ProvidersMap.get(provider)}</span>
                                 <div>
-                                    <span>Статус: </span><span>{status}</span>
+                                    <span>Статус: </span>
+                                    <span 
+                                        style={
+                                            BookStatusMap.get(status) === BookStatusEnum.IN_STOCK 
+                                                ? 
+                                                    {color: '#2CA664'} 
+                                                : 
+                                                    BookStatusMap.get(status) === BookStatusEnum.CHECKED_OUT 
+                                                        ? 
+                                                            {color: '#E86C01'} 
+                                                        : 
+                                                            {color: '#D14C41'}
+                                            }
+                                    >
+                                        {status}
+                                    </span>
                                 </div>
                                 {averageRating !== 0 &&
                                     <div className={styles.averageRatingContainer}>
