@@ -115,7 +115,7 @@ const AdminPanel: FC = () => {
                         <CustomTable 
                             headerData={EXPIRED_STATUSES_ADMIN_PANEL_TABLE_HEADERS} 
                             data={expiredStatuses.objects} 
-                            hiddenColumns={isReturnDateExpired ? new Set<number>().add(0).add(9) : new Set<number>().add(0)} 
+                            hiddenColumns={new Set<number>().add(0).add(9)} 
                             tableTitle={getTableTitle()} 
                             onCheckboxChanged={() => {}} 
                         />

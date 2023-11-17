@@ -80,3 +80,41 @@
 .tableBody tr:hover {
     background-color: #CCC;
 }
+
+
+
+.returnDateExpiredCell {
+    color: red;
+    cursor: pointer;
+    position: relative;
+}
+
+.returnDateExpiredCell:hover::after {
+    content: 'Возврат просрочен';
+    position: absolute;
+    left: 10%;
+    top: 50%;
+    z-index: 1;
+    background-color: white;
+    color: black;
+    padding: 4px;
+}
+
+
+
+.weekLeftCell {
+    color: #1567E6;
+    cursor: pointer;
+    position: relative;
+}
+
+.weekLeftCell:hover::after {
+    content: 'Осталось меньше недели';
+    position: absolute;
+    left: 10%;
+    top: 50%;
+    z-index: 1;
+    background-color: white;
+    color: black;
+    padding: 4px;
+}

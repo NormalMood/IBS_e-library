@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import styles from './CustomTable.module.css';
 import CustomCheckbox from '../CustomCheckbox/CustomCheckbox';
 import { BooleanMap } from '../../../map/BooleanMap';
-import { getDateForTable } from '../../../utils/DateConverter';
+import { getDateForTable, isLessWeekLeftBeforeReturning, isReturnDateExpired } from '../../../utils/DateHandler';
 
 interface ICustomTableProps {
     headerData: string[];
@@ -76,20 +76,35 @@ const CustomTable: FC<ICustomTableProps> = ({headerData, data, tableTitle, isChe
                                 }
                                 {dataRow && Object.values(dataRow as any).map((dataCell, dataRowIndex) => 
                                     !hiddenColumns.has(dataRowIndex) ?      
-                                            <>
-                                            {typeof(dataCell) === 'boolean' 
-                                                ?
-                                                    <td style={BooleanMap.get(dataCell) ? {color: 'red'} : {}} key={dataRowIndex}>{BooleanMap.get(dataCell)}</td>
-                                                :
-                                                    <>
-                                                        {headerData[dataRowIndex].includes('Дата')
-                                                            ?
-                                                                <td key={dataRowIndex}>{getDateForTable(dataCell as string)}</td>
-                                                            :
-                                                                <td key={dataRowIndex}>{dataCell as string}</td>
-                                                        }
-                                                    </>
-                                            }
+                                            <>  
+                                                {headerData[dataRowIndex].includes('Дата')
+                                                    ?
+                                                        <>
+                                                            {headerData[dataRowIndex].includes('Дата возврата')
+                                                                ?
+                                                                    <td
+                                                                        className={
+                                                                            isReturnDateExpired(dataCell as string) 
+                                                                                ? 
+                                                                                    styles.returnDateExpiredCell 
+                                                                                : 
+                                                                                    isLessWeekLeftBeforeReturning(dataCell as string) 
+                                                                                        ? 
+                                                                                            styles.weekLeftCell 
+                                                                                        : 
+                                                                                            {}
+                                                                            } 
+                                                                        key={dataRowIndex}
+                                                                    >
+                                                                        {getDateForTable(dataCell as string)}
+                                                                    </td>
+                                                                :
+                                                                    <td key={dataRowIndex}>{getDateForTable(dataCell as string)}</td>
+                                                               }
+                                                        </>
+                                                    :
+                                                        <td key={dataRowIndex}>{dataCell as string}</td>
+                                                }
                                             </>
                                         :
                                             null

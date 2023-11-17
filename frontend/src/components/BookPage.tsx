@@ -11,7 +11,7 @@ import { CUSTOM_BLOB_SERVER_COVERS_URL, CUSTOM_BLOB_SERVER_PICTURES_URL } from '
 import { ProvidersMap } from '../map/ProvidersMap';
 import ReviewsService from '../service/ReviewsService';
 import { IReviewResponse } from '../@types/IReviewResponse';
-import { getDateForReview } from '../utils/DateConverter';
+import { getDateForReview } from '../utils/DateHandler';
 
 const BookPage: FC = () => {
     const { id } = useParams()
