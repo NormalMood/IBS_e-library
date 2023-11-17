@@ -95,7 +95,7 @@ const ReviewPage: FC = () => {
                     </div>
                     <div className={styles.reviewFieldsContainer}>
                         <div className={styles.starsWrapper}>
-                            <span>Ваша оценка книге*:</span>
+                            <span>Оценка*:</span>
                             <div className={styles.starsContainer}>
                                 {starsVisible.map((starVisible, index) => 
                                     <img 

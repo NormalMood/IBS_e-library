@@ -64,7 +64,7 @@ const AdminPanel: FC = () => {
     const getTableTitle = () => {
         if (openedTab === TabsEnum.ADMIN_PANEL_HISTORY)
             return 'История'
-        return 'Статус срока возврата'
+        return 'Учет'
     }
     const getHistory = async () => {
         setHistory(await AdminPanelService.getDetailedHistory())
@@ -98,7 +98,7 @@ const AdminPanel: FC = () => {
                                     isChecked={isReturnDateExpired} 
                                     onChangeHandler={() => setIsReturnDateExpired(!isReturnDateExpired)} 
                                 />
-                                <span>Срок возврата истек</span>
+                                <span>Срок истек</span>
                             </>
                         }
                     </div>

@@ -18,14 +18,16 @@ const AdminToolbar: FC = () => {
                         onClickCallback={() => {
                             openTab(TabsEnum.ADMIN_PANEL_HISTORY)
                         }} 
+                        additionalStyles={styles.customTab}
                     />
                     <CustomTab 
                         id={TabsEnum.ADMIN_PANEL_RETURN_DATE_STATUS} 
                         name={'topGroup'} 
-                        text={'Статус срока возврата'} 
+                        text={'Учет'} 
                         onClickCallback={() => {
                             openTab(TabsEnum.ADMIN_PANEL_RETURN_DATE_STATUS)
                         }} 
+                        additionalStyles={styles.customTab}
                     />
                 </div>
             </div>
