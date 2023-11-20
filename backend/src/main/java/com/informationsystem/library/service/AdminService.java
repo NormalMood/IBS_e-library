@@ -8,7 +8,7 @@ public interface AdminService {
 
     ObjectResponseDTO getDetailedHistory(Pageable pageable);
 
-    ObjectResponseDTO getBookDetailedHistory(Long bookId, Pageable pageable);
+    Object getBookDetailedHistory(String bookId, Pageable pageable);
 
     ObjectResponseDTO getBinExpiredStatuses(Pageable pageable);
 

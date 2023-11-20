@@ -13,6 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 public interface NewBooksService {
 
     StatusResponseDTO saveGenres(List<String> genres);
+    
+    StatusResponseDTO checkNewBooksUserRequestDTO(NewBooksUserRequestDTO newBookRequest);
+    
+    StatusResponseDTO checkNewBooksAdminRequestDTO(NewBooksAdminRequestDTO newBookRequest);
 
     StatusResponseDTO addBook(NewBooksUserRequestDTO newBook);
 

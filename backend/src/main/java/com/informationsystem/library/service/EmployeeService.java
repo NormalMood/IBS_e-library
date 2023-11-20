@@ -22,32 +22,34 @@ public interface EmployeeService {
 
     StatusResponseDTO returnBooks(List<Long> booksIds);
 
-    Object extendBooks(List<Long> booksIds);
+    StatusResponseDTO extendBooks(List<Long> booksIds);
 
     void saveActionOnBook(Long employeeId, List<Long> booksIds, Short actionId);
     
-    ObjectResponseDTO getAllBooks(
+    Object getAllBooks(
     		String genres, 
     		Set<String> providers,
     		Set<String> status,
-    		Float averageRatingFrom,
-    		Float averageRatingTo,
+    		String averageRatingFrom,
+    		String averageRatingTo,
     		String sortingField,
     		String sortingOrder,
     		Pageable pageable);
     
     ObjectResponseDTO getTop10Books(Pageable pageable);
     
-    ObjectResponseDTO getBooksBySearchQuery(
+    Object getBooksBySearchQuery(
 			String searchQuery, 
 			String genres, 
 			Set<String> providers, 
 			Set<String> status,
-			Float averageRatingFrom, 
-			Float averageRatingTo, 
+			String averageRatingFrom, 
+			String averageRatingTo, 
 			String sortingField, 
 			String sortingOrder,
 			Pageable pageable);
+    
+    Float getAverageRatingParsed(String averageRating);
 
     boolean isCheckoutPossible(Long bookId);
 

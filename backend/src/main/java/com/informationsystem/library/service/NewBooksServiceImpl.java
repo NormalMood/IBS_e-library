@@ -15,6 +15,7 @@ import com.informationsystem.library.repository.VGenresRepository;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -54,14 +55,74 @@ public class NewBooksServiceImpl implements NewBooksService {
                 HttpStatus.OK,
                 HttpStatus.OK.value());
     }
-
+    
+    @Override
+    public StatusResponseDTO checkNewBooksUserRequestDTO(NewBooksUserRequestDTO newBookRequest) {
+    	if (StringUtils.isBlank(newBookRequest.getTitle()))
+    		return new StatusResponseDTO(
+            		"Введите название",
+            	    HttpStatus.BAD_REQUEST, 
+            	    HttpStatus.BAD_REQUEST.value()
+            	);
+    	if (StringUtils.isBlank(newBookRequest.getLastName()))
+    		return new StatusResponseDTO(
+            		"Введите фамилию",
+            	    HttpStatus.BAD_REQUEST, 
+            	    HttpStatus.BAD_REQUEST.value()
+            	);
+    	if (StringUtils.isBlank(newBookRequest.getFirstName()))
+    		return new StatusResponseDTO(
+            		"Введите имя",
+            	    HttpStatus.BAD_REQUEST, 
+            	    HttpStatus.BAD_REQUEST.value()
+            	);
+    	if (StringUtils.isBlank(newBookRequest.getDescription()))
+    		return new StatusResponseDTO(
+            		"Введите описание книги",
+            	    HttpStatus.BAD_REQUEST, 
+            	    HttpStatus.BAD_REQUEST.value()
+            	);
+    	if (newBookRequest.getGenresIds() == null || newBookRequest.getGenresIds().size() == 0)
+    		return new StatusResponseDTO(
+            		"Выберите жанр(ы)",
+            	    HttpStatus.BAD_REQUEST, 
+            	    HttpStatus.BAD_REQUEST.value()
+            	);
+    	return null;
+    }
+    
+    @Override
+    public StatusResponseDTO checkNewBooksAdminRequestDTO(NewBooksAdminRequestDTO newBookRequest) {
+    	StatusResponseDTO checkResult = checkNewBooksUserRequestDTO(new NewBooksUserRequestDTO(
+    			newBookRequest.getTitle(),
+    			newBookRequest.getLastName(),
+    			newBookRequest.getFirstName(),
+    			newBookRequest.getFatherName(),
+    			newBookRequest.getDescription(),
+    			newBookRequest.getGenresIds(),
+    			newBookRequest.getCoverName()
+    		));
+    	if (checkResult != null)
+    		return checkResult;
+    	if (newBookRequest.getProvider() == null)
+    		return new StatusResponseDTO(
+            		"Выберите поставщика",
+            	    HttpStatus.BAD_REQUEST, 
+            	    HttpStatus.BAD_REQUEST.value()
+            	);
+    	return null;
+    }
+    	
     @Override
     public StatusResponseDTO addBook(NewBooksUserRequestDTO newBookRequest) {
-    	if (new File("C:/Library_project/IBS_e-library/backend/src/main/resources/covers/" + newBookRequest.getCoverName()).isFile()) {
+    	StatusResponseDTO checkResult = checkNewBooksUserRequestDTO(newBookRequest);
+    	if (checkResult != null)
+    		return checkResult;
+    	if (new File("C:/Library_project/IBS_e-library/backend/src/main/resources/blob/covers/" + newBookRequest.getCoverName()).isFile()) {
     		Books book = newBooksUserRequestMapper.newBooksUserRequestToBooks(newBookRequest);
             saveBook(book, newBookRequest.getGenresIds());
             return new StatusResponseDTO(
-        		"Книга была добавлена",
+        		"Книга добавлена",
                 HttpStatus.OK, 
                 HttpStatus.OK.value()
             );
@@ -75,12 +136,15 @@ public class NewBooksServiceImpl implements NewBooksService {
 
     @Override
     public StatusResponseDTO addBook(NewBooksAdminRequestDTO newBookRequest) {
-    	if (new File("C:/Library_project/IBS_e-library/backend/src/main/resources/covers/" + newBookRequest.getCoverName()).isFile()) {
+    	StatusResponseDTO checkResult = checkNewBooksAdminRequestDTO(newBookRequest);
+    	if (checkResult != null)
+    		return checkResult;
+    	if (new File("C:/Library_project/IBS_e-library/backend/src/main/resources/blob/covers/" + newBookRequest.getCoverName()).isFile()) {
     		Books book = newBooksAdminRequestMapper
     		    .newBooksAdminRequestToBooks(newBookRequest);
     		saveBook(book, newBookRequest.getGenresIds());
     		return new StatusResponseDTO(
-    			"Книга была добавлена",
+    			"Книга добавлена",
     			HttpStatus.OK, 
     			HttpStatus.OK.value()
     		);
@@ -106,7 +170,7 @@ public class NewBooksServiceImpl implements NewBooksService {
 			if (contentTypeToFileExtension.containsKey(cover.getContentType())) {
 				String coverName = UUID.randomUUID().toString() + contentTypeToFileExtension.get(cover.getContentType());
 				File destination = new File(
-		   		    	"C:/Library_project/IBS_e-library/backend/src/main/resources/covers/" 
+		   		    	"C:/Library_project/IBS_e-library/backend/src/main/resources/blob/covers/" 
 		   		    	+ coverName
 		   		    );
 				try {
@@ -131,7 +195,7 @@ public class NewBooksServiceImpl implements NewBooksService {
 			);
    		}
 		return new StatusResponseDTO(
-			"Выберите обложку", 
+			"Выберите обложку в формате png или jpg", 
 			HttpStatus.BAD_REQUEST, 
 			HttpStatus.BAD_REQUEST.value()
 		);

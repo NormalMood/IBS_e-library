@@ -20,7 +20,7 @@ public class AdminController {
     }
 
     @GetMapping("/detailed_history/certain")
-    public ResponseEntity<?> getBookDetailedHistory(@RequestParam("bookId") Long bookId,
+    public ResponseEntity<?> getBookDetailedHistory(@RequestParam("bookId") String bookId,
                                                     Pageable pageable) {
         return ResponseEntity.ok(adminService.getBookDetailedHistory(bookId, pageable));
     }

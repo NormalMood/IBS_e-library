@@ -88,6 +88,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public StatusResponseDTO returnBooks(List<Long> booksIds) {
+    	if (booksIds == null || booksIds.size() == 0)
+    		return new StatusResponseDTO("Выберите книгу(и)",
+                    HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value());
         Long currentEmployeeId = getCurrentEmployee().getId();
         saveActionOnBook(currentEmployeeId, booksIds, Action.ACTIONS.get(ActionsName.RETURN));
         for (Long bookId : booksIds) {
@@ -95,12 +98,15 @@ public class EmployeeServiceImpl implements EmployeeService {
             book.setStatusesId(Status.STATUSES.get(StatusName.IN_STOCK));
             booksRepository.save(book);
         }
-        return new StatusResponseDTO("Books were returned successfully",
+        return new StatusResponseDTO("Книга(и) возвращена(ы)",
                 HttpStatus.OK, HttpStatus.OK.value());
     }
 
     @Override
-    public Object extendBooks(List<Long> booksIds) {
+    public StatusResponseDTO extendBooks(List<Long> booksIds) {
+    	if (booksIds == null || booksIds.size() == 0)
+    		return new StatusResponseDTO("Выберите книгу(и)",
+                    HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value());
         Long currentEmployeeId = getCurrentEmployee().getId();
         List<String> forbiddenExtendings = new ArrayList<>();
         for (Long bookId : booksIds) {
@@ -131,11 +137,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         	}	
         }
         if (forbiddenExtendings.size() > 0)
-        	return new ForbiddenExtendingsResponseDTO("Forbidden extendings", 
-        			HttpStatus.FORBIDDEN, 
-        			HttpStatus.FORBIDDEN.value(), 
-        			forbiddenExtendings);
-        return new StatusResponseDTO("Return date was successfully extended",
+        	return new StatusResponseDTO("Книга(и) уже продлена(ы): " + String.join(", ", forbiddenExtendings), 
+        			HttpStatus.BAD_REQUEST, 
+        			HttpStatus.BAD_REQUEST.value());
+        return new StatusResponseDTO("Книга(и) продлена(ы)",
                 HttpStatus.OK, HttpStatus.OK.value());
     }
     
@@ -152,15 +157,32 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     //BooksCheckoutController
     @Override
-    public ObjectResponseDTO getAllBooks(
+    public Object getAllBooks(
     		String genres, 
     		Set<String> providers,
     		Set<String> status,
-    		Float averageRatingFrom,
-    		Float averageRatingTo,
+    		String averageRatingFrom,
+    		String averageRatingTo,
     		String sortingField,
     		String sortingOrder,
     		Pageable pageable) {
+    	
+    	Float averageRatingFromParsed = getAverageRatingParsed(averageRatingFrom);
+    	if (averageRatingFromParsed != null && averageRatingFromParsed == -1)
+    		return new StatusResponseDTO(
+    			"Введите число от 1.0 до 5.0", 
+    			HttpStatus.BAD_REQUEST, 
+    			HttpStatus.BAD_REQUEST.value()
+    		);
+    	
+    	Float averageRatingToParsed = getAverageRatingParsed(averageRatingTo);
+    	if (averageRatingToParsed != null && averageRatingToParsed == -1)
+    		return new StatusResponseDTO(
+    			"Введите число от 1.0 до 5.0", 
+    			HttpStatus.BAD_REQUEST, 
+    			HttpStatus.BAD_REQUEST.value()
+    		);
+    	
     	Sort sort = Sort.unsorted();
     	if (!sortingField.equals("NONE"))
     		sort = Sort
@@ -174,8 +196,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         				genres.isEmpty() ? null : genres, 
         				providers.isEmpty() ? null : providers, 
         				status.isEmpty() ? null : status, 
-        				averageRatingFrom, 
-        				averageRatingTo, 
+        				averageRatingFromParsed, 
+        				averageRatingToParsed, 
         				PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort)
         			);
         return new ObjectResponseDTO(libraryBooks.toList(), libraryBooks.getTotalPages());
@@ -189,9 +211,33 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
     
     @Override
-	public ObjectResponseDTO getBooksBySearchQuery(String searchQuery, String genres, Set<String> providers,
-			Set<String> status, Float averageRatingFrom, Float averageRatingTo, String sortingField,
-			String sortingOrder, Pageable pageable) {
+	public Object getBooksBySearchQuery(
+			String searchQuery, 
+			String genres, 
+			Set<String> providers,
+			Set<String> status, 
+			String averageRatingFrom, 
+			String averageRatingTo, 
+			String sortingField,
+			String sortingOrder, 
+			Pageable pageable) {
+    	
+    	Float averageRatingFromParsed = getAverageRatingParsed(averageRatingFrom);
+    	if (averageRatingFromParsed != null && averageRatingFromParsed == -1)
+    		return new StatusResponseDTO(
+    			"Введите число от 1.0 до 5.0", 
+    			HttpStatus.BAD_REQUEST, 
+    			HttpStatus.BAD_REQUEST.value()
+    		);
+    	
+    	Float averageRatingToParsed = getAverageRatingParsed(averageRatingTo);
+    	if (averageRatingToParsed != null && averageRatingToParsed == -1)
+    		return new StatusResponseDTO(
+    			"Введите число от 1.0 до 5.0", 
+    			HttpStatus.BAD_REQUEST, 
+    			HttpStatus.BAD_REQUEST.value()
+    		);
+    	
     	Sort sort = Sort.unsorted();
     	if (!sortingField.equals("NONE"))
     		sort = Sort
@@ -206,12 +252,27 @@ public class EmployeeServiceImpl implements EmployeeService {
         				genres.isEmpty() ? null : genres, 
         				providers.isEmpty() ? null : providers, 
         				status.isEmpty() ? null : status, 
-        				averageRatingFrom, 
-        				averageRatingTo, 
+        				averageRatingFromParsed, 
+        				averageRatingToParsed, 
         				PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort)
         			);
         return new ObjectResponseDTO(libraryBooks.toList(), libraryBooks.getTotalPages());
 	}
+    
+    @Override
+    public Float getAverageRatingParsed(String averageRating) {
+    	if (!averageRating.isBlank())
+	    	try {
+	    		Float averageRatingParsed = Float.parseFloat(averageRating);
+	    		if (averageRatingParsed < 1 || averageRatingParsed > 5)
+	    			return -1.0f;
+	    		return averageRatingParsed;
+	    			
+	    	} catch(Exception e) {
+	    		return -1.0f;
+	    	}
+    	return null;
+    }
 
     @Override
     public boolean isCheckoutPossible(Long bookId) {
@@ -235,10 +296,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             book.setStatusesId(Status.STATUSES.get(StatusName.CHECKED_OUT));
             booksRepository.save(book);
         } else
-            return new StatusResponseDTO("Checkout is unavailable",
+            return new StatusResponseDTO("Книгу нельзя брать",
                     HttpStatus.FORBIDDEN,
                     HttpStatus.FORBIDDEN.value());
-        return new StatusResponseDTO("Books were checked out successfully",
+        return new StatusResponseDTO("Добавлена в корзину",
                 HttpStatus.OK, HttpStatus.OK.value());
     }
 

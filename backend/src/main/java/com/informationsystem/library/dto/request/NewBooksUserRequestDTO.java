@@ -14,24 +14,18 @@ import jakarta.validation.constraints.NotEmpty;
 @AllArgsConstructor
 public class NewBooksUserRequestDTO {
 
-	@NotEmpty
     private String title;
 
-	@NotEmpty
     private String lastName;
 
-	@NotEmpty
     private String firstName;
 
     private String fatherName;
     
-    @NotEmpty
     private String description;
 
-    @NotEmpty
     private Set<Short> genresIds;
     
-    @NotEmpty
     private String coverName;
 
 }

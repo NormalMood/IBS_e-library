@@ -1,6 +1,7 @@
 package com.informationsystem.library.service;
 
 import com.informationsystem.library.dto.response.ObjectResponseDTO;
+import com.informationsystem.library.dto.response.StatusResponseDTO;
 import com.informationsystem.library.entity.BinExpiredStatus;
 import com.informationsystem.library.entity.CommonDetailedHistory;
 import com.informationsystem.library.mapper.BooksExpiredStatusesMapper;
@@ -15,6 +16,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,9 +39,25 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public ObjectResponseDTO getBookDetailedHistory(Long bookId, Pageable pageable) {
+    public Object getBookDetailedHistory(String bookId, Pageable pageable) {
+    	Long bookIdParsed;
+    	try {
+    		bookIdParsed = Long.parseLong(bookId);
+    		if (bookIdParsed < 1)
+    			return new StatusResponseDTO(
+        				"Введите целое число больше 0", 
+        				HttpStatus.BAD_REQUEST, 
+        				HttpStatus.BAD_REQUEST.value()
+        			);
+    	} catch(Exception e) {
+    		return new StatusResponseDTO(
+    				"Введите целое число больше 0", 
+    				HttpStatus.BAD_REQUEST, 
+    				HttpStatus.BAD_REQUEST.value()
+    			);
+    	}
         Page<CommonDetailedHistory> bookDetailedHistory = commonDetailedHistoryRepository
-                .findAllByBookId(bookId, pageable);
+                .findAllByBookId(bookIdParsed, pageable);
         return new ObjectResponseDTO(bookDetailedHistory.toList(),
                         bookDetailedHistory.getTotalPages());
     }

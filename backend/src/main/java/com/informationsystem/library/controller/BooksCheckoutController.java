@@ -27,8 +27,8 @@ public class BooksCheckoutController {
     		@RequestParam String genres, 
     		@RequestParam Set<String> providers,
     		@RequestParam Set<String> status,
-    		Float averageRatingFrom,
-    		Float averageRatingTo,
+    		String averageRatingFrom,
+    		String averageRatingTo,
     		@RequestParam String sortingField,
     		@RequestParam String sortingOrder,
     		Pageable pageable) {
@@ -63,8 +63,8 @@ public class BooksCheckoutController {
     		@RequestParam String genres, 
     		@RequestParam Set<String> providers,
     		@RequestParam Set<String> status,
-    		Float averageRatingFrom,
-    		Float averageRatingTo,
+    		String averageRatingFrom,
+    		String averageRatingTo,
     		@RequestParam String sortingField,
     		@RequestParam String sortingOrder,
     		Pageable pageable
@@ -86,7 +86,7 @@ public class BooksCheckoutController {
     }
 
     @PostMapping("/checkout")
-    public ResponseEntity<?> checkoutBook(@RequestBody Long bookId) {
+    public ResponseEntity<?> checkoutBook(@RequestParam Long bookId) {
         StatusResponseDTO statusResponseDTO = employeeService.checkoutBook(bookId);
         return new ResponseEntity<>(statusResponseDTO, statusResponseDTO.getStatus());
     }

@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -70,6 +71,14 @@ public class BookReviewsServiceImpl implements BookReviewsService {
 
 	@Override
 	public StatusResponseDTO addReview(BookNewReviewRequestDTO newBookReview) {
+		if (newBookReview.getStars() == null || 
+				newBookReview.getStars() < 1 || 
+				newBookReview.getStars() > 5)
+			return new StatusResponseDTO("Оцените книгу",
+	                HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value());
+		if (StringUtils.isBlank(newBookReview.getComment()))
+			return new StatusResponseDTO("Напишите свои мысли о книге",
+	                HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value());
 		Reviews review = reviewsBookNewReviewRequestMapper.bookNewReviewRequestToReviews(newBookReview);
         reviewsRepository.save(review);
         return new StatusResponseDTO("Рецензия опубликована",
@@ -78,6 +87,14 @@ public class BookReviewsServiceImpl implements BookReviewsService {
 
 	@Override
 	public StatusResponseDTO updateReview(BookUpdatedReviewRequestDTO updatedBookReview) {
+		if (updatedBookReview.getStars() == null ||
+				updatedBookReview.getStars() < 1 ||
+				updatedBookReview.getStars() > 5)
+			return new StatusResponseDTO("Оцените книгу",
+	                HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value());
+		if (StringUtils.isBlank(updatedBookReview.getComment()))
+			return new StatusResponseDTO("Напишите свои мысли о книге",
+	                HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value());
 		Reviews review = reviewsBookUpdatedReviewRequestMapper.bookUpdatedReviewRequestToReviews(updatedBookReview);
         reviewsRepository.save(review);
         return new StatusResponseDTO("Рецензия обновлена",
