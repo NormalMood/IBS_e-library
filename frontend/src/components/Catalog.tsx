@@ -51,7 +51,6 @@ const Catalog: FC = () => {
 
     const message = useCatalogStore(state => state.message)
     const code = useCatalogStore(state => state.code)
-    const setMessageCodeDefault = useCatalogStore(state => state.setMessageCodeDefault)
 
     useEffect(() => {
         if (message !== '') {
@@ -59,7 +58,6 @@ const Catalog: FC = () => {
             responsesArray.push({ message, code})
             setResponses(responsesArray)
         }
-        setMessageCodeDefault()
     }, [message])
 
     const [responses, setResponses] = useState<IMessageCodeResponse[]>([])
@@ -69,7 +67,7 @@ const Catalog: FC = () => {
             <CustomSearch />
             <Toolbar />
             <div className={styles.catalogContentContainer}>
-                <Sidebar />
+                <Sidebar lastResponse={responses[responses.length - 1]} />
                 <div className="container">
                     <CatalogBooks />
                 </div>

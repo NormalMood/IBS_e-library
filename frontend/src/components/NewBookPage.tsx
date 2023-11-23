@@ -14,6 +14,9 @@ import CustomRadioButton from './UI/CustomRadioButton/CustomRadioButton';
 import { NewBookPageProviderFieldsEnum } from '../@types/NewBookPageProviderFieldsEnum';
 import { IMessageCodeResponse } from '../@types/IMessageCodeResponse';
 import MessagePopup from './UI/MessagePopup/MessagePopup';
+import customInputStyle from './UI/CustomInput/CustomInput.module.css';
+import { OK_RESPONSE_CODE } from '../api/axiosInstance';
+import customTextAreaStyle from './UI/CustomTextarea/CustomTextarea.module.css';
 
 const NewBook: FC = () => {
     const [title, setTitle] = useState('') 
@@ -137,6 +140,27 @@ const NewBook: FC = () => {
         }
     }
 
+    const getCustomInputAdditionalStyle = (keyWord: string) => {
+        if (responses.length > 0 && 
+            responses[responses.length - 1].message.includes(keyWord) && 
+            responses[responses.length - 1].code !== OK_RESPONSE_CODE
+        )
+            return customInputStyle.invalidCustomInput
+        return ''
+    }
+
+    const getCustomTextAreaAdditionalStyle = (keyWord: string) => {
+        if (responses.length > 0 && 
+            responses[responses.length - 1].message.includes(keyWord) && 
+            responses[responses.length - 1].code !== OK_RESPONSE_CODE
+            ) {
+                
+                console.log('sdf')
+            return [styles.newBookTextarea, customTextAreaStyle.invalidCustomTextarea].join(' ')
+        }
+        return styles.newBookTextarea
+    }
+
     return (
         <>
             <div className="container">
@@ -147,17 +171,36 @@ const NewBook: FC = () => {
                                 <CustomFileInput />
                             </div>
                             <div className={styles.newBookInputContainer}>
-                                <CustomInput value={title} onChangeHandler={setTitle} placeholder={'Название*'} />
-                                <CustomInput value={lastName} onChangeHandler={setLastName} placeholder={'Фамилия*'} />
-                                <CustomInput value={firstName} onChangeHandler={setFirstName} placeholder={'Имя*'} />
-                                <CustomInput value={fatherName} onChangeHandler={setFatherName} placeholder={'Отчество'} />
+                                <CustomInput 
+                                    value={title} 
+                                    onChangeHandler={setTitle} 
+                                    placeholder={'Название*'} 
+                                    additionalStyles={getCustomInputAdditionalStyle('название')} 
+                                />
+                                <CustomInput 
+                                    value={lastName} 
+                                    onChangeHandler={setLastName} 
+                                    placeholder={'Фамилия*'} 
+                                    additionalStyles={getCustomInputAdditionalStyle('фамилию')}
+                                />
+                                <CustomInput 
+                                    value={firstName} 
+                                    onChangeHandler={setFirstName} 
+                                    placeholder={'Имя*'} 
+                                    additionalStyles={getCustomInputAdditionalStyle('имя')}
+                                />
+                                <CustomInput 
+                                    value={fatherName} 
+                                    onChangeHandler={setFatherName} 
+                                    placeholder={'Отчество'} 
+                                />
                             </div>
                             <div className={styles.newBookTextareaContainer}>
                                 <CustomTextarea 
                                     text={description} 
                                     onChangeHandler={setDescription} 
                                     placeholder={'Описание книги*'}
-                                    additionalStyles={styles.newBookTextarea}
+                                    additionalStyles={getCustomTextAreaAdditionalStyle('описание')}
                                 />
                             </div>
                         </div>

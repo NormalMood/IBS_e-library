@@ -11,6 +11,7 @@ import useEmployeeDataStore from '../store/useEmployeeDataStore';
 import { IMessageCodeResponse } from '../@types/IMessageCodeResponse';
 import MessagePopup from './UI/MessagePopup/MessagePopup';
 import useReviewPageResponseStore from '../store/useReviewPageResponseStore';
+import customTextAreaStyle from './UI/CustomTextarea/CustomTextarea.module.css';
 
 const ReviewPage: FC = () => {
     const { id } = useParams()
@@ -61,6 +62,7 @@ const ReviewPage: FC = () => {
     const currentEmployeeId = useEmployeeDataStore(state => state.id)
 
     const addReview =  async () => {
+        setIsLastResponseError(false)
         const starsQuantity = starsVisible.filter(star => star).length
         await ReviewsService.addReview(currentEmployeeId, Number(id), starsQuantity, reviewText).then(response => {
             handleAddUpdateReviewResponse(response)
@@ -68,7 +70,10 @@ const ReviewPage: FC = () => {
         )
     }
 
+    const [isLastResponseError, setIsLastResponseError] = useState(false)
+
     const updateReview = async () => {
+        setIsLastResponseError(false)
         const starsQuantity = starsVisible.filter(star => star).length
         await ReviewsService.updateReview(Number(reviewId), currentEmployeeId, Number(id), starsQuantity, reviewText).then(response => {
             handleAddUpdateReviewResponse(response)
@@ -81,8 +86,10 @@ const ReviewPage: FC = () => {
             setCode(response.code)
             navigate(`/book/${id}`)
         }
-        else
+        else {
+            setIsLastResponseError(true)
             updateResponses(response)
+        }
     }
 
     const updateResponses = (response: IMessageCodeResponse) => {
@@ -95,6 +102,13 @@ const ReviewPage: FC = () => {
 
     const setMessage = useReviewPageResponseStore(state => state.setMessage)
     const setCode = useReviewPageResponseStore(store => store.setCode)
+
+    const getCustomTextAreaAdditionalStyle = () => {
+        if (responses[responses.length - 1]?.message.includes('мысли о книге') && isLastResponseError) {
+            return [styles.pageReviewTextarea, customTextAreaStyle.invalidCustomTextarea].join(' ')
+        }
+        return styles.pageReviewTextarea
+    }
     
     return (
         <>
@@ -140,7 +154,7 @@ const ReviewPage: FC = () => {
                                 text={reviewText} 
                                 onChangeHandler={setReviewText} 
                                 placeholder={'Ваши мысли о книге*'}
-                                additionalStyles={styles.pageReviewTextarea}
+                                additionalStyles={getCustomTextAreaAdditionalStyle()}
                             />
                             <div className={styles.bookReviewButtonContainer}>
                                 {reviewId === undefined 

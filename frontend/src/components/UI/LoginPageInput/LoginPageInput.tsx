@@ -6,16 +6,17 @@ interface LoginPageInputProps {
     placeholder: string;
     value: string;
     setCredential: (credential: React.SetStateAction<string>) => void;
+    additionalStyles: string;
 }
 
-const LoginPageInput: FC<LoginPageInputProps> = ({type = 'text', placeholder, value, setCredential}) => {
+const LoginPageInput: FC<LoginPageInputProps> = ({type = 'text', placeholder, value, setCredential, additionalStyles}) => {
   return (
     <input 
       type={type}
       placeholder={placeholder} 
       value={value}
       onChange={(e) => setCredential(e.target.value)}
-      className={classes.input}
+      className={[classes.input, additionalStyles].join(' ')}
      />
   );
 }

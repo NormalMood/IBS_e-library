@@ -14,6 +14,8 @@ import { EXPIRED_STATUSES_ADMIN_PANEL_TABLE_HEADERS } from '../tableHeaders/expi
 import useSearchDebounce from '../hooks/useSearchDebounce';
 import MessagePopup from './UI/MessagePopup/MessagePopup';
 import { IMessageCodeResponse } from '../@types/IMessageCodeResponse';
+import customInputStyle from './UI/CustomInput/CustomInput.module.css';
+import { OK_RESPONSE_CODE } from '../api/axiosInstance';
 
 const AdminPanel: FC = () => {
     const [isReturnDateExpired, setIsReturnDateExpired] = useState(false)
@@ -33,8 +35,10 @@ const AdminPanel: FC = () => {
         if (searchQuery !== null && searchQuery !== '') {
             getHistoryByBookId(searchQuery)
         }
-        else
+        else { 
             getHistory()
+            setIsLastResponseError(false)
+        }
     }
 
     const openedTab = useCatalogStore(state => state.openedTab)
@@ -72,6 +76,7 @@ const AdminPanel: FC = () => {
         setHistory(await AdminPanelService.getDetailedHistory())
     }
     const getHistoryByBookId = async (bookId: number) => {
+        setIsLastResponseError(false)
         await AdminPanelService.getDetailedHistoryByBookId(bookId).then(response => {
             if ((response as IMessageCodeResponse).message)
                 updateResponses(response as IMessageCodeResponse)
@@ -88,11 +93,24 @@ const AdminPanel: FC = () => {
 
     const [responses, setResponses] = useState<IMessageCodeResponse[]>([])
 
+    const [isLastResponseError, setIsLastResponseError] = useState(false)
+
     const updateResponses = (response: IMessageCodeResponse) => {
         const responsesArray = [...responses]
         responsesArray.push(response)
         setResponses(responsesArray)
     }
+
+    const getCustomInputAdditionalStyle = () => {
+        if (isLastResponseError)
+            return [styles.adminPanelCustomInput, customInputStyle.invalidCustomInput].join(' ')
+        return styles.adminPanelCustomInput
+    }
+
+    useEffect(() => {
+        if (responses.length > 0 && responses[responses.length - 1]?.code !== OK_RESPONSE_CODE)
+            setIsLastResponseError(true)
+    }, [responses])
 
     return (
         <>
@@ -105,7 +123,7 @@ const AdminPanel: FC = () => {
                                 value={bookId}
                                 placeholder={'id книги'} 
                                 onChangeHandler={customInputChangeHandler} 
-                                additionalStyles={styles.adminPanelCustomInput}
+                                additionalStyles={getCustomInputAdditionalStyle()}
                             />
                         }
                         {openedTab === TabsEnum.ADMIN_PANEL_RETURN_DATE_STATUS &&

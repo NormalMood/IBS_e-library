@@ -5,7 +5,7 @@ interface ICustomInputProps {
     value: string;
     onChangeHandler: (value: string) => void;
     placeholder: string;
-    additionalStyles?: React.HTMLAttributes<any>;
+    additionalStyles?: string;
 }
 
 const CustomInput: FC<ICustomInputProps> = ({placeholder, value, onChangeHandler, additionalStyles = null}) => {

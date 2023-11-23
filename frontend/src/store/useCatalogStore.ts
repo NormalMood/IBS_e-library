@@ -88,6 +88,7 @@ const useCatalogStore = create<IUseCatalogStoreState>((set, get) => ({
                         set({ books: (response as ICatalog).objects })
                     else
                         set({ books: [...get().books, ...(response as ICatalog).objects] })
+                    get().setMessageCodeDefault()
                 }
                 else if ((response as IMessageCodeResponse).message) {
                     set({ message: (response as IMessageCodeResponse).message })

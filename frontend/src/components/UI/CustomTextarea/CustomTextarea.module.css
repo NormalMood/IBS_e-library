@@ -16,3 +16,7 @@
     outline: none;
     border-bottom: solid #0022CC 2px;
 }
+
+.invalidCustomTextarea {
+    border-bottom: solid red 2px;
+}

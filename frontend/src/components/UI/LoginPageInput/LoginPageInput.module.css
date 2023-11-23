@@ -21,9 +21,15 @@
 }
 
 .input:focus {
-    outline: 2px solid #0022CC;
+    outline: 3px solid #0022CC;
 }
 
 .input::placeholder {
     color: #999B9E;
+}
+
+
+
+.invalidInput {
+    outline: 2px solid red;
 }

@@ -7,7 +7,8 @@ import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import MessagePopup from './UI/MessagePopup/MessagePopup';
 import { IMessageCodeResponse } from '../@types/IMessageCodeResponse';
-import { UNAUTHORIZED_RESPONSE_CODE } from '../api/axiosInstance';
+import { OK_RESPONSE_CODE, UNAUTHORIZED_RESPONSE_CODE } from '../api/axiosInstance';
+import inputStyles from '../components/UI/LoginPageInput/LoginPageInput.module.css';
 
 const Login: FC = () => {
     const [username, setUsername] = useState<string>('ymvenediktov@ibs.ru')
@@ -34,6 +35,13 @@ const Login: FC = () => {
             navigate('/my_books')
     }
     const [responses, setResponses] = useState<IMessageCodeResponse[]>([])
+
+    const getInputAdditionalStyle = () => {
+        if (responses.length > 0 && responses[responses.length - 1].code !== OK_RESPONSE_CODE) 
+            return inputStyles.invalidInput
+        return ''
+    }
+
     return (
         <>
             <section className={classes.Login}>
@@ -46,8 +54,19 @@ const Login: FC = () => {
                                     <img src='/img/ibs_logo.png' className={classes.backgroundLogo} />
                                     <img src='/img/book_shelf.png' className={classes.backgroundIcon} />
                                 </div>
-                                <LoginPageInput type={'email'} placeholder={'E-mail'} value={username} setCredential={setUsername} />
-                                <LoginPageInput placeholder={'Пароль'} value={password} setCredential={setPassword} />
+                                <LoginPageInput 
+                                    type={'email'} 
+                                    placeholder={'E-mail'} 
+                                    value={username} 
+                                    setCredential={setUsername}
+                                    additionalStyles={getInputAdditionalStyle()}
+                                />
+                                <LoginPageInput 
+                                    placeholder={'Пароль'} 
+                                    value={password} 
+                                    setCredential={setPassword} 
+                                    additionalStyles={getInputAdditionalStyle()}
+                                />
                                 {isLoading ?
                                     <CustomButton text={'Войти'} styles={[classes.customButtonLoginPage, classes.customButtonLoadingLoginPage].join(' ')} onClick={() => {}} disabled={true} />
                                     :

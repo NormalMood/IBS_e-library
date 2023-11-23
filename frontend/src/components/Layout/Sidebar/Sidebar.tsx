@@ -15,8 +15,14 @@ import { SortingOrdersEnum } from '../../../@types/SortingOrdersEnum';
 import useCatalogSortingStore from '../../../store/useCatalogSortingStore';
 import { ProvidersMap } from '../../../map/ProvidersMap';
 import useWindowWidth from '../../../hooks/useWindowWidth';
+import customInputStyle from '../../UI/CustomInput/CustomInput.module.css';
+import { IMessageCodeResponse } from '../../../@types/IMessageCodeResponse';
 
-const Sidebar: FC = () => {
+interface ISidebarProps {
+    lastResponse: IMessageCodeResponse;
+}
+
+const Sidebar: FC<ISidebarProps> = ({lastResponse}) => {
     const [isSidebarOpened, setIsSidebarOpened] = useState(false);
     
     const isWidthLess = useWindowWidth(900)
@@ -247,6 +253,15 @@ const Sidebar: FC = () => {
         })
         return titlesMapped
     }
+
+    const message = useCatalogStore(state => state.message)
+    const setMessageCodeDefault = useCatalogStore(state => state.setMessageCodeDefault)
+
+    const getAverageRatingAdditionalStyle = () => {
+        if (message.includes('от 1.0 до 5.0'))
+            return customInputStyle.invalidCustomInput
+        return ''
+    }
     
     return (
         <aside className={getSidebarStyles()}>
@@ -301,6 +316,7 @@ const Sidebar: FC = () => {
                                 }
                             }
                             toolsOptionClickHandler()
+                            setMessageCodeDefault()
                         }} 
                         styles={styles.sidebarButtons} 
                     />
@@ -386,6 +402,7 @@ const Sidebar: FC = () => {
                                     value={averageRatingFrom}
                                     onChangeHandler={setAverageRatingFrom}
                                     placeholder={'1.0'}
+                                    additionalStyles={getAverageRatingAdditionalStyle()}
                                 />
                             </div>
                             <span className={styles.dashBetweenInputs}></span>
@@ -394,6 +411,7 @@ const Sidebar: FC = () => {
                                     value={averageRatingTo}
                                     onChangeHandler={setAverageRatingTo}
                                     placeholder={'5.0'}
+                                    additionalStyles={getAverageRatingAdditionalStyle()}
                                 />
                             </div>
                         </div>
