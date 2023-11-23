@@ -42,6 +42,12 @@ const Login: FC = () => {
         return ''
     }
 
+    const onEnterKeyUpHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            submit()
+        }
+    }
+
     return (
         <>
             <section className={classes.Login}>
@@ -60,17 +66,28 @@ const Login: FC = () => {
                                     value={username} 
                                     setCredential={setUsername}
                                     additionalStyles={getInputAdditionalStyle()}
+                                    onKeyUpHandler={onEnterKeyUpHandler}
                                 />
                                 <LoginPageInput 
                                     placeholder={'Пароль'} 
                                     value={password} 
                                     setCredential={setPassword} 
                                     additionalStyles={getInputAdditionalStyle()}
+                                    onKeyUpHandler={onEnterKeyUpHandler}
                                 />
                                 {isLoading ?
-                                    <CustomButton text={'Войти'} styles={[classes.customButtonLoginPage, classes.customButtonLoadingLoginPage].join(' ')} onClick={() => {}} disabled={true} />
+                                    <CustomButton 
+                                        text={'Войти'} 
+                                        styles={[classes.customButtonLoginPage, classes.customButtonLoadingLoginPage].join(' ')} 
+                                        onClick={() => {}} 
+                                        disabled={true} 
+                                    />
                                     :
-                                    <CustomButton text={'Войти'} styles={classes.customButtonLoginPage} onClick={async () => await submit()} />
+                                    <CustomButton 
+                                        text={'Войти'} 
+                                        styles={classes.customButtonLoginPage} 
+                                        onClick={async () => await submit()}
+                                    />
                                 }
                             </div>
                         </div>
