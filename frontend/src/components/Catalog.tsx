@@ -61,6 +61,10 @@ const Catalog: FC = () => {
     }, [message])
 
     const [responses, setResponses] = useState<IMessageCodeResponse[]>([])
+
+    useEffect(() => {
+        console.log(responses)
+    }, [responses])
     
     return (
         <>
