@@ -52,13 +52,10 @@ const CatalogBooks = () => {
         openTab(TabsEnum.CATALOG_ALL_BOOKS)
         page = 0
         setPage(0)
-        console.log('sdfsdfds: ' + page)
     }, [])
 
     useEffect(() => {
         getAllBooks(getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder, page)
-        console.log('hahahaha')
-        console.log(books)
     }, [page])
 
     useObserver(booksPaginationElement, page < totalPages, isBooksLoading, () => {
@@ -71,7 +68,7 @@ const CatalogBooks = () => {
             {books?.length !== 0 &&
                 <>
                     <div className={styles.catalogBooksContainer}>
-                        {books.map(book => 
+                        {books?.map(book => 
                             <CatalogBook
                                 id={book?.id}
                                 title={book?.title}

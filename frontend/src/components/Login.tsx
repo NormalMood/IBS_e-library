@@ -5,6 +5,9 @@ import CustomButton from './UI/CustomButton/CustomButton';
 import { loginServer } from '../service/AuthService';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import MessagePopup from './UI/MessagePopup/MessagePopup';
+import { IMessageCodeResponse } from '../@types/IMessageCodeResponse';
+import { UNAUTHORIZED_RESPONSE_CODE } from '../api/axiosInstance';
 
 const Login: FC = () => {
     const [username, setUsername] = useState<string>('ymvenediktov@ibs.ru')
@@ -16,44 +19,58 @@ const Login: FC = () => {
         setIsLoading(true)
         localStorage.setItem('username', username)
         localStorage.setItem('password', password)
+        const responsesArray = [...responses]
         await loginServer(setIsAuthCallback)
-            .then(response => setIsLoading(false))
+            .then(responseCode => {
+                if (responseCode === UNAUTHORIZED_RESPONSE_CODE)
+                    responsesArray.push({ message: 'Неверные учетные данные', code: responseCode })
+                setIsLoading(false)
+            })
+        setResponses(responsesArray)
     }
     const setIsAuthCallback = async (isAuth: boolean) => {
         setIsAuth(isAuth)
         if (isAuth) 
             navigate('/my_books')
     }
+    const [responses, setResponses] = useState<IMessageCodeResponse[]>([])
     return (
-        <section className={classes.Login}>
-            <div className={classes.background}>
-                <div className={classes.backgroundContentWrapper}>
-                    <div className={classes.inputAndButtonWrapper}>
-                        <div className={classes.inputAndButtonContainer}>
-                            <div className={classes.backgroundContentContainer}>
-                                <span className={classes.backgroundImgText}>Библиотека</span>
-                                <img src='/img/ibs_logo.png' className={classes.backgroundLogo} />
-                                <img src='/img/book_shelf.png' className={classes.backgroundIcon} />
+        <>
+            <section className={classes.Login}>
+                <div className={classes.background}>
+                    <div className={classes.backgroundContentWrapper}>
+                        <div className={classes.inputAndButtonWrapper}>
+                            <div className={classes.inputAndButtonContainer}>
+                                <div className={classes.backgroundContentContainer}>
+                                    <span className={classes.backgroundImgText}>Библиотека</span>
+                                    <img src='/img/ibs_logo.png' className={classes.backgroundLogo} />
+                                    <img src='/img/book_shelf.png' className={classes.backgroundIcon} />
+                                </div>
+                                <LoginPageInput type={'email'} placeholder={'E-mail'} value={username} setCredential={setUsername} />
+                                <LoginPageInput placeholder={'Пароль'} value={password} setCredential={setPassword} />
+                                {isLoading ?
+                                    <CustomButton text={'Войти'} styles={[classes.customButtonLoginPage, classes.customButtonLoadingLoginPage].join(' ')} onClick={() => {}} disabled={true} />
+                                    :
+                                    <CustomButton text={'Войти'} styles={classes.customButtonLoginPage} onClick={async () => await submit()} />
+                                }
                             </div>
-                            <LoginPageInput type={'email'} placeholder={'E-mail'} value={username} setCredential={setUsername} />
-                            <LoginPageInput placeholder={'Пароль'} value={password} setCredential={setPassword} />
-                            {isLoading ?
-                                <CustomButton text={'Войти'} styles={[classes.customButtonLoginPage, classes.customButtonLoadingLoginPage].join(' ')} onClick={() => {}} disabled={true} />
-                                :
-                                <CustomButton text={'Войти'} styles={classes.customButtonLoginPage} onClick={async () => await submit()} />
-                            }
+                        </div>
+                        <div className={classes.greetingTextContainer}>
+                            <p className={classes.greetingText}>
+                                <b>Добро пожаловать в электронную библиотеку IBS!</b> <br /> <br />
+                                Смотрите книги в "Каталоге", берите их и оставляйте рецензии. <br />
+                                Чтобы добавить в библиотеку свою книгу, зайдите в раздел "Новая книга".
+                            </p>
                         </div>
                     </div>
-                    <div className={classes.greetingTextContainer}>
-                        <p className={classes.greetingText}>
-                            <b>Добро пожаловать в электронную библиотеку IBS!</b> <br /> <br />
-                            Смотрите книги в "Каталоге", берите их и оставляйте рецензии. <br />
-                            Чтобы добавить в библиотеку свою книгу, зайдите в раздел "Новая книга".
-                        </p>
-                    </div>
                 </div>
+            </section>
+            <div className='messagePopupContainer'>
+                {responses.map(response => 
+                    <MessagePopup message={response.message} code={response.code} />
+                )}
             </div>
-        </section>
+        </>
     )
 }
 

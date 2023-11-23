@@ -12,6 +12,8 @@ import AdminPanelService from '../service/AdminPanelService';
 import { IBookExpiredStatuses } from '../@types/IBookExpiredStatuses';
 import { EXPIRED_STATUSES_ADMIN_PANEL_TABLE_HEADERS } from '../tableHeaders/expiredStatusesAdminPanelTableHeaders';
 import useSearchDebounce from '../hooks/useSearchDebounce';
+import MessagePopup from './UI/MessagePopup/MessagePopup';
+import { IMessageCodeResponse } from '../@types/IMessageCodeResponse';
 
 const AdminPanel: FC = () => {
     const [isReturnDateExpired, setIsReturnDateExpired] = useState(false)
@@ -70,7 +72,12 @@ const AdminPanel: FC = () => {
         setHistory(await AdminPanelService.getDetailedHistory())
     }
     const getHistoryByBookId = async (bookId: number) => {
-        setHistory(await AdminPanelService.getDetailedHistoryByBookId(bookId))
+        await AdminPanelService.getDetailedHistoryByBookId(bookId).then(response => {
+            if ((response as IMessageCodeResponse).message)
+                updateResponses(response as IMessageCodeResponse)
+            else if ((response as IBookHistory).objects)
+                setHistory(response as IBookHistory)
+        })
     }
     const getExpiredStatuses = async () => {
         setExpiredStatuses(await AdminPanelService.getBinExpiredStatuses())
@@ -78,6 +85,15 @@ const AdminPanel: FC = () => {
     const getExpiredStatusesOnly = async () => {
         setExpiredStatuses(await AdminPanelService.getBinExpiredStatusesOnly())
     }
+
+    const [responses, setResponses] = useState<IMessageCodeResponse[]>([])
+
+    const updateResponses = (response: IMessageCodeResponse) => {
+        const responsesArray = [...responses]
+        responsesArray.push(response)
+        setResponses(responsesArray)
+    }
+
     return (
         <>
             <AdminToolbar />
@@ -121,6 +137,11 @@ const AdminPanel: FC = () => {
                         />
                     }
                 </div>
+            </div>
+            <div className='messagePopupContainer'>
+                {responses.map(response => 
+                    <MessagePopup message={response.message} code={response.code} />
+                )}
             </div>
         </>
     )

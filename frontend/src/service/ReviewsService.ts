@@ -1,4 +1,5 @@
 import { IBookReviewsResponse } from "../@types/IBookReviewsResponse"
+import { IMessageCodeResponse } from "../@types/IMessageCodeResponse"
 import { IReviewResponse } from "../@types/IReviewResponse"
 import axiosInstance, { BASE_BOOK_REVIEWS_API } from "../api/axiosInstance"
 
@@ -41,7 +42,7 @@ export default class ReviewsService {
     }
 
     static async deleteReview(employeeId: number, reviewId: number) {
-        const response = await axiosInstance.delete(
+        const response = await axiosInstance.delete<IMessageCodeResponse>(
             BASE_BOOK_REVIEWS_API + '/review',
             {
                 params: {
@@ -50,11 +51,11 @@ export default class ReviewsService {
                 }
             }
         )
-        return response
+        return response.data
     }
 
     static async addReview(employeeId: number, bookId: number, stars: number, comment: string) {
-        return await axiosInstance.post(
+        const response = await axiosInstance.post<IMessageCodeResponse>(
             BASE_BOOK_REVIEWS_API + '/review',
             {
                 employeeId,
@@ -64,10 +65,11 @@ export default class ReviewsService {
                 
             }
         )
+        return response.data
     }
 
     static async updateReview(id: number, employeeId: number, bookId: number, stars: number, comment: string) {
-        return await axiosInstance.put(
+        const response = await axiosInstance.put<IMessageCodeResponse>(
             BASE_BOOK_REVIEWS_API + '/review',
             {
                 id,
@@ -77,6 +79,7 @@ export default class ReviewsService {
                 comment
             }
         )
+        return response.data
     }
 
 }

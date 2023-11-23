@@ -1,4 +1,7 @@
-import axiosInstance, { BASE_ADD_BOOK_API } from "../api/axiosInstance";
+import { IMessageCodeResponse } from "../@types/IMessageCodeResponse";
+import axiosInstance, { BASE_ADD_BOOK_API, OK_RESPONSE_CODE } from "../api/axiosInstance";
+
+const COVER_NAME_KEY = 'coverName'
 
 export default class BookUploadService {
     
@@ -13,10 +16,12 @@ export default class BookUploadService {
             providerId: number,
             isAdmin: boolean
         ) {
-            
+        console.log('i am heeree')
         const formData = new FormData()
         formData.append('cover', cover as File)
-        const coverUploadResponse = await axiosInstance.post(
+        let coverUploadResponse = null
+        if (localStorage.getItem(COVER_NAME_KEY) === null)
+        coverUploadResponse = await axiosInstance.post<IMessageCodeResponse>(
             BASE_ADD_BOOK_API + '/cover',
             formData,
             {
@@ -26,10 +31,13 @@ export default class BookUploadService {
             }
         )
         
-        if (coverUploadResponse.data?.code === 200) {
+        if ((coverUploadResponse !== null && coverUploadResponse.data.code === OK_RESPONSE_CODE) || 
+            (localStorage.getItem(COVER_NAME_KEY) !== null)) {
+            if (localStorage.getItem(COVER_NAME_KEY) === null && coverUploadResponse !== null)
+                localStorage.setItem(COVER_NAME_KEY, coverUploadResponse.data?.message)
             let bookInfoUploadResponse = null
             if (isAdmin) {
-                bookInfoUploadResponse = await axiosInstance.post(
+                bookInfoUploadResponse = await axiosInstance.post<IMessageCodeResponse>(
                     BASE_ADD_BOOK_API + '/admin/book',
                     {
                         title,
@@ -37,14 +45,14 @@ export default class BookUploadService {
                         firstName,
                         fatherName,
                         description,
-                        coverName: coverUploadResponse.data?.message,
+                        coverName: localStorage.getItem(COVER_NAME_KEY),
                         genresIds,
                         provider: providerId
                     }
                 )
             }
             else {
-                bookInfoUploadResponse = await axiosInstance.post(
+                bookInfoUploadResponse = await axiosInstance.post<IMessageCodeResponse>(
                     BASE_ADD_BOOK_API + '/user/book',
                     {
                         title,
@@ -52,14 +60,16 @@ export default class BookUploadService {
                         firstName,
                         fatherName,
                         description,
-                        coverName: coverUploadResponse.data?.message,
+                        coverName: localStorage.getItem(COVER_NAME_KEY),
                         genresIds
                     }
                 )
             }
-            return bookInfoUploadResponse
+            if (bookInfoUploadResponse.data.code === OK_RESPONSE_CODE)
+                localStorage.removeItem(COVER_NAME_KEY)
+            return bookInfoUploadResponse.data
         }
-        return null
+        return coverUploadResponse?.data
     }
 
 }

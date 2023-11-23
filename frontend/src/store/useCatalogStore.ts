@@ -8,6 +8,10 @@ import useCatalogFilterStore from './useCatalogFilterStore';
 import { FilterKeysEnum } from '../@types/FilterKeysEnum';
 import { CatalogSortingFieldsEnum } from '../@types/CatalogSortingFieldsEnum';
 import { SortingOrdersEnum } from '../@types/SortingOrdersEnum';
+import { ICatalog } from "../@types/ICatalog";
+import { IMessageCodeResponse } from '../@types/IMessageCodeResponse';
+import { BAD_REQUEST_RESPONSE_CODE, INCORRECT_AVERAGE_RATING_FILTER_RESPONSE_MESSAGE } from '../api/axiosInstance';
+import { getAverageRatingParsed } from '../utils/AverageRatingHandler';
 
 interface IUseCatalogStoreState {
     books: IBookCatalog[];
@@ -35,6 +39,12 @@ interface IUseCatalogStoreState {
     ) => {};
     openTab: (tab: TabsEnum) => void;
     clickTool: (tool: CatalogToolsEnum) => void;
+
+    message: string;
+    setMessage: (message: string) => void;
+    code: number;
+    setCode: (code: number) => void;
+    setMessageCodeDefault: () => void;
 }
 
 const useCatalogStore = create<IUseCatalogStoreState>((set, get) => ({
@@ -71,15 +81,19 @@ const useCatalogStore = create<IUseCatalogStoreState>((set, get) => ({
                 sortingOrder,
                 page
             ).then(response => {
-                set({ isBooksLoading: false })
-                set({ totalPages: response.pages })
-                if (page === 0)
-                    set({ books: response.objects })
-                else
-                    set({ books: [...get().books, ...response.objects] })
+                if ((response as ICatalog).objects) {
+                    set({ isBooksLoading: false })
+                    set({ totalPages: (response as ICatalog).pages })
+                    if (page === 0)
+                        set({ books: (response as ICatalog).objects })
+                    else
+                        set({ books: [...get().books, ...(response as ICatalog).objects] })
+                }
+                else if ((response as IMessageCodeResponse).message) {
+                    set({ message: (response as IMessageCodeResponse).message })
+                    set({ code: (response as IMessageCodeResponse).code })
+                }
             })
-        
-        console.log(get().books)
     },
     getTopTenBooks: async (
         filterCriteria: Map<FilterKeysEnum, Set<string>>, 
@@ -88,17 +102,26 @@ const useCatalogStore = create<IUseCatalogStoreState>((set, get) => ({
         sortingField: CatalogSortingFieldsEnum,
         sortingOrder: SortingOrdersEnum
         ) => {
-        const data = await CatalogService.getTopTenBooks()
-        const updatedBooks = CatalogToolsService
-            .getTopTenBooksSortedAndFiltered(
-                filterCriteria, 
-                averageRatingFrom, 
-                averageRatingTo, 
-                sortingField,
-                sortingOrder,
-                data.objects
-            )
-        set({ books: updatedBooks })
+        const averageRatingFromParsed = getAverageRatingParsed(averageRatingFrom)
+        const averageRatingToParsed = getAverageRatingParsed(averageRatingTo)
+        if ((averageRatingFromParsed !== '' && averageRatingFromParsed === -1) || 
+            (averageRatingToParsed !== '' && averageRatingToParsed === -1)) {
+            set({ message: INCORRECT_AVERAGE_RATING_FILTER_RESPONSE_MESSAGE })
+            set({ code: BAD_REQUEST_RESPONSE_CODE })
+        }
+        else {
+            const data = await CatalogService.getTopTenBooks()
+            const updatedBooks = CatalogToolsService
+                    .getTopTenBooksSortedAndFiltered(
+                        filterCriteria, 
+                        averageRatingFrom, 
+                        averageRatingTo, 
+                        sortingField,
+                        sortingOrder,
+                        (data as ICatalog).objects
+                    )
+            set({ books: updatedBooks })
+        }
     },
     openTab: (tab: TabsEnum) => {
         set({ openedTab: tab })
@@ -106,6 +129,19 @@ const useCatalogStore = create<IUseCatalogStoreState>((set, get) => ({
     clickTool: (tool: CatalogToolsEnum) => {
         console.log('TOOL WAS CLICKED!')
         set({ toolClicked: tool })
+    },
+
+    message: '',
+    setMessage: (message: string) => {
+        set({ message })
+    },
+    code: -1,
+    setCode: (code: number) => {
+        set({ code })
+    },
+    setMessageCodeDefault: () => {
+        set({ message: '' })
+        set({ code: -1 })
     }
 }))
 

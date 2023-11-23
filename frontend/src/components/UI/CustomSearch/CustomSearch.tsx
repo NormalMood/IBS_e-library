@@ -10,6 +10,8 @@ import useCatalogSortingStore from '../../../store/useCatalogSortingStore';
 import CatalogService from '../../../service/CatalogService';
 import { TabsEnum } from '../../../@types/TabsEnum';
 import { CUSTOM_BLOB_SERVER_COVERS_URL } from '../../../api/axiosInstance';
+import { ICatalog } from '../../../@types/ICatalog';
+import { IMessageCodeResponse } from '../../../@types/IMessageCodeResponse';
 
 const CustomSearch: FC = () => {
     const getFilterCriteria = useCatalogFilterStore(state => state.getFilterCriteria)
@@ -45,6 +47,9 @@ const CustomSearch: FC = () => {
     const [searchQuery, setSearchQuery] = useSearchDebounce()
     const [words, setWords] = useState('')
 
+    const setMessage = useCatalogStore(state => state.setMessage)
+    const setCode = useCatalogStore(state => state.setCode)
+
     const clearSearchInput = () => {
         setWords('')
         setSearchQuery('')
@@ -59,21 +64,28 @@ const CustomSearch: FC = () => {
     }, [searchQuery])
     const getBooksBySearchQueryRequest = async () => {
         if (searchQuery !== null && searchQuery !== '') {
-            const response = await CatalogService.getBooksBySearchQuery(searchQuery, getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder)
-            setFoundBooks(response.objects)
+            await CatalogService.getBooksBySearchQuery(searchQuery, getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder)
+            .then(response => {
+                if ((response as ICatalog).objects) {
+                    setFoundBooks((response as ICatalog).objects)
+                }
+                else if ((response as IMessageCodeResponse).message) {
+                    setMessage((response as IMessageCodeResponse).message)
+                    setCode((response as IMessageCodeResponse).code)
+                }
+            })
         }
         else
             setFoundBooks([])
     }
     useEffect(() => {
-        console.log('clicked outside: ', isClickedOutside)
         if (!isClickedOutside)
             getBooksBySearchQueryRequest()
         console.log(foundBooks)
     }, [isClickedOutside])
 
     const getSearchPopupStyle = () => {
-        if (isClickedOutside || foundBooks.length === 0)
+        if (isClickedOutside || foundBooks?.length === 0)
             return styles.hiddenElement
         return styles.searchPopupContainer
     }
@@ -111,7 +123,7 @@ const CustomSearch: FC = () => {
             <div className={getSearchPopupStyle()} ref={customSearchPopupRef} onClick={handleClickInside}>
                 <div className={styles.searchPopupContent}>
                 {
-                    foundBooks.map((foundBook, index) => {
+                    foundBooks?.map((foundBook, index) => {
                         return index <= 4 ? <article 
                                 className={styles.bookRowContainer}
                                 onClick={() => navigate(`/book/${foundBook.id}`)}

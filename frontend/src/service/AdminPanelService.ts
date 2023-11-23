@@ -1,5 +1,6 @@
 import { IBookExpiredStatuses } from "../@types/IBookExpiredStatuses";
 import { IBookHistory } from "../@types/IBookHistory";
+import { IMessageCodeResponse } from "../@types/IMessageCodeResponse";
 import axiosInstance, { BASE_ADMIN_API } from "../api/axiosInstance";
 
 export default class AdminPanelService {
@@ -12,7 +13,7 @@ export default class AdminPanelService {
     }
 
     static async getDetailedHistoryByBookId(bookId: number) {
-        const response = await axiosInstance.get<IBookHistory>(
+        const response = await axiosInstance.get<IBookHistory | IMessageCodeResponse>(
             BASE_ADMIN_API + '/detailed_history/certain',
             {
                 params: {

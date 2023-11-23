@@ -93,6 +93,7 @@ main {
     padding: 10px;
     width: 100%;
     max-width: 500px;
+    z-index: 1;
 }
 
 @media (min-width: 768px) {

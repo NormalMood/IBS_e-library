@@ -3,6 +3,8 @@ import styles from './BookReview.module.css';
 import useEmployeeDataStore from '../../../store/useEmployeeDataStore';
 import ReviewsService from '../../../service/ReviewsService';
 import { useNavigate } from 'react-router-dom';
+import { OK_RESPONSE_CODE } from '../../../api/axiosInstance';
+import { IMessageCodeResponse } from '../../../@types/IMessageCodeResponse';
 
 interface IBookReviewProps {
     reviewId: number;
@@ -13,7 +15,7 @@ interface IBookReviewProps {
     reviewDate: string;
     text: string;
     stars: number;
-    deleteReviewCallback: () => void;
+    deleteReviewCallback: (response: IMessageCodeResponse) => void;
 }
 
 const BookReview: FC<IBookReviewProps> = ({reviewId, bookId, reviewerId, profileImageUrl, username, reviewDate, text, stars, deleteReviewCallback}) => {
@@ -51,8 +53,7 @@ const BookReview: FC<IBookReviewProps> = ({reviewId, bookId, reviewerId, profile
                                     src='/img/delete_review.png' 
                                     onClick={async () => {
                                         await ReviewsService.deleteReview(reviewerId, reviewId).then(response => {
-                                            if (response.status === 200)
-                                                deleteReviewCallback()
+                                            deleteReviewCallback(response)
                                         })
                                     }}
                                 />

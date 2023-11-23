@@ -12,6 +12,8 @@ import useCoverStore from '../store/useCoverStore';
 import BookUploadService from '../service/BookUploadService';
 import CustomRadioButton from './UI/CustomRadioButton/CustomRadioButton';
 import { NewBookPageProviderFieldsEnum } from '../@types/NewBookPageProviderFieldsEnum';
+import { IMessageCodeResponse } from '../@types/IMessageCodeResponse';
+import MessagePopup from './UI/MessagePopup/MessagePopup';
 
 const NewBook: FC = () => {
     const [title, setTitle] = useState('') 
@@ -118,86 +120,104 @@ const NewBook: FC = () => {
                 Array.from(genresIds),
                 selectedProviderId,
                 isAdmin
-            ).then(response => 
+            ).then(response => {
                 setIsBookUploading(false)
-            )
+                updateResponses(response)
+            })
+        }
+    }
+
+    const [responses, setResponses] = useState<IMessageCodeResponse[]>([])
+
+    const updateResponses = (response: IMessageCodeResponse | undefined) => {
+        if (response !== undefined) {
+            const responsesArray = [...responses]
+            responsesArray.push(response)
+            setResponses(responsesArray)
         }
     }
 
     return (
-        <div className="container">
-            <div className={styles.newBookWrapper}>
-                <div className={styles.newBookContainer}>
-                    <div className={styles.newBookInfoContainer}>
-                        <div className={styles.newBookCoverContainer}>
-                            <CustomFileInput />
+        <>
+            <div className="container">
+                <div className={styles.newBookWrapper}>
+                    <div className={styles.newBookContainer}>
+                        <div className={styles.newBookInfoContainer}>
+                            <div className={styles.newBookCoverContainer}>
+                                <CustomFileInput />
+                            </div>
+                            <div className={styles.newBookInputContainer}>
+                                <CustomInput value={title} onChangeHandler={setTitle} placeholder={'Название*'} />
+                                <CustomInput value={lastName} onChangeHandler={setLastName} placeholder={'Фамилия*'} />
+                                <CustomInput value={firstName} onChangeHandler={setFirstName} placeholder={'Имя*'} />
+                                <CustomInput value={fatherName} onChangeHandler={setFatherName} placeholder={'Отчество'} />
+                            </div>
+                            <div className={styles.newBookTextareaContainer}>
+                                <CustomTextarea 
+                                    text={description} 
+                                    onChangeHandler={setDescription} 
+                                    placeholder={'Описание книги*'}
+                                    additionalStyles={styles.newBookTextarea}
+                                />
+                            </div>
                         </div>
-                        <div className={styles.newBookInputContainer}>
-                            <CustomInput value={title} onChangeHandler={setTitle} placeholder={'Название*'} />
-                            <CustomInput value={lastName} onChangeHandler={setLastName} placeholder={'Фамилия*'} />
-                            <CustomInput value={firstName} onChangeHandler={setFirstName} placeholder={'Имя*'} />
-                            <CustomInput value={fatherName} onChangeHandler={setFatherName} placeholder={'Отчество'} />
-                        </div>
-                        <div className={styles.newBookTextareaContainer}>
-                            <CustomTextarea 
-                                text={description} 
-                                onChangeHandler={setDescription} 
-                                placeholder={'Описание книги*'}
-                                additionalStyles={styles.newBookTextarea}
-                            />
-                        </div>
-                    </div>
-                    <div className={styles.newBookGenresButtonContainer}>
-                        <div className={styles.list}>
-                            <CheckboxListLayout 
-                                header={'Жанр'} 
-                                content={genresTitles} 
-                                isChecked={isGenreChecked} 
-                                isCheckedAll={isAllGenresChecked}
-                                onSelectAllHandler={onSelectAllGenresHandler}
-                                onCheckboxChangeHandler={onGenreCheckboxChangeHandler}
-                                additionalStyles={styles.listLayoutContainerNewBookPage}
-                            />
-                            {isAdmin &&
-                                <div className={styles.providerFieldsContainer}>
-                                    <span className={styles.providerOptionHeader}>Поставщик</span>
-                                    <CustomRadioButton 
-                                        id={NewBookPageProviderFieldsEnum.IBS} 
-                                        selectedId={selectedProviderId}
-                                        name={'newBookProviderFields'} 
-                                        onClick={setSelectedProviderId}
-                                        text={'IBS'}
-                                    />
-                                    <CustomRadioButton 
-                                        id={NewBookPageProviderFieldsEnum.EMPLOYEE} 
-                                        selectedId={selectedProviderId}
-                                        name={'newBookProviderFields'} 
-                                        onClick={setSelectedProviderId}
-                                        text={'Сотрудник'}
-                                    />
-                                </div>
-                            }
-                        </div>
-                        <div className={styles.newBookButtonContainer}>
-                            {isBookUploading ?
-                                    <CustomButton 
-                                        text={'Добавить книгу'} 
-                                        onClick={() => {}} 
-                                        styles={[styles.newBookButton, styles.newBookButtonLoadingNewBookPage].join(' ')} 
-                                        disabled={true}
-                                    />
-                                :
-                                    <CustomButton 
-                                        text={'Добавить книгу'} 
-                                        onClick={() => uploadBook()} 
-                                        styles={styles.newBookButton} 
-                                    />
-                            }
+                        <div className={styles.newBookGenresButtonContainer}>
+                            <div className={styles.list}>
+                                <CheckboxListLayout 
+                                    header={'Жанр'} 
+                                    content={genresTitles} 
+                                    isChecked={isGenreChecked} 
+                                    isCheckedAll={isAllGenresChecked}
+                                    onSelectAllHandler={onSelectAllGenresHandler}
+                                    onCheckboxChangeHandler={onGenreCheckboxChangeHandler}
+                                    additionalStyles={styles.listLayoutContainerNewBookPage}
+                                />
+                                {isAdmin &&
+                                    <div className={styles.providerFieldsContainer}>
+                                        <span className={styles.providerOptionHeader}>Поставщик</span>
+                                        <CustomRadioButton 
+                                            id={NewBookPageProviderFieldsEnum.IBS} 
+                                            selectedId={selectedProviderId}
+                                            name={'newBookProviderFields'} 
+                                            onClick={setSelectedProviderId}
+                                            text={'IBS'}
+                                        />
+                                        <CustomRadioButton 
+                                            id={NewBookPageProviderFieldsEnum.EMPLOYEE} 
+                                            selectedId={selectedProviderId}
+                                            name={'newBookProviderFields'} 
+                                            onClick={setSelectedProviderId}
+                                            text={'Сотрудник'}
+                                        />
+                                    </div>
+                                }
+                            </div>
+                            <div className={styles.newBookButtonContainer}>
+                                {isBookUploading ?
+                                        <CustomButton 
+                                            text={'Добавить книгу'} 
+                                            onClick={() => {}} 
+                                            styles={[styles.newBookButton, styles.newBookButtonLoadingNewBookPage].join(' ')} 
+                                            disabled={true}
+                                        />
+                                    :
+                                        <CustomButton 
+                                            text={'Добавить книгу'} 
+                                            onClick={() => uploadBook()} 
+                                            styles={styles.newBookButton} 
+                                        />
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div className='messagePopupContainer'>
+                {responses.map(response => 
+                    <MessagePopup message={response.message} code={response.code} />
+                )}
+            </div>
+        </>
     )
 }
 

@@ -14,6 +14,10 @@ import ReviewsService from '../service/ReviewsService';
 import { IReviewResponse } from '../@types/IReviewResponse';
 import { getDateForReview } from '../utils/DateHandler';
 import { BookStatusEnum } from '../@types/BookStatusEnum';
+import { IMessageCodeResponse } from '../@types/IMessageCodeResponse';
+import MessagePopup from './UI/MessagePopup/MessagePopup';
+import EmployeeBinService from '../service/EmployeeBinService';
+import useReviewPageResponseStore from '../store/useReviewPageResponseStore';
 
 const BookPage: FC = () => {
     const { id } = useParams()
@@ -73,132 +77,168 @@ const BookPage: FC = () => {
         setFirst10Reviews()
     }, [location])
 
+    const [responses, setResponses] = useState<IMessageCodeResponse[]>([])
+
+    const updateResponses = (response: IMessageCodeResponse) => {
+        const responsesArray = [...responses]
+        responsesArray.push(response)
+        setResponses(responsesArray)
+    }
+
+    const checkoutBook = async () => {
+        await EmployeeBinService.checkoutBook(Number(id)).then(response => {
+            updateResponses(response)
+        })
+        setBookDataById(Number(id))
+    }
+
+    const deleteReviewCallbackHandler = (response: IMessageCodeResponse) => {
+        setIsOpenReviewsButtonHidden(false)
+        setBookDataById(Number(id))
+        setFirst10Reviews()
+        updateResponses(response)
+    }
+
+    const message = useReviewPageResponseStore(state => state.message)
+    const code = useReviewPageResponseStore(state => state.code)
+    const setMessageCodeDefault = useReviewPageResponseStore(state => state.setMessageCodeDefault)
+
+    useEffect(() => {
+        if (message !== '') {
+            updateResponses({ message, code })
+            setMessageCodeDefault()
+        }
+    }, [message, code])
+
     return (
-        <div className='container'>
-            <div className={styles.bookPageWrapper}>
-                <div className={styles.backgroundCoverContainer}>
-                    <img src={coverPath} className={styles.backgroundCover} />
-                    <div className={styles.backgroundMask}></div>
-                    <div className={styles.bookTitleAuthorContainer}>
-                        <span className={styles.bookTitle}>{title}</span>
-                        <span>{author}</span>
-                    </div>
-                </div>
-                <div className={styles.bookInfoWrapper}>
-                    <div className={styles.bookCoverWrapper}>
-                        <div className={styles.bookCoverContainer}>
-                            <img src={coverPath} className={styles.bookCover} />
+        <>
+            <div className='container'>
+                <div className={styles.bookPageWrapper}>
+                    <div className={styles.backgroundCoverContainer}>
+                        <img src={coverPath} className={styles.backgroundCover} />
+                        <div className={styles.backgroundMask}></div>
+                        <div className={styles.bookTitleAuthorContainer}>
+                            <span className={styles.bookTitle}>{title}</span>
+                            <span>{author}</span>
                         </div>
                     </div>
-                    <div className={styles.checkoutBookButtonWrapper}>
-                        <div className={styles.checkoutBookButtonContainer}>
-                            <CustomButton 
-                                text={'Взять книгу'} 
-                                onClick={() => {}} 
-                                styles={styles.checkoutBookButton} 
-                                disabled={BookStatusMap.get(status) !== BookStatusEnum.IN_STOCK}
-                            />
+                    <div className={styles.bookInfoWrapper}>
+                        <div className={styles.bookCoverWrapper}>
+                            <div className={styles.bookCoverContainer}>
+                                <img src={coverPath} className={styles.bookCover} />
+                            </div>
                         </div>
-                    </div>
-                    <div className={styles.bookInfoContainer}>
-                        <div className={styles.rightContentWrapper}>
-                            <div className={styles.rightContentContainer}>
-                                <span>Поставщик: {ProvidersMap.get(provider)}</span>
-                                <div>
-                                    <span>Статус: </span>
-                                    <span 
-                                        style={
-                                            BookStatusMap.get(status) === BookStatusEnum.IN_STOCK 
-                                                ? 
-                                                    {color: '#2CA664'} 
-                                                : 
-                                                    BookStatusMap.get(status) === BookStatusEnum.CHECKED_OUT 
-                                                        ? 
-                                                            {color: '#E86C01'} 
-                                                        : 
-                                                            {color: '#D14C41'}
-                                            }
-                                    >
-                                        {status}
-                                    </span>
-                                </div>
-                                {averageRating !== 0 &&
-                                    <div className={styles.averageRatingContainer}>
-                                        <img src='/img/star_filled.png' className={styles.averageRatingImg} />
-                                        <span className={styles.averageRatingValue}>{averageRating}</span>
+                        <div className={styles.checkoutBookButtonWrapper}>
+                            <div className={styles.checkoutBookButtonContainer}>
+                                <CustomButton 
+                                    text={'Взять книгу'} 
+                                    onClick={async () => await checkoutBook()} 
+                                    styles={styles.checkoutBookButton} 
+                                    disabled={BookStatusMap.get(status) !== BookStatusEnum.IN_STOCK}
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.bookInfoContainer}>
+                            <div className={styles.rightContentWrapper}>
+                                <div className={styles.rightContentContainer}>
+                                    <span>Поставщик: {ProvidersMap.get(provider)}</span>
+                                    <div>
+                                        <span>Статус: </span>
+                                        <span 
+                                            style={
+                                                BookStatusMap.get(status) === BookStatusEnum.IN_STOCK 
+                                                    ? 
+                                                        {color: '#2CA664'} 
+                                                    : 
+                                                        BookStatusMap.get(status) === BookStatusEnum.CHECKED_OUT 
+                                                            ? 
+                                                                {color: '#E86C01'} 
+                                                            : 
+                                                                {color: '#D14C41'}
+                                                }
+                                        >
+                                            {status}
+                                        </span>
                                     </div>
-                                }
-                                <div>
-                                    <span>Жанр:</span><br />
-                                    <span>{genres}</span>
+                                    {averageRating !== 0 &&
+                                        <div className={styles.averageRatingContainer}>
+                                            <img src='/img/star_filled.png' className={styles.averageRatingImg} />
+                                            <span className={styles.averageRatingValue}>{averageRating}</span>
+                                        </div>
+                                    }
+                                    <div>
+                                        <span>Жанр:</span><br />
+                                        <span>{genres}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className={styles.reviewLinkWrapper}>
-                        <div 
-                                className={styles.reviewLinkContainer}
-                                onClick={() => navigate(`/book/${id}/review`)}
-                            >
-                                <img src='/img/add_review.png' className={styles.reviewLinkImg} />
-                                <span className={styles.reviewLinkText}>Написать<br />рецензию</span>
+                        <div className={styles.reviewLinkWrapper}>
+                            <div 
+                                    className={styles.reviewLinkContainer}
+                                    onClick={() => navigate(`/book/${id}/review`)}
+                                >
+                                    <img src='/img/add_review.png' className={styles.reviewLinkImg} />
+                                    <span className={styles.reviewLinkText}>Написать<br />рецензию</span>
+                            </div>
                         </div>
-                    </div>
-                    <div className={styles.tabsContainer}>
-                        <CustomTab 
-                            id={TabsEnum.BOOK_PAGE_DESCRIPTION} 
-                            name={'bookPageTab'} 
-                            text={'Описание'} 
-                            onClickCallback={() => openTab(TabsEnum.BOOK_PAGE_DESCRIPTION)} 
-                            additionalStyles={styles.bookPageCustomTab}
-                        />
-                        <CustomTab 
-                            id={TabsEnum.BOOK_PAGE_REVIEWS} 
-                            name={'bookPageTab'} 
-                            text={'Рецензии'} 
-                            onClickCallback={() => openTab(TabsEnum.BOOK_PAGE_REVIEWS)}
-                            additionalStyles={styles.bookPageCustomTab}
-                        />
-                    </div>
-                </div>
-                <div className={styles.tabContentContainer}>
-                    {openedTab === TabsEnum.BOOK_PAGE_DESCRIPTION &&
-                        <div>
-                            {description}
-                        </div>
-                    }
-                    {openedTab === TabsEnum.BOOK_PAGE_REVIEWS &&
-                        bookReviews.map(bookReview =>
-                            <BookReview 
-                                reviewId={bookReview.id}
-                                bookId={Number(id)}
-                                reviewerId={bookReview.employeeId}
-                                profileImageUrl={CUSTOM_BLOB_SERVER_PICTURES_URL + '/' + bookReview.pictureName}
-                                username={bookReview.firstName + ' ' + bookReview.lastName}
-                                reviewDate={getDateForReview(bookReview.reviewsDate)}
-                                text={bookReview.comment}
-                                stars={bookReview.stars}
-                                deleteReviewCallback={() => {
-                                    setIsOpenReviewsButtonHidden(false)
-                                    setBookDataById(Number(id))
-                                    setFirst10Reviews()
-                                }}
+                        <div className={styles.tabsContainer}>
+                            <CustomTab 
+                                id={TabsEnum.BOOK_PAGE_DESCRIPTION} 
+                                name={'bookPageTab'} 
+                                text={'Описание'} 
+                                onClickCallback={() => openTab(TabsEnum.BOOK_PAGE_DESCRIPTION)} 
+                                additionalStyles={styles.bookPageCustomTab}
                             />
-                        ) 
-                    }
-                    {openedTab === TabsEnum.BOOK_PAGE_REVIEWS && reviewsQuantity > SHOWN_REVIEWS_QUANTITY &&
-                        <CustomButton 
-                            text={'Раскрыть рецензии ('+ (reviewsQuantity - SHOWN_REVIEWS_QUANTITY) + ')'} 
-                            onClick={async () => {
-                                setIsOpenReviewsButtonHidden(true)
-                                await setAllReviews()
-                            }}
-                            styles={getOpenReviewsButtonStyle()}
-                        />
-                    }
+                            <CustomTab 
+                                id={TabsEnum.BOOK_PAGE_REVIEWS} 
+                                name={'bookPageTab'} 
+                                text={'Рецензии'} 
+                                onClickCallback={() => openTab(TabsEnum.BOOK_PAGE_REVIEWS)}
+                                additionalStyles={styles.bookPageCustomTab}
+                            />
+                        </div>
+                    </div>
+                    <div className={styles.tabContentContainer}>
+                        {openedTab === TabsEnum.BOOK_PAGE_DESCRIPTION &&
+                            <div>
+                                {description}
+                            </div>
+                        }
+                        {openedTab === TabsEnum.BOOK_PAGE_REVIEWS &&
+                            bookReviews.map(bookReview =>
+                                <BookReview 
+                                    reviewId={bookReview.id}
+                                    bookId={Number(id)}
+                                    reviewerId={bookReview.employeeId}
+                                    profileImageUrl={CUSTOM_BLOB_SERVER_PICTURES_URL + '/' + bookReview.pictureName}
+                                    username={bookReview.firstName + ' ' + bookReview.lastName}
+                                    reviewDate={getDateForReview(bookReview.reviewsDate)}
+                                    text={bookReview.comment}
+                                    stars={bookReview.stars}
+                                    deleteReviewCallback={deleteReviewCallbackHandler}
+                                />
+                            ) 
+                        }
+                        {openedTab === TabsEnum.BOOK_PAGE_REVIEWS && reviewsQuantity > SHOWN_REVIEWS_QUANTITY &&
+                            <CustomButton 
+                                text={'Раскрыть рецензии ('+ (reviewsQuantity - SHOWN_REVIEWS_QUANTITY) + ')'} 
+                                onClick={async () => {
+                                    setIsOpenReviewsButtonHidden(true)
+                                    await setAllReviews()
+                                }}
+                                styles={getOpenReviewsButtonStyle()}
+                            />
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
+            <div className='messagePopupContainer'>
+                {responses.map(response => 
+                    <MessagePopup message={response.message} code={response.code} />
+                )}
+            </div>
+        </>
     )
 }
 

@@ -5,38 +5,35 @@ import { getDateForTable, isLessWeekLeftBeforeReturning, isReturnDateExpired } f
 
 interface ICustomTableProps {
     headerData: string[];
-    data: any[];
+    data: any[] | undefined;
+    isHeaderCheckboxChecked?: boolean;
+    isRowChecked?: boolean[];
     tableTitle: string;
     isCheckboxColumnHidden?: boolean;
     hiddenColumns: Set<number>;
-    onCheckboxChanged: (value: boolean, tableRowIndex: number) => void;
+    onCheckboxChanged?: (isChecked: boolean, tableRowIndex: number) => void;
+    onSelectAllChanged?: (isChecked: boolean) => void;
 }
 
-const CustomTable: FC<ICustomTableProps> = ({headerData, data, tableTitle, isCheckboxColumnHidden = true, hiddenColumns, onCheckboxChanged}) => {
-    const tableRowCheckboxStates: boolean[] = new Array(data?.length).fill(false)
-    const [isHeaderCheckboxChecked, setIsHeaderCheckboxChecked] = useState(false)
-    const [isRowChecked, setIsRowChecked] = useState(tableRowCheckboxStates)
-    const onSelectAllHandler = (isChecked: boolean, tableRowIndex: number) => {
-        setIsHeaderCheckboxChecked(isChecked)
-        setIsRowChecked(tableRowCheckboxStates.fill(isChecked))
+const CustomTable: FC<ICustomTableProps> = ({
+    headerData, data, isHeaderCheckboxChecked, isRowChecked, 
+    tableTitle, isCheckboxColumnHidden = true, hiddenColumns, onCheckboxChanged, onSelectAllChanged}) => {
+    // useEffect(() => {
+    //     let isSelectedAll = true
+    //     isRowChecked.map((value, index) => {
+    //         if (!value)
+    //             isSelectedAll = false
+    //         //console.log(index, ' ', value)
+    //         onCheckboxChanged(value, index)
+    //     })
+    //     if (!isRowChecked?.length)
+    //         isSelectedAll = false
+    //     setIsHeaderCheckboxChecked(isSelectedAll)
+    // }, [isRowChecked])
+    const onSelectAllChangedHandler = (isChecked: boolean, index: number) => {
+        onSelectAllChanged!(isChecked)
     }
-    const onCheckboxChangeHandler = (isChecked: boolean, tableRowIndex: number) => {
-        setIsHeaderCheckboxChecked(false)
-        const tableRowCheckboxStatesUpdated = [...isRowChecked]
-        tableRowCheckboxStatesUpdated[tableRowIndex] = isChecked
-        setIsRowChecked(tableRowCheckboxStatesUpdated)
-    }
-    useEffect(() => {
-        let isSelectedAll = true
-        isRowChecked.map((value, index) => {
-            if (!value)
-                isSelectedAll = false
-            onCheckboxChanged(value, index)
-        })
-        if (!isRowChecked?.length)
-            isSelectedAll = false
-        setIsHeaderCheckboxChecked(isSelectedAll)
-    }, [isRowChecked])
+
     return (
         <div className={styles.tableContainer}>
             <table className={styles.table}>
@@ -48,7 +45,7 @@ const CustomTable: FC<ICustomTableProps> = ({headerData, data, tableTitle, isChe
                                 <CustomCheckbox 
                                     additionalStyles={styles.customCheckboxTh} 
                                     isChecked={isHeaderCheckboxChecked}
-                                    onChangeHandler={onSelectAllHandler}
+                                    onChangeHandler={onSelectAllChangedHandler}
                                 />
                             </th>
                         }
@@ -68,8 +65,8 @@ const CustomTable: FC<ICustomTableProps> = ({headerData, data, tableTitle, isChe
                                         <CustomCheckbox 
                                             additionalStyles={styles.customCheckboxTh} 
                                             tableRowIndex={index}
-                                            isChecked={isRowChecked[index]}
-                                            onChangeHandler={onCheckboxChangeHandler}
+                                            isChecked={isRowChecked![index]}
+                                            onChangeHandler={onCheckboxChanged!}
                                         />
                                     </td>
                                 }

@@ -2,6 +2,7 @@ import { CatalogSortingFieldsEnum } from "../@types/CatalogSortingFieldsEnum";
 import { FilterKeysEnum } from "../@types/FilterKeysEnum";
 import { IBookCatalog } from "../@types/IBookCatalog";
 import { ICatalog } from "../@types/ICatalog";
+import { IMessageCodeResponse } from "../@types/IMessageCodeResponse";
 import { SortingOrdersEnum } from "../@types/SortingOrdersEnum";
 import axiosInstance, { BASE_CATALOG_API } from "../api/axiosInstance";
 
@@ -15,7 +16,7 @@ export default class CatalogService {
         sortingOrder: SortingOrdersEnum,
         page: number
     ) {
-        const response = await axiosInstance.get<ICatalog>(
+        const response = await axiosInstance.get<ICatalog | IMessageCodeResponse>(
             BASE_CATALOG_API + '/all',
             {
                 params: {
@@ -49,7 +50,7 @@ export default class CatalogService {
         sortingField: CatalogSortingFieldsEnum,
         sortingOrder: SortingOrdersEnum
     ) {
-        const response = await axiosInstance.get<ICatalog>(
+        const response = await axiosInstance.get<ICatalog | IMessageCodeResponse>(
             BASE_CATALOG_API + '/search',
             {
                 params: {

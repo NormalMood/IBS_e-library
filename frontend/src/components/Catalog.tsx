@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Toolbar from './Layout/Toolbar/Toolbar';
 import CatalogBooks from './Layout/CatalogBooks/CatalogBooks';
 import Sidebar from './Layout/Sidebar/Sidebar';
@@ -8,6 +8,8 @@ import useCatalogStore from '../store/useCatalogStore';
 import { CatalogToolsEnum } from '../@types/CatalogToolsEnum';
 import FiltersService from '../service/FiltersService';
 import CustomSearch from './UI/CustomSearch/CustomSearch';
+import { IMessageCodeResponse } from '../@types/IMessageCodeResponse';
+import MessagePopup from './UI/MessagePopup/MessagePopup';
 
 const Catalog: FC = () => {
     const genresTitles = useCatalogFilterStore(state => state.genresTitles)
@@ -46,6 +48,21 @@ const Catalog: FC = () => {
         const statuses = await FiltersService.getAllStatuses()
         setStatusesTitles(statuses.map(status => status.name))
     }
+
+    const message = useCatalogStore(state => state.message)
+    const code = useCatalogStore(state => state.code)
+    const setMessageCodeDefault = useCatalogStore(state => state.setMessageCodeDefault)
+
+    useEffect(() => {
+        if (message !== '') {
+            const responsesArray = [...responses]
+            responsesArray.push({ message, code})
+            setResponses(responsesArray)
+        }
+        setMessageCodeDefault()
+    }, [message])
+
+    const [responses, setResponses] = useState<IMessageCodeResponse[]>([])
     
     return (
         <>
@@ -56,6 +73,11 @@ const Catalog: FC = () => {
                 <div className="container">
                     <CatalogBooks />
                 </div>
+            </div>
+            <div className='messagePopupContainer'>
+                {responses.map(response => 
+                    <MessagePopup message={response.message} code={response.code} />
+                )}
             </div>
         </>
     )
