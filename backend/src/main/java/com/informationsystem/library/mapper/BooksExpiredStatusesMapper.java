@@ -12,6 +12,6 @@ import com.informationsystem.library.entity.BinExpiredStatus;
 public interface BooksExpiredStatusesMapper {
 	
 	List<BooksExpiredOnlyResponseDTO> booksExpiredStatusesToBooksExpiredOnlyResponseDTOList(
-			Page<BinExpiredStatus> booksExpiredStatuses);
+			List<BinExpiredStatus> booksExpiredStatuses);
 
 }

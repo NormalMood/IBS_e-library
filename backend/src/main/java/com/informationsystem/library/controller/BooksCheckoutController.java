@@ -1,5 +1,6 @@
 package com.informationsystem.library.controller;
 
+import com.informationsystem.library.dto.request.CatalogBookActionRequestDTO;
 import com.informationsystem.library.dto.response.StatusResponseDTO;
 import com.informationsystem.library.service.EmployeeService;
 import lombok.AllArgsConstructor;
@@ -22,8 +23,9 @@ public class BooksCheckoutController {
 
     private final EmployeeService employeeService;
 
-    @GetMapping("/all")
-    public ResponseEntity<?> getAllBooks(
+    @GetMapping("/books")
+    public ResponseEntity<?> getAllBooksOrBySearchQuery(
+    		@RequestParam(required = false) String searchQuery,
     		@RequestParam String genres, 
     		@RequestParam Set<String> providers,
     		@RequestParam Set<String> status,
@@ -34,7 +36,8 @@ public class BooksCheckoutController {
     		Pageable pageable) {
         return ResponseEntity.ok(
         		employeeService
-        			.getAllBooks(
+        			.getAllBooksOrBySearchQuery(
+        					searchQuery,
         					genres, 
         					providers, 
         					status, 
@@ -57,37 +60,9 @@ public class BooksCheckoutController {
     	return ResponseEntity.ok(employeeService.getTop10Books(pageable));
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<?> getBooksBySearchQuery(
-    		@RequestParam String searchQuery,
-    		@RequestParam String genres, 
-    		@RequestParam Set<String> providers,
-    		@RequestParam Set<String> status,
-    		String averageRatingFrom,
-    		String averageRatingTo,
-    		@RequestParam String sortingField,
-    		@RequestParam String sortingOrder,
-    		Pageable pageable
-    		) {
-        return ResponseEntity.ok(
-        		employeeService
-        			.getBooksBySearchQuery(
-        					searchQuery,
-        					genres, 
-        					providers, 
-        					status, 
-        					averageRatingFrom, 
-        					averageRatingTo, 
-        					sortingField, 
-        					sortingOrder, 
-        					pageable
-        				)
-        	);
-    }
-
-    @PostMapping("/checkout")
-    public ResponseEntity<?> checkoutBook(@RequestParam Long bookId) {
-        StatusResponseDTO statusResponseDTO = employeeService.checkoutBook(bookId);
+    @PostMapping("/book")
+    public ResponseEntity<?> checkoutBook(@RequestBody CatalogBookActionRequestDTO bookAction) {
+        StatusResponseDTO statusResponseDTO = employeeService.checkoutBook(bookAction);
         return new ResponseEntity<>(statusResponseDTO, statusResponseDTO.getStatus());
     }
 

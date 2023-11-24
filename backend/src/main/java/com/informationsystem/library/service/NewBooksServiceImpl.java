@@ -45,16 +45,6 @@ public class NewBooksServiceImpl implements NewBooksService {
     private final NewBooksAdminRequestMapper newBooksAdminRequestMapper = Mappers.getMapper(NewBooksAdminRequestMapper.class);
 
     private final NewBooksUserRequestMapper newBooksUserRequestMapper = Mappers.getMapper(NewBooksUserRequestMapper.class);
-
-    @Override
-    public StatusResponseDTO saveGenres(List<String> genres) {
-        for (String genre : genres) {
-            vGenresRepository.save(new VGenres(genre));
-        }
-        return new StatusResponseDTO("Genres were added",
-                HttpStatus.OK,
-                HttpStatus.OK.value());
-    }
     
     @Override
     public StatusResponseDTO checkNewBooksUserRequestDTO(NewBooksUserRequestDTO newBookRequest) {

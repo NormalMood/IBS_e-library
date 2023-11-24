@@ -10,6 +10,6 @@ import java.util.List;
 @Mapper
 public interface EmployeeBinPageListMapper {
 
-    List<BinBooksResponseDTO> employeeBinPageToBinBooksResponseDTOList (Page<EmployeeBin> employeeBinPage);
+    List<BinBooksResponseDTO> employeeBinPageToBinBooksResponseDTOList (List<EmployeeBin> employeeBinList);
 
 }

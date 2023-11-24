@@ -1,14 +1,15 @@
 package com.informationsystem.library.repository;
 
 import com.informationsystem.library.entity.EmployeeBin;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.PagingAndSortingRepository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EmployeeBinRepository extends PagingAndSortingRepository<EmployeeBin, Long> {
+public interface EmployeeBinRepository extends JpaRepository<EmployeeBin, Long> {
 
-    Page<EmployeeBin> findByEmployeeId(Long employeeId, Pageable pageable);
+    List<EmployeeBin> findByEmployeeId(Long employeeId);
 
 }

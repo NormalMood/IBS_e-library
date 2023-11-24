@@ -1,9 +1,9 @@
 package com.informationsystem.library.service;
 
+import com.informationsystem.library.dto.request.BinBooksActionRequestDTO;
+import com.informationsystem.library.dto.request.CatalogBookActionRequestDTO;
 import com.informationsystem.library.dto.response.BinBooksResponseDTO;
-import com.informationsystem.library.dto.response.EmployeeBinResponseDTO;
 import com.informationsystem.library.dto.response.EmployeeResponseDTO;
-import com.informationsystem.library.dto.response.ForbiddenExtendingsResponseDTO;
 import com.informationsystem.library.dto.response.ObjectResponseDTO;
 import com.informationsystem.library.dto.response.StatusResponseDTO;
 import com.informationsystem.library.entity.Employee;
@@ -16,6 +16,7 @@ import com.informationsystem.library.model.Status;
 import com.informationsystem.library.model.StatusName;
 import com.informationsystem.library.model.Action;
 import com.informationsystem.library.model.ActionsName;
+import com.informationsystem.library.model.BooksAction;
 import com.informationsystem.library.repository.EmployeeRepository;
 import com.informationsystem.library.repository.EmployeeBinRepository;
 import com.informationsystem.library.repository.HistoryRepository;
@@ -75,16 +76,27 @@ public class EmployeeServiceImpl implements EmployeeService {
     //EmployeeBinController
 
     @Override
-    public EmployeeBinResponseDTO getBinData(Pageable pageable) {
+    public List<BinBooksResponseDTO> getBinData() {
         Employee currentEmployee = getCurrentEmployee();
-        Page<EmployeeBin> employeeBin = employeeBinRepository
-                .findByEmployeeId(currentEmployee.getId(), pageable);
+        List<EmployeeBin> employeeBin = employeeBinRepository
+                .findByEmployeeId(currentEmployee.getId());
         List<BinBooksResponseDTO> currentEmployeeBooks = employeeBinPageListMapper
                 .employeeBinPageToBinBooksResponseDTOList(employeeBin);
-        return new EmployeeBinResponseDTO(currentEmployee.getFullName(),
-                currentEmployeeBooks,
-                employeeBin.getTotalPages());
+        return currentEmployeeBooks;
     }
+    
+    @Override
+	public StatusResponseDTO changeBooksStatus(BinBooksActionRequestDTO booksAction) {
+		if (booksAction.getAction().equals(BooksAction.RETURN))
+			return returnBooks(booksAction.getBooksIds());
+		else if (booksAction.getAction().equals(BooksAction.EXTEND))
+			return extendBooks(booksAction.getBooksIds());
+		return new StatusResponseDTO(
+			"Книги можно только вернуть или продлить", 
+			HttpStatus.BAD_REQUEST, 
+			HttpStatus.BAD_REQUEST.value()
+		);
+	}
 
     @Override
     public StatusResponseDTO returnBooks(List<Long> booksIds) {
@@ -156,6 +168,42 @@ public class EmployeeServiceImpl implements EmployeeService {
     //////////////////////
 
     //BooksCheckoutController
+    
+    @Override
+    public Object getAllBooksOrBySearchQuery(
+    		String searchQuery,
+    		String genres, 
+    		Set<String> providers,
+    		Set<String> status,
+    		String averageRatingFrom,
+    		String averageRatingTo,
+    		String sortingField,
+    		String sortingOrder,
+    		Pageable pageable) {
+    	if (searchQuery != null)
+    		return getBooksBySearchQuery(
+    				searchQuery,
+    				genres,
+    				providers,
+    				status,
+    				averageRatingFrom,
+    				averageRatingTo,
+    				sortingField,
+    				sortingOrder,
+    				pageable
+    			);
+    	return getAllBooks(
+				genres,
+				providers,
+				status,
+				averageRatingFrom,
+				averageRatingTo,
+				sortingField,
+				sortingOrder,
+				pageable
+    		);
+    }
+    
     @Override
     public Object getAllBooks(
     		String genres, 
@@ -286,20 +334,25 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public StatusResponseDTO checkoutBook(Long bookId) {
-        Long currentEmployeeId = getCurrentEmployee().getId();
-        if (isCheckoutPossible(bookId)) {
-            historyRepository.save(
-                    new History(currentEmployeeId, bookId, Action.ACTIONS.get(ActionsName.TAKE))
-            );
-            Books book = booksRepository.findById(bookId).get();
-            book.setStatusesId(Status.STATUSES.get(StatusName.CHECKED_OUT));
-            booksRepository.save(book);
-        } else
-            return new StatusResponseDTO("Книгу нельзя брать",
-                    HttpStatus.FORBIDDEN,
-                    HttpStatus.FORBIDDEN.value());
-        return new StatusResponseDTO("Добавлена в корзину",
+    public StatusResponseDTO checkoutBook(CatalogBookActionRequestDTO bookAction) {
+    	if (bookAction.getAction().equals(BooksAction.CHECKOUT)) {
+	        Long currentEmployeeId = getCurrentEmployee().getId();
+	        Long bookId = bookAction.getBookId();
+	        if (isCheckoutPossible(bookId)) {
+	            historyRepository.save(
+	                    new History(currentEmployeeId, bookId, Action.ACTIONS.get(ActionsName.TAKE))
+	            );
+	            Books book = booksRepository.findById(bookId).get();
+	            book.setStatusesId(Status.STATUSES.get(StatusName.CHECKED_OUT));
+	            booksRepository.save(book);
+	        } else
+	            return new StatusResponseDTO("Книгу нельзя брать",
+	                    HttpStatus.FORBIDDEN,
+	                    HttpStatus.FORBIDDEN.value());
+	        return new StatusResponseDTO("Добавлена в корзину",
+	                HttpStatus.OK, HttpStatus.OK.value());
+    	}
+    	return new StatusResponseDTO("Можно только взять книгу",
                 HttpStatus.OK, HttpStatus.OK.value());
     }
 

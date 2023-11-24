@@ -1,5 +1,6 @@
 package com.informationsystem.library.controller;
 
+import com.informationsystem.library.model.StatusName;
 import com.informationsystem.library.service.AdminService;
 import lombok.AllArgsConstructor;
 
@@ -8,31 +9,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api/admin-panel")
 @AllArgsConstructor
 public class AdminController {
 
     private final AdminService adminService;
 
-    @GetMapping("/detailed_history/all")
-    public ResponseEntity<?> getDetailedHistory(Pageable pageable) {
-        return ResponseEntity.ok(adminService.getDetailedHistory(pageable));
+    @GetMapping("/history")
+    public ResponseEntity<?> getHistory(@RequestParam(required = false) String bookId) {
+        return ResponseEntity.ok(adminService.getHistory(bookId));
     }
 
-    @GetMapping("/detailed_history/certain")
-    public ResponseEntity<?> getBookDetailedHistory(@RequestParam("bookId") String bookId,
-                                                    Pageable pageable) {
-        return ResponseEntity.ok(adminService.getBookDetailedHistory(bookId, pageable));
-    }
-
-    @GetMapping("/expired")
-    public ResponseEntity<?> getBinExpiredStatuses(Pageable pageable) {
-        return ResponseEntity.ok(adminService.getBinExpiredStatuses(pageable));
-    }
-    
-    @GetMapping("/expired_only")
-    public ResponseEntity<?> getBinExpiredStatusesOnly(Pageable pageable) {
-    	return ResponseEntity.ok(adminService.getBinExpiredStatusesOnly(pageable));
+    @GetMapping("/checkouted-books")
+    public ResponseEntity<?> getCheckoutedBooks(@RequestParam(required = false) StatusName status) {
+        return ResponseEntity.ok(adminService.getCheckoutedBooks(status));
     }
 
 }

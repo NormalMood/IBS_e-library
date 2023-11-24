@@ -1,14 +1,15 @@
 package com.informationsystem.library.repository;
 
 import com.informationsystem.library.entity.CommonDetailedHistory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.PagingAndSortingRepository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CommonDetailedHistoryRepository extends PagingAndSortingRepository<CommonDetailedHistory, Long> {
+public interface CommonDetailedHistoryRepository extends JpaRepository<CommonDetailedHistory, Long> {
 
-    Page<CommonDetailedHistory> findAllByBookId(Long bookId, Pageable pageable);
+    List<CommonDetailedHistory> findAllByBookId(Long bookId);
 
 }

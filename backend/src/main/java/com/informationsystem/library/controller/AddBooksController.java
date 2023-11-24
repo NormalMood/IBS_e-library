@@ -23,11 +23,6 @@ public class AddBooksController {
 
     private final NewBooksService newBooksService;
 
-    @PostMapping("/genres/add")
-    public ResponseEntity<?> saveGenres(@RequestBody List<String> genres){
-        return ResponseEntity.ok(newBooksService.saveGenres(genres));
-    }
-
     @PostMapping("/user/book")
     public ResponseEntity<?> addBooks(@Valid @RequestBody NewBooksUserRequestDTO newBook){
         return ResponseEntity.ok(newBooksService.addBook(newBook));

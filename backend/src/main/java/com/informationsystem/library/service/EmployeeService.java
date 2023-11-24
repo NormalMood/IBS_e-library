@@ -1,6 +1,8 @@
 package com.informationsystem.library.service;
 
-import com.informationsystem.library.dto.response.EmployeeBinResponseDTO;
+import com.informationsystem.library.dto.request.BinBooksActionRequestDTO;
+import com.informationsystem.library.dto.request.CatalogBookActionRequestDTO;
+import com.informationsystem.library.dto.response.BinBooksResponseDTO;
 import com.informationsystem.library.dto.response.EmployeeResponseDTO;
 import com.informationsystem.library.dto.response.ObjectResponseDTO;
 import com.informationsystem.library.dto.response.StatusResponseDTO;
@@ -18,13 +20,26 @@ public interface EmployeeService {
     
     EmployeeResponseDTO getUserData();
 
-    EmployeeBinResponseDTO getBinData(Pageable pageable);
+    List<BinBooksResponseDTO> getBinData();
+    
+    StatusResponseDTO changeBooksStatus(BinBooksActionRequestDTO booksAction);
 
     StatusResponseDTO returnBooks(List<Long> booksIds);
 
     StatusResponseDTO extendBooks(List<Long> booksIds);
 
     void saveActionOnBook(Long employeeId, List<Long> booksIds, Short actionId);
+    
+    Object getAllBooksOrBySearchQuery(
+    		String searchQuery,
+    		String genres, 
+    		Set<String> providers,
+    		Set<String> status,
+    		String averageRatingFrom,
+    		String averageRatingTo,
+    		String sortingField,
+    		String sortingOrder,
+    		Pageable pageable);
     
     Object getAllBooks(
     		String genres, 
@@ -53,7 +68,7 @@ public interface EmployeeService {
 
     boolean isCheckoutPossible(Long bookId);
 
-    StatusResponseDTO checkoutBook(Long bookId);
+    StatusResponseDTO checkoutBook(CatalogBookActionRequestDTO bookAction);
 
     VBooks getBookDataById(Long bookId);
 

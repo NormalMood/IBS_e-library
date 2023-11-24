@@ -17,9 +17,9 @@ import java.util.Collection;
 
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    private final String USER_SUCCESSFUL_URL = APIRoutes.EMPLOYEE_BIN_CONTROLLER_MAPPING + "/data?page=0&size=10";
+    private final String USER_SUCCESSFUL_URL = APIRoutes.BOOKS_BIN_PATH + "/books";
 
-    private final String ADMIN_SUCCESSFUL_URL = APIRoutes.ADMIN_CONTROLLER_MAPPING + "/detailed_history/all?page=0&size=10";
+    private final String ADMIN_SUCCESSFUL_URL = APIRoutes.ADMIN_PANEL_PATH + "/history";
 
     @Getter
     private final SimpleUrlAuthenticationSuccessHandler userSuccessHandler =

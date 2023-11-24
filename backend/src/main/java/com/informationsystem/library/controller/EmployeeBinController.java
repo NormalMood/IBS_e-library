@@ -1,5 +1,6 @@
 package com.informationsystem.library.controller;
 
+import com.informationsystem.library.dto.request.BinBooksActionRequestDTO;
 import com.informationsystem.library.service.EmployeeService;
 import lombok.AllArgsConstructor;
 
@@ -16,19 +17,14 @@ public class EmployeeBinController {
 
     private final EmployeeService employeeService;
 
-    @GetMapping("/data")
-    public ResponseEntity<?> getBinData(Pageable pageable) {
-        return ResponseEntity.ok(employeeService.getBinData(pageable));
+    @GetMapping("/books")
+    public ResponseEntity<?> getBinData() {
+        return ResponseEntity.ok(employeeService.getBinData());
     }
-
-    @PostMapping("/return")
-    public ResponseEntity<?> returnBooks(@RequestBody List<Long> booksIds){
-        return ResponseEntity.ok(employeeService.returnBooks(booksIds));
-    }
-
-    @PostMapping("/extend")
-    public ResponseEntity<?> extendBooks(@RequestBody List<Long> booksIds){
-        return ResponseEntity.ok(employeeService.extendBooks(booksIds));
+    
+    @PostMapping("/books/status")
+    public ResponseEntity<?> changeBooksStatus(@RequestBody BinBooksActionRequestDTO booksAction) {
+    	return ResponseEntity.ok(employeeService.changeBooksStatus(booksAction));
     }
 
 }
