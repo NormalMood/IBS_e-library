@@ -99,6 +99,14 @@ const CustomSearch: FC = () => {
         setBooks(foundBooks)
     }
 
+    const SHOWN_BOOK_INDEX_MAX = 4
+
+    const onEnterKeyUpHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            showResultsClickedHandle()
+        }
+    }
+
     return (
         <div className={styles.searchContainer}>
             <div className={styles.searchWrapper}>
@@ -110,6 +118,7 @@ const CustomSearch: FC = () => {
                     value={words}
                     onChange={e => { setWords(e.target.value); setSearchQuery(e.target.value) }}
                     placeholder='Книга, автор, жанр'
+                    onKeyUp={onEnterKeyUpHandler}
                 />
                 <img 
                     src='/img/close.png' 
@@ -128,7 +137,7 @@ const CustomSearch: FC = () => {
                 <div className={styles.searchPopupContent}>
                 {
                     foundBooks?.map((foundBook, index) => {
-                        return index <= 4 ? <article 
+                        return index <= SHOWN_BOOK_INDEX_MAX ? <article 
                                 className={styles.bookRowContainer}
                                 onClick={() => navigate(`/book/${foundBook.id}`)}
                             >
