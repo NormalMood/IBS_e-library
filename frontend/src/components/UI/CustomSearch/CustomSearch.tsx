@@ -101,9 +101,12 @@ const CustomSearch: FC = () => {
 
     const SHOWN_BOOK_INDEX_MAX = 4
 
-    const onEnterKeyUpHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const onKeyUpHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             showResultsClickedHandle()
+        }
+        else if (e.key === 'Escape') {
+            clearSearchInput()
         }
     }
 
@@ -118,7 +121,7 @@ const CustomSearch: FC = () => {
                     value={words}
                     onChange={e => { setWords(e.target.value); setSearchQuery(e.target.value) }}
                     placeholder='Книга, автор, жанр'
-                    onKeyUp={onEnterKeyUpHandler}
+                    onKeyUp={onKeyUpHandler}
                 />
                 <img 
                     src='/img/close.png' 
