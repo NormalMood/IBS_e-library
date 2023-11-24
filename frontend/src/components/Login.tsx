@@ -11,9 +11,9 @@ import { OK_RESPONSE_CODE, UNAUTHORIZED_RESPONSE_CODE } from '../api/axiosInstan
 import inputStyles from '../components/UI/LoginPageInput/LoginPageInput.module.css';
 
 const Login: FC = () => {
-    const [username, setUsername] = useState<string>('ymvenediktov@ibs.ru')
+    const [username, setUsername] = useState<string>('asshubin@ibs.ru')
     const navigate = useNavigate()
-    const [password, setPassword] = useState<string>('user1')
+    const [password, setPassword] = useState<string>('admin')
     const { setIsAuth} = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(false)
     const submit = async () => {
@@ -69,6 +69,7 @@ const Login: FC = () => {
                                     onKeyUpHandler={onEnterKeyUpHandler}
                                 />
                                 <LoginPageInput 
+                                    type={'password'}
                                     placeholder={'Пароль'} 
                                     value={password} 
                                     setCredential={setPassword} 
