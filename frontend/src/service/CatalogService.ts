@@ -17,7 +17,7 @@ export default class CatalogService {
         page: number
     ) {
         const response = await axiosInstance.get<ICatalog | IMessageCodeResponse>(
-            BASE_CATALOG_API + '/all',
+            BASE_CATALOG_API + '/books',
             {
                 params: {
                     page: page,
@@ -51,7 +51,7 @@ export default class CatalogService {
         sortingOrder: SortingOrdersEnum
     ) {
         const response = await axiosInstance.get<ICatalog | IMessageCodeResponse>(
-            BASE_CATALOG_API + '/search',
+            BASE_CATALOG_API + '/books',
             {
                 params: {
                     searchQuery: searchQuery,

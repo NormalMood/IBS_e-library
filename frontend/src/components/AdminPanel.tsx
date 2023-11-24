@@ -7,15 +7,15 @@ import useCatalogStore from '../store/useCatalogStore';
 import { TabsEnum } from '../@types/TabsEnum';
 import styles from '../style/AdminPanel.module.css';
 import { HISTORY_ADMIN_PANEL_TABLE_HEADERS } from '../tableHeaders/historyAdminPanelTableHeaders';
-import { IBookHistory } from '../@types/IBookHistory';
 import AdminPanelService from '../service/AdminPanelService';
-import { IBookExpiredStatuses } from '../@types/IBookExpiredStatuses';
 import { EXPIRED_STATUSES_ADMIN_PANEL_TABLE_HEADERS } from '../tableHeaders/expiredStatusesAdminPanelTableHeaders';
 import useSearchDebounce from '../hooks/useSearchDebounce';
 import MessagePopup from './UI/MessagePopup/MessagePopup';
 import { IMessageCodeResponse } from '../@types/IMessageCodeResponse';
 import customInputStyle from './UI/CustomInput/CustomInput.module.css';
 import { OK_RESPONSE_CODE } from '../api/axiosInstance';
+import { IHistory } from '../@types/IHistory';
+import { IExpiredStatuses } from '../@types/IExpiredStatuses';
 
 const AdminPanel: FC = () => {
     const [isReturnDateExpired, setIsReturnDateExpired] = useState(false)
@@ -43,14 +43,8 @@ const AdminPanel: FC = () => {
 
     const openedTab = useCatalogStore(state => state.openedTab)
     const openTab = useCatalogStore(state => state.openTab)
-    const [history, setHistory] = useState<IBookHistory>({
-        objects: [],
-        pages: 0
-    })
-    const [expiredStatuses, setExpiredStatuses] = useState<IBookExpiredStatuses>({
-        objects: [],
-        pages: 0
-    })
+    const [history, setHistory] = useState<IHistory[]>([])
+    const [expiredStatuses, setExpiredStatuses] = useState<IExpiredStatuses[]>([])
     useEffect(() => {
         openTab(TabsEnum.ADMIN_PANEL_HISTORY)
         getHistory()
@@ -80,8 +74,8 @@ const AdminPanel: FC = () => {
         await AdminPanelService.getDetailedHistoryByBookId(bookId).then(response => {
             if ((response as IMessageCodeResponse).message)
                 updateResponses(response as IMessageCodeResponse)
-            else if ((response as IBookHistory).objects)
-                setHistory(response as IBookHistory)
+            else if ((response as IHistory[]))
+                setHistory(response as IHistory[])
         })
     }
     const getExpiredStatuses = async () => {
@@ -139,7 +133,7 @@ const AdminPanel: FC = () => {
                     {openedTab === TabsEnum.ADMIN_PANEL_HISTORY &&
                         <CustomTable 
                             headerData={HISTORY_ADMIN_PANEL_TABLE_HEADERS} 
-                            data={history.objects} 
+                            data={history} 
                             hiddenColumns={new Set<number>().add(0)} 
                             tableTitle={getTableTitle()} 
                             onCheckboxChanged={() => {}} 
@@ -148,7 +142,7 @@ const AdminPanel: FC = () => {
                     {openedTab === TabsEnum.ADMIN_PANEL_RETURN_DATE_STATUS &&
                         <CustomTable 
                             headerData={EXPIRED_STATUSES_ADMIN_PANEL_TABLE_HEADERS} 
-                            data={expiredStatuses.objects} 
+                            data={expiredStatuses} 
                             hiddenColumns={new Set<number>().add(0).add(9)} 
                             tableTitle={getTableTitle()} 
                             onCheckboxChanged={() => {}} 

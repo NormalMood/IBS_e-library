@@ -3,14 +3,13 @@ import CustomTable from './UI/CustomTable/CustomTable';
 import CustomButton from './UI/CustomButton/CustomButton';
 import styles from '../style/EmployeeBin.module.css';
 import EmployeeBinService from '../service/EmployeeBinService';
-import { IEmployeeBin } from '../@types/IEmployeeBin';
 import { EMPLOYEE_BIN_TABLE_HEADERS } from '../tableHeaders/employeeBinTableHeaders';
 import MessagePopup from './UI/MessagePopup/MessagePopup';
 import { IMessageCodeResponse } from '../@types/IMessageCodeResponse';
 import { IBookEmployeeBin } from '../@types/IBookEmployeeBin';
 
 const MyBooks: FC = () => {
-    const [books, setBooks] = useState<IEmployeeBin>(/*{
+    const [books, setBooks] = useState<IBookEmployeeBin[]>([]/*{
         fullName: '',
         books: [],
         // books: [{
@@ -112,15 +111,15 @@ const MyBooks: FC = () => {
 
     const getBooksTaken = async () => {
         const updatedBooks = await EmployeeBinService.getBooksTaken()
-        updateBooksIdsSetAfterFetching(updatedBooks.books)
-        restoreIsRowChecked(updatedBooks.books)
+        updateBooksIdsSetAfterFetching(updatedBooks)
+        restoreIsRowChecked(updatedBooks)
         setBooks(updatedBooks)
     }
 
     const updateBooksIdsSetAfterFetching = (updatedBooks: IBookEmployeeBin[]) => {
         if (updatedBooks !== undefined) {
             const booksIdSetUpdated = new Set<number>()
-            updatedBooks.forEach(book => {
+            updatedBooks?.forEach(book => {
                 if (booksIdSet.has(book.bookId))
                     booksIdSetUpdated.add(book.bookId)
             })
@@ -133,12 +132,12 @@ const MyBooks: FC = () => {
         if (books !== undefined) {
             updateIsRowChecked(value, tableRowIndex)
             if (value) {
-                const booksIdSetUpdated = new Set(booksIdSet.add(books.books[tableRowIndex].bookId))
+                const booksIdSetUpdated = new Set(booksIdSet.add(books[tableRowIndex].bookId))
                 setBooksIdSet(booksIdSetUpdated)
             }
             else {
                 const booksIdSetUpdated = new Set(booksIdSet)
-                booksIdSetUpdated.delete(books.books[tableRowIndex].bookId)
+                booksIdSetUpdated.delete(books[tableRowIndex].bookId)
                 setBooksIdSet(booksIdSetUpdated)
             }
         }
@@ -190,7 +189,7 @@ const MyBooks: FC = () => {
         const updatedIsRowChecked = new Array(isRowChecked.length).fill(isChecked)
         setIsRowChecked(updatedIsRowChecked)
         if (isChecked) {
-            const updatedBooksIdsSet = new Set(books?.books.map(book => book.bookId))
+            const updatedBooksIdsSet = new Set(books.map(book => book.bookId))
             setBooksIdSet(updatedBooksIdsSet)
         }
         else
@@ -224,7 +223,7 @@ const MyBooks: FC = () => {
                 </div>
                 <CustomTable 
                     headerData={EMPLOYEE_BIN_TABLE_HEADERS} 
-                    data={books?.books} 
+                    data={books} 
                     isCheckboxColumnHidden={false} 
                     hiddenColumns={new Set<number>().add(0)} 
                     tableTitle={'Взятые книги'} 
