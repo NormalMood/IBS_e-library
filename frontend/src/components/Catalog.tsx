@@ -12,17 +12,11 @@ import { IMessageCodeResponse } from '../@types/IMessageCodeResponse';
 import MessagePopup from './UI/MessagePopup/MessagePopup';
 
 const Catalog: FC = () => {
-    const genresTitles = useCatalogFilterStore(state => state.genresTitles)
     const setGenresTitles = useCatalogFilterStore(state => state.setGenresTitles)
-    const setIsGenreChecked = useCatalogFilterStore(state => state.setIsGenreChecked)
 
-    const providersTitles = useCatalogFilterStore(state => state.providersTitles)
     const setProvidersTitles = useCatalogFilterStore(state => state.setProvidersTitles)
-    const setIsProviderChecked = useCatalogFilterStore(state => state.setIsProviderChecked)
 
-    const statusesTitles = useCatalogFilterStore(state => state.statusesTitles)
     const setStatusesTitles = useCatalogFilterStore(state => state.setStatusesTitles)
-    const setIsStatusChecked = useCatalogFilterStore(state => state.setIsStatusChecked)
 
     const clickTool = useCatalogStore(state => state.clickTool)
 
@@ -71,7 +65,7 @@ const Catalog: FC = () => {
             <CustomSearch />
             <Toolbar />
             <div className={styles.catalogContentContainer}>
-                <Sidebar lastResponse={responses[responses.length - 1]} />
+                <Sidebar />
                 <div className="container">
                     <CatalogBooks />
                 </div>

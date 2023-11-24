@@ -4,14 +4,13 @@ import CatalogService from '../service/CatalogService';
 import { TabsEnum } from '../@types/TabsEnum';
 import { CatalogToolsEnum } from '../@types/CatalogToolsEnum';
 import CatalogToolsService from '../service/CatalogToolsService';
-import useCatalogFilterStore from './useCatalogFilterStore';
 import { FilterKeysEnum } from '../@types/FilterKeysEnum';
 import { CatalogSortingFieldsEnum } from '../@types/CatalogSortingFieldsEnum';
 import { SortingOrdersEnum } from '../@types/SortingOrdersEnum';
 import { ICatalog } from "../@types/ICatalog";
 import { IMessageCodeResponse } from '../@types/IMessageCodeResponse';
-import { BAD_REQUEST_RESPONSE_CODE, INCORRECT_AVERAGE_RATING_FILTER_RESPONSE_MESSAGE } from '../api/axiosInstance';
 import { getAverageRatingParsed } from '../utils/AverageRatingHandler';
+import { BAD_REQUEST_RESPONSE_CODE, INCORRECT_AVERAGE_RATING_FILTER_RESPONSE_MESSAGE } from '../api/axiosInstance';
 
 interface IUseCatalogStoreState {
     books: IBookCatalog[];
@@ -103,26 +102,28 @@ const useCatalogStore = create<IUseCatalogStoreState>((set, get) => ({
         sortingField: CatalogSortingFieldsEnum,
         sortingOrder: SortingOrdersEnum
         ) => {
-        const averageRatingFromParsed = getAverageRatingParsed(averageRatingFrom)
-        const averageRatingToParsed = getAverageRatingParsed(averageRatingTo)
-        if ((averageRatingFromParsed !== '' && averageRatingFromParsed === -1) || 
-            (averageRatingToParsed !== '' && averageRatingToParsed === -1)) {
-            set({ message: INCORRECT_AVERAGE_RATING_FILTER_RESPONSE_MESSAGE })
-            set({ code: BAD_REQUEST_RESPONSE_CODE })
-        }
-        else {
-            const data = await CatalogService.getTopTenBooks()
-            const updatedBooks = CatalogToolsService
+        await CatalogService.getTopTenBooks().then(response => {
+            const averageRatingFromParsed = getAverageRatingParsed(averageRatingFrom)
+            const averageRatingToParsed = getAverageRatingParsed(averageRatingTo)
+            if ((averageRatingFromParsed !== '' && averageRatingFromParsed === -1) || 
+                (averageRatingToParsed !== '' && averageRatingToParsed === -1)) {
+                    set({ message: INCORRECT_AVERAGE_RATING_FILTER_RESPONSE_MESSAGE })
+                    set({ code: BAD_REQUEST_RESPONSE_CODE })
+            }
+            else {
+                const updatedBooks = CatalogToolsService
                     .getTopTenBooksSortedAndFiltered(
                         filterCriteria, 
                         averageRatingFrom, 
                         averageRatingTo, 
                         sortingField,
                         sortingOrder,
-                        (data as ICatalog).objects
+                        response.objects
                     )
-            set({ books: updatedBooks })
-        }
+                set({ books: updatedBooks })
+                get().setMessageCodeDefault()
+            }
+        })
     },
     openTab: (tab: TabsEnum) => {
         set({ openedTab: tab })

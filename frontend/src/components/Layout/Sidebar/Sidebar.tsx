@@ -16,13 +16,10 @@ import useCatalogSortingStore from '../../../store/useCatalogSortingStore';
 import { ProvidersMap } from '../../../map/ProvidersMap';
 import useWindowWidth from '../../../hooks/useWindowWidth';
 import customInputStyle from '../../UI/CustomInput/CustomInput.module.css';
-import { IMessageCodeResponse } from '../../../@types/IMessageCodeResponse';
+import { getAverageRatingParsed } from '../../../utils/AverageRatingHandler';
+import { BAD_REQUEST_RESPONSE_CODE, INCORRECT_AVERAGE_RATING_FILTER_RESPONSE_MESSAGE } from '../../../api/axiosInstance';
 
-interface ISidebarProps {
-    lastResponse: IMessageCodeResponse;
-}
-
-const Sidebar: FC<ISidebarProps> = ({lastResponse}) => {
+const Sidebar: FC = () => {
     const [isSidebarOpened, setIsSidebarOpened] = useState(false);
     
     const isWidthLess = useWindowWidth(900)
@@ -44,7 +41,6 @@ const Sidebar: FC<ISidebarProps> = ({lastResponse}) => {
     }
     
     useEffect(() => {
-        console.log('2 times!: ' + CatalogToolsEnum[toolClicked])
         if (toolClicked !== CatalogToolsEnum.DEFAULT_NONE) {
             setIsSidebarOpened(true)
         }
@@ -231,10 +227,10 @@ const Sidebar: FC<ISidebarProps> = ({lastResponse}) => {
     const resetSorting = useCatalogSortingStore(state => state.resetSorting)
     const resetSelectedSorting = useCatalogSortingStore(state => state.resetSelectedSorting)
 
-
     const toolsOptionClickHandler = () => {
-        if (openedTab === TabsEnum.CATALOG_TOP_TEN)
+        if (openedTab === TabsEnum.CATALOG_TOP_TEN) {
             getTopTenBooks(getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder)
+        }
         else if (openedTab === TabsEnum.CATALOG_ALL_BOOKS) {
             getAllBooks(getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder, 0)
         }

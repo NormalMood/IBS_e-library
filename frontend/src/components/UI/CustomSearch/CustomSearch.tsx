@@ -49,6 +49,7 @@ const CustomSearch: FC = () => {
 
     const setMessage = useCatalogStore(state => state.setMessage)
     const setCode = useCatalogStore(state => state.setCode)
+    const setMessageCodeDefault = useCatalogStore(state => state.setMessageCodeDefault)
 
     const clearSearchInput = () => {
         setWords('')
@@ -64,10 +65,12 @@ const CustomSearch: FC = () => {
     }, [searchQuery])
     const getBooksBySearchQueryRequest = async () => {
         if (searchQuery !== null && searchQuery !== '') {
+            setMessageCodeDefault()
             await CatalogService.getBooksBySearchQuery(searchQuery, getFilterCriteria(), averageRatingFrom, averageRatingTo, sortingField, sortingOrder)
             .then(response => {
                 if ((response as ICatalog).objects) {
                     setFoundBooks((response as ICatalog).objects)
+                    setMessageCodeDefault()
                 }
                 else if ((response as IMessageCodeResponse).message) {
                     setMessage((response as IMessageCodeResponse).message)
@@ -75,8 +78,9 @@ const CustomSearch: FC = () => {
                 }
             })
         }
-        else
+        else {
             setFoundBooks([])
+        }
     }
     useEffect(() => {
         if (!isClickedOutside)
