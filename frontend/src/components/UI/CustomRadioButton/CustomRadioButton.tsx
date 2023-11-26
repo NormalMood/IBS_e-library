@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import styles from './CustomRadioButton.module.css';
-import { CatalogSortingFieldsEnum } from '../../../@types/CatalogSortingFieldsEnum';
 
 interface ICustomRadioButtonProps {
     id: any;

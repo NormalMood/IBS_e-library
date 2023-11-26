@@ -16,8 +16,6 @@ import useCatalogSortingStore from '../../../store/useCatalogSortingStore';
 import { ProvidersMap } from '../../../map/ProvidersMap';
 import useWindowWidth from '../../../hooks/useWindowWidth';
 import customInputStyle from '../../UI/CustomInput/CustomInput.module.css';
-import { getAverageRatingParsed } from '../../../utils/AverageRatingHandler';
-import { BAD_REQUEST_RESPONSE_CODE, INCORRECT_AVERAGE_RATING_FILTER_RESPONSE_MESSAGE } from '../../../api/axiosInstance';
 
 const Sidebar: FC = () => {
     const [isSidebarOpened, setIsSidebarOpened] = useState(false);

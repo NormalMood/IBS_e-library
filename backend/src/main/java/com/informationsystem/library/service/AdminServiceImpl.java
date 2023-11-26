@@ -1,7 +1,6 @@
 package com.informationsystem.library.service;
 
 import com.informationsystem.library.dto.response.BooksExpiredOnlyResponseDTO;
-import com.informationsystem.library.dto.response.ObjectResponseDTO;
 import com.informationsystem.library.dto.response.StatusResponseDTO;
 import com.informationsystem.library.entity.BinExpiredStatus;
 import com.informationsystem.library.entity.CommonDetailedHistory;
@@ -9,15 +8,11 @@ import com.informationsystem.library.mapper.BooksExpiredStatusesMapper;
 import com.informationsystem.library.model.StatusName;
 import com.informationsystem.library.repository.CommonDetailedHistoryRepository;
 import com.informationsystem.library.repository.ExpiredStatusRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 import org.mapstruct.factory.Mappers;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 

@@ -1,8 +1,7 @@
-import React, { FC, useContext, useState } from 'react';
+import { FC, useContext } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { privateUserRoutes, privateAdminRoutes, publicRoutes } from '../routes/routes';
 import { AuthContext } from '../context/AuthContext';
-import { RolesEnum } from '../@types/RolesEnum';
 import useEmployeeDataStore from '../store/useEmployeeDataStore';
 
 const AppRouter: FC = () => {

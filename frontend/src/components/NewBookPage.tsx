@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styles from '../style/NewBookPage.module.css';
 import CustomFileInput from './UI/CustomFileInput/CustomFileInput';
 import CustomInput from './UI/CustomInput/CustomInput';
@@ -154,8 +154,6 @@ const NewBook: FC = () => {
             responses[responses.length - 1].message.includes(keyWord) && 
             responses[responses.length - 1].code !== OK_RESPONSE_CODE
             ) {
-                
-                console.log('sdf')
             return [styles.newBookTextarea, customTextAreaStyle.invalidCustomTextarea].join(' ')
         }
         return styles.newBookTextarea

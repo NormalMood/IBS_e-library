@@ -68,8 +68,6 @@ const useCatalogStore = create<IUseCatalogStoreState>((set, get) => ({
         page: number
         ) => {
         set({ page: page })
-        console.log('page 0? -> ' + page)
-        console.log('books: ' + get().books)
         set({ isBooksLoading: true })
         await CatalogService
             .getAllBooks(
@@ -129,7 +127,6 @@ const useCatalogStore = create<IUseCatalogStoreState>((set, get) => ({
         set({ openedTab: tab })
     },
     clickTool: (tool: CatalogToolsEnum) => {
-        console.log('TOOL WAS CLICKED!')
         set({ toolClicked: tool })
     },
 

@@ -4,7 +4,6 @@ package com.informationsystem.library.service;
 import java.util.List;
 
 import com.informationsystem.library.dto.response.BooksExpiredOnlyResponseDTO;
-import com.informationsystem.library.dto.response.ObjectResponseDTO;
 import com.informationsystem.library.entity.BinExpiredStatus;
 import com.informationsystem.library.model.StatusName;
 

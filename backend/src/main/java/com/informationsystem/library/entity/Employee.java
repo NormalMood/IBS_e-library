@@ -1,10 +1,8 @@
 package com.informationsystem.library.entity;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.springframework.data.redis.core.RedisHash;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

@@ -16,7 +16,6 @@ export default class BookUploadService {
             providerId: number,
             isAdmin: boolean
         ) {
-        console.log('i am heeree')
         const formData = new FormData()
         formData.append('cover', cover as File)
         let coverUploadResponse = null

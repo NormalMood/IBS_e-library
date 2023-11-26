@@ -2,8 +2,6 @@ package com.informationsystem.library.controller;
 
 import com.informationsystem.library.dto.request.BookNewReviewRequestDTO;
 import com.informationsystem.library.dto.request.BookUpdatedReviewRequestDTO;
-import com.informationsystem.library.dto.response.BookReviewsResponseDTO;
-import com.informationsystem.library.dto.response.StatusResponseDTO;
 import com.informationsystem.library.service.BookReviewsService;
 import lombok.AllArgsConstructor;
 

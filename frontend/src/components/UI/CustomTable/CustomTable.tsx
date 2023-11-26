@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import styles from './CustomTable.module.css';
 import CustomCheckbox from '../CustomCheckbox/CustomCheckbox';
 import { getDateForTable, isLessWeekLeftBeforeReturning, isReturnDateExpired } from '../../../utils/DateHandler';
@@ -18,18 +18,6 @@ interface ICustomTableProps {
 const CustomTable: FC<ICustomTableProps> = ({
     headerData, data, isHeaderCheckboxChecked, isRowChecked, 
     tableTitle, isCheckboxColumnHidden = true, hiddenColumns, onCheckboxChanged, onSelectAllChanged}) => {
-    // useEffect(() => {
-    //     let isSelectedAll = true
-    //     isRowChecked.map((value, index) => {
-    //         if (!value)
-    //             isSelectedAll = false
-    //         //console.log(index, ' ', value)
-    //         onCheckboxChanged(value, index)
-    //     })
-    //     if (!isRowChecked?.length)
-    //         isSelectedAll = false
-    //     setIsHeaderCheckboxChecked(isSelectedAll)
-    // }, [isRowChecked])
     const onSelectAllChangedHandler = (isChecked: boolean, index: number) => {
         onSelectAllChanged!(isChecked)
     }

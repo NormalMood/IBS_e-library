@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Toolbar from './Layout/Toolbar/Toolbar';
 import CatalogBooks from './Layout/CatalogBooks/CatalogBooks';
 import Sidebar from './Layout/Sidebar/Sidebar';

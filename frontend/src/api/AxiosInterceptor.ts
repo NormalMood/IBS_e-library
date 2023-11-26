@@ -7,8 +7,6 @@ interface IAxiosInterceptorProps {
     children: React.ReactElement<any, any> | null
 }
 
-
-
 const AxiosInterceptor: FC<IAxiosInterceptorProps> = ({children}) => {
     const { setIsAuth } = useContext(AuthContext)
     useEffect(() => {

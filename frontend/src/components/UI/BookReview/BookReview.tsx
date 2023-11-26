@@ -3,7 +3,6 @@ import styles from './BookReview.module.css';
 import useEmployeeDataStore from '../../../store/useEmployeeDataStore';
 import ReviewsService from '../../../service/ReviewsService';
 import { useNavigate } from 'react-router-dom';
-import { OK_RESPONSE_CODE } from '../../../api/axiosInstance';
 import { IMessageCodeResponse } from '../../../@types/IMessageCodeResponse';
 
 interface IBookReviewProps {

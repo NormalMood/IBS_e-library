@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import useCatalogStore from '../../../store/useCatalogStore';
 import CatalogBook from '../../CatalogBook';
 import styles from './CatalogBooks.module.css';
@@ -7,7 +7,6 @@ import useCatalogFilterStore from '../../../store/useCatalogFilterStore';
 import useCatalogSortingStore from '../../../store/useCatalogSortingStore';
 import { CatalogSortingFieldsEnum } from '../../../@types/CatalogSortingFieldsEnum';
 import { SortingOrdersEnum } from '../../../@types/SortingOrdersEnum';
-import { IBookCatalog } from '../../../@types/IBookCatalog';
 import { useObserver } from '../../../hooks/useObserver';
 
 const CatalogBooks = () => {
@@ -59,7 +58,6 @@ const CatalogBooks = () => {
     }, [page])
 
     useObserver(booksPaginationElement, page < totalPages, isBooksLoading, () => {
-        console.log('page here: ' + page)
         setPage(page + 1)
     })
 

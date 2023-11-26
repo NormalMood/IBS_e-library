@@ -2,35 +2,28 @@ package com.informationsystem.library.service;
 
 import com.informationsystem.library.dto.request.NewBooksAdminRequestDTO;
 import com.informationsystem.library.dto.request.NewBooksUserRequestDTO;
-import com.informationsystem.library.dto.response.ObjectResponseDTO;
 import com.informationsystem.library.dto.response.StatusResponseDTO;
 import com.informationsystem.library.entity.Books;
 import com.informationsystem.library.entity.BooksGenres;
-import com.informationsystem.library.entity.VGenres;
 import com.informationsystem.library.mapper.NewBooksAdminRequestMapper;
 import com.informationsystem.library.mapper.NewBooksUserRequestMapper;
 import com.informationsystem.library.repository.BooksGenresRepository;
 import com.informationsystem.library.repository.BooksRepository;
 import com.informationsystem.library.repository.VGenresRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.factory.Mappers;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import static com.informationsystem.library.model.ImageContentTypeMapper.contentTypeToFileExtension;;
+import static com.informationsystem.library.model.ImageContentTypeMapper.contentTypeToFileExtension;
 
 @Service
 @RequiredArgsConstructor

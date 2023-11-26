@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import styles from './CustomTab.module.css';
 import { TabsEnum } from '../../../@types/TabsEnum';
 import useCatalogStore from '../../../store/useCatalogStore';
