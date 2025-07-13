@@ -9,7 +9,6 @@ import com.informationsystem.library.mapper.NewBooksAdminRequestMapper;
 import com.informationsystem.library.mapper.NewBooksUserRequestMapper;
 import com.informationsystem.library.repository.BooksGenresRepository;
 import com.informationsystem.library.repository.BooksRepository;
-import com.informationsystem.library.repository.VGenresRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Set;
 import java.util.UUID;
 
@@ -29,8 +29,6 @@ import static com.informationsystem.library.model.ImageContentTypeMapper.content
 @RequiredArgsConstructor
 public class NewBooksServiceImpl implements NewBooksService {
 
-    private final VGenresRepository vGenresRepository;
-
     private final BooksRepository booksRepository;
 
     private final BooksGenresRepository booksGenresRepository;
@@ -38,6 +36,8 @@ public class NewBooksServiceImpl implements NewBooksService {
     private final NewBooksAdminRequestMapper newBooksAdminRequestMapper = Mappers.getMapper(NewBooksAdminRequestMapper.class);
 
     private final NewBooksUserRequestMapper newBooksUserRequestMapper = Mappers.getMapper(NewBooksUserRequestMapper.class);
+    
+    private final String COVERS_FOLDER_RELATIVE_PATH = "src/main/resources/blob/covers";
     
     @Override
     public StatusResponseDTO checkNewBooksUserRequestDTO(NewBooksUserRequestDTO newBookRequest) {
@@ -101,7 +101,7 @@ public class NewBooksServiceImpl implements NewBooksService {
     	StatusResponseDTO checkResult = checkNewBooksUserRequestDTO(newBookRequest);
     	if (checkResult != null)
     		return checkResult;
-    	if (new File("C:/Library_project/IBS_e-library/backend/src/main/resources/blob/covers/" + newBookRequest.getCoverName()).isFile()) {
+    	if (new File(Paths.get(COVERS_FOLDER_RELATIVE_PATH + "/" + newBookRequest.getCoverName()).toAbsolutePath().toString()).isFile()) {
     		Books book = newBooksUserRequestMapper.newBooksUserRequestToBooks(newBookRequest);
             saveBook(book, newBookRequest.getGenresIds());
             return new StatusResponseDTO(
@@ -122,7 +122,7 @@ public class NewBooksServiceImpl implements NewBooksService {
     	StatusResponseDTO checkResult = checkNewBooksAdminRequestDTO(newBookRequest);
     	if (checkResult != null)
     		return checkResult;
-    	if (new File("C:/Library_project/IBS_e-library/backend/src/main/resources/blob/covers/" + newBookRequest.getCoverName()).isFile()) {
+    	if (new File(Paths.get(COVERS_FOLDER_RELATIVE_PATH + "/" + newBookRequest.getCoverName()).toAbsolutePath().toString()).isFile()) {
     		Books book = newBooksAdminRequestMapper
     		    .newBooksAdminRequestToBooks(newBookRequest);
     		saveBook(book, newBookRequest.getGenresIds());
@@ -153,7 +153,7 @@ public class NewBooksServiceImpl implements NewBooksService {
 			if (contentTypeToFileExtension.containsKey(cover.getContentType())) {
 				String coverName = UUID.randomUUID().toString() + contentTypeToFileExtension.get(cover.getContentType());
 				File destination = new File(
-		   		    	"C:/Library_project/IBS_e-library/backend/src/main/resources/blob/covers/" 
+						Paths.get(COVERS_FOLDER_RELATIVE_PATH + "/").toAbsolutePath().toString() 
 		   		    	+ coverName
 		   		    );
 				try {

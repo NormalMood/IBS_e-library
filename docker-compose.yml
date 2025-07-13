@@ -1,0 +1,45 @@
+version: "3.9" # optional since v1.27.0
+services:
+  client:
+    build: frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+  server:
+    build: backend
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - nginx
+      - db
+      - session_storage
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db/ibs_library
+      - SPRING_DATA_REDIS_HOST=session_storage
+      - SPRING_DATA_REDIS_PORT=6379
+  nginx:
+    build: nginx
+    restart: always
+    ports:
+      - "8000:80"
+    volumes:
+      - "./backend/src/main/resources/blob:/blob"
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: library
+    volumes:
+      - "./db_scripts/init.sql:/docker-entrypoint-initdb.d/init.sql"
+    expose:
+      - "5432"
+    ports:
+      - "5435:5432"
+  session_storage:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"

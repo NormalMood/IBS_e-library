@@ -280,9 +280,10 @@ const Sidebar: FC = () => {
                                 resetProviderCheckboxes()
                                 resetStatusCheckboxes()
                                 //dirty trick. Doesn't work without assignment :(
-                                averageRatingFrom = ''
-                                averageRatingTo = ''
-                                //
+                                // averageRatingFrom = ''
+                                // averageRatingTo = ''
+                                // //
+                                console.log('new new new!!!')
                                 resetFilters()
                             }
                             else if (toolClicked === CatalogToolsEnum.CATALOG_SORT) {
