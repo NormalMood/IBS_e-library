@@ -1,6 +1,6 @@
 
 # E-library for IBS
-This is a demo backend project for [ООО "ИБС Пермь"](https://ibs.ru/career/region/perm/)
+This is a demo project for [ООО "ИБС Пермь"](https://ibs.ru/career/region/perm/)
 The application allows you to checkout, extend and return books. Only employees of the company can sign in via a corporate e-mail and a password. Employee sees checkouted books at his cart. Also any user can search and sort books by a few parameters, add books, add a review of a book, get all reviews of a certain book and know the date of returning his books. Admin is able to look at the history and expired statuses. All names, e-mails, passwords in this work are fictitious. Any resemblance to real persons, living or dead, is purely coincidental.
 
 
